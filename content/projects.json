@@ -1,0 +1,65 @@
+[
+	{
+		"slug": "rag-whatsapp-assistant",
+		"title": "RAG Assistant for WhatsApp Support",
+		"summary": "FastAPI webhook with pgvector retrieval powering regulated WhatsApp support.",
+		"results": [
+			"5-8 s p95 response",
+			"99% ingest success",
+			"33% time waste reduction"
+		],
+		"tags": ["FastAPI", "pgvector", "SLOs"],
+		"image": "/images/projects/rag-assistant.jpg",
+		"links": {
+			"caseStudy": "/case-studies/rag-whatsapp-assistant",
+			"repo": ""
+		},
+		"updatedAt": "2025-05-01"
+	},
+	{
+		"slug": "aws-iceberg-lakehouse",
+		"title": "AWS Iceberg Lakehouse with Embedded BI",
+		"summary": "Iceberg on S3 with Glue, Athena, Great Expectations, and Superset 5.0 embeds.",
+		"results": [
+			"<1% data loss across 260k rows",
+			"RLS for 7 business units",
+			"CI/CD dashboards"
+		],
+		"tags": ["Iceberg", "Great Expectations", "Superset"],
+		"image": "/images/projects/iceberg-lakehouse.jpg",
+		"links": {
+			"caseStudy": "/case-studies/aws-iceberg-lakehouse",
+			"repo": ""
+		},
+		"updatedAt": "2025-04-10"
+	},
+	{
+		"slug": "gleac-chatbot-impact",
+		"title": "GLEAC Client Interaction Chatbot",
+		"summary": "Automation rollout delivering a 91% lift in interactions and measurable adoption.",
+		"results": ["91% interactions lift", "33% time waste reduction"],
+		"tags": ["Automation", "Enablement", "Analytics"],
+		"image": "/images/projects/gleac-chatbot.jpg",
+		"links": {
+			"caseStudy": "/case-studies/gleac-chatbot",
+			"repo": ""
+		},
+		"updatedAt": "2025-02-15"
+	},
+	{
+		"slug": "estee-lauder-ariba-automation",
+		"title": "SAP Ariba Workflow Automations",
+		"summary": "Process mining and scripted automations delivering 48% less repetitive work.",
+		"results": [
+			"48% repetitive work reduction",
+			"20k+ client records automated"
+		],
+		"tags": ["RPA", "SAP Ariba", "Automation"],
+		"image": "/images/projects/ariba-automation.jpg",
+		"links": {
+			"caseStudy": "/case-studies/estee-lauder-automation",
+			"repo": ""
+		},
+		"updatedAt": "2023-03-01"
+	}
+]

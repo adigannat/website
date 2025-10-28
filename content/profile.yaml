@@ -1,0 +1,279 @@
+version: 1
+updated: "2025-10-28"
+profile:
+  name: "Aditya Ganesh"
+  title: "Applied ML Engineer"
+  summary: >
+    Applied ML Engineer delivering production retrieval-augmented assistants and governed data platforms.
+    Ship FastAPI + Postgres/pgvector systems, AWS Iceberg analytics stacks, and automation with measurable SLOs,
+    GitHub Actions CI/CD, and cost guardrails.
+  location: "Dubai, UAE"
+  nationality: "Indian"
+  visa_status: "UAE Residence"
+  languages:
+    - "English"
+    - "Hindi (verbal)"
+  contact:
+    phone: "+971509402346"
+    email: "adigannat@gmail.com"
+    linkedin: "https://www.linkedin.com/in/adityaganesh-ai"
+    github: "https://github.com/adigannat"
+  birthdate: "2001-05-12"
+
+education:
+  - degree: "Bachelor of Computer Science (Hons) - Artificial Intelligence"
+    institutions:
+      - "De Montfort University"
+      - "Asia Pacific University (Dual Certification)"
+    period:
+      start: "2020-09"
+      end: "2024-11"
+    highlights: []
+
+skills:
+  languages: ["Python", "SQL", "R", "C++", "C#", "Java", "PowerShell", "Bash"]
+  applied_ml:
+    [
+      "RAG",
+      "Embeddings",
+      "OpenAI API (GPT-4/5)",
+      "PyTorch",
+      "TensorFlow",
+      "FastAPI",
+      "Postgres",
+      "pgvector",
+      "Prompt design",
+      "Reranking",
+    ]
+  data_cloud:
+    [
+      "Apache Iceberg",
+      "AWS S3",
+      "AWS Glue",
+      "AWS Athena",
+      "RDS (PostgreSQL)",
+      "PyAthena",
+      "PySpark",
+      "Terraform",
+    ]
+  automation: ["n8n", "UiPath", "SAP RPA", "Model Context Protocol (MCP)"]
+  devops:
+    [
+      "Docker",
+      "Kubernetes (Helm)",
+      "GitHub Actions (CI/CD)",
+      "Amazon ECS",
+      "Amazon EKS",
+      "Redis",
+      "Celery",
+    ]
+  analytics: ["Apache Superset 5.0 (RLS, embedded)", "Power BI", "Mapbox", "deck.gl"]
+  strengths:
+    [
+      "SLO definition",
+      "Cost governance",
+      "Edge/webhook design",
+      "Incident runbooks",
+      "Security and data validation",
+    ]
+
+work_history:
+  - role: "Artificial Intelligence Specialist"
+    company: "La Capitale"
+    location: "Dubai"
+    period: { start: "2025-04", end: "present" }
+    type: "Full-time"
+    summary: >
+      Solo engineer for the data and AI platform: AWS Iceberg lakehouse, Superset 5.0 with RLS/embedded,
+      and production chatbots on WhatsApp Cloud API with FastAPI webhooks and pgvector retrieval.
+    achievements:
+      - "Designed and deployed an Apache Iceberg lakehouse on S3 with Glue Catalog and Athena SQL access."
+      - "Implemented Great Expectations validation keeping data loss under 1% on ~260k-row ingests."
+      - "Built Superset 5.0 dashboards with row-level security, deck.gl maps, and CRM embedding."
+      - "Version-controlled dashboards via YAML with GitHub Actions CI/CD and automated approvals."
+      - "Automated user onboarding via Superset REST with background workers on Redis and Celery."
+      - "Production WhatsApp Cloud API chatbots with FastAPI webhook + media workers and pgvector retrieval."
+      - "Defined SLOs: ingest success >= 99%, ingest p95 <= 60 s, assistant p95 5-8 s, documented runbooks."
+
+  - role: "Co-Founder (Advisory)"
+    company: "BloomingdaleEducation"
+    location: "India"
+    period: { start: "2024-09", end: "present" }
+    type: "Advisory"
+    summary: "Set up finance and security foundations while introducing AI as a teacher-assist advisor."
+    achievements:
+      - "Established secure finance and operations foundations."
+      - "Deployed AI guidance for educators to augment lessons and feedback loops."
+
+  - role: "AI Workflow Architect & Strategist Intern"
+    company: "GLEAC"
+    location: "Dubai"
+    period: { start: "2025-01", end: "2025-03" }
+    type: "Internship"
+    achievements:
+      - "Launched a chatbot increasing client interactions by 91% and reducing time waste by 33%."
+      - "Rolled out AI tools across Tech, QA, Sales, HR, and Admin and led staff upskilling."
+
+  - role: "Digital Transformation Management Intern"
+    company: "EstAce Lauder"
+    location: "Kuala Lumpur"
+    period: { start: "2022-11", end: "2023-03" }
+    type: "Internship"
+    achievements:
+      - "Managed SAP Ariba data for 20,000+ clients and automated workflows cutting repetitive work by 48%."
+
+  - role: "Artificial Intelligence Intern"
+    company: "Microsoft"
+    location: "Dubai"
+    period: { start: "2019-01", end: "2019-01" }
+    type: "Internship"
+    achievements: []
+
+projects:
+  - slug: "rag-whatsapp-assistant"
+    title: "RAG Assistant for WhatsApp Support"
+    context: "Customer operations in regulated finance"
+    summary: "FastAPI webhook with pgvector retrieval powering WhatsApp support assistants."
+    results:
+      - "p95 response 5-8 s with media handling"
+      - "99% ingest success with incident playbooks"
+      - "33% reduction in time waste for agents"
+    metrics: ["5-8 s p95", "99% ingest success", "33% time waste reduction"]
+    stack: ["FastAPI", "Postgres", "pgvector", "Redis", "Celery", "WhatsApp Cloud API"]
+    links:
+      caseStudy: "/case-studies/rag-whatsapp-assistant"
+      repo: ""
+  - slug: "aws-iceberg-lakehouse"
+    title: "AWS Iceberg Lakehouse with Embedded BI"
+    context: "Executive reporting and governed self-serve analytics"
+    summary: "Iceberg tables on S3 with Glue Catalog, Athena, Great Expectations, and Superset 5.0 embeds."
+    results:
+      - "<1% data loss across ~260k rows"
+      - "Row-level security enforced for 7 business units"
+      - "BI changes versioned through GitHub Actions"
+    metrics: ["<1% data loss", "RLS for 7 units", "CI/CD dashboards"]
+    stack: ["S3", "Glue", "Athena", "Apache Iceberg", "Great Expectations", "Superset", "GitHub Actions"]
+    links:
+      caseStudy: "/case-studies/aws-iceberg-lakehouse"
+      repo: ""
+  - slug: "gleac-chatbot-impact"
+    title: "GLEAC Client Interaction Chatbot"
+    context: "Internal enablement and client engagement"
+    summary: "Department-wide chatbot rollout with analytics loops and training."
+    results:
+      - "91% increase in client interactions"
+      - "33% reduction in time waste"
+    metrics: ["91% interactions lift", "33% time waste reduction"]
+    stack: ["Automation", "Analytics", "Training"]
+    links:
+      caseStudy: "/case-studies/gleac-chatbot"
+      repo: ""
+  - slug: "estee-lauder-ariba-automation"
+    title: "SAP Ariba Workflow Automations"
+    context: "Ops efficiency for a 20k client dataset"
+    summary: "Process mining and scripted automations for SAP Ariba operations."
+    results:
+      - "48% reduction in repetitive work across 4 automations"
+      - "20,000+ client records managed with higher accuracy"
+    metrics: ["48% repetitive work reduction", "20k+ clients"]
+    stack: ["SAP Ariba", "RPA", "Automation"]
+    links:
+      caseStudy: "/case-studies/estee-lauder-automation"
+      repo: ""
+
+case_studies:
+  - slug: "rag-whatsapp-assistant"
+    title: "RAG Assistant - Production WhatsApp Chatbot"
+    date: "2025-05-01"
+    tags: ["fastapi", "pgvector", "whatsapp", "slo"]
+    og:
+      title: "RAG Assistant - 5-8 s p95"
+      description: "Production WhatsApp chatbot with pgvector retrieval, cost guardrails, and runbooks."
+    schemaType: "CreativeWork"
+    metrics: ["5-8 s p95 response", "60 s ingest p95", "99% ingest success"]
+    stack:
+      [
+        "FastAPI",
+        "Postgres",
+        "pgvector",
+        "Redis",
+        "Celery",
+        "WhatsApp Cloud API",
+      ]
+    links: { repo: "", demo: "" }
+    outline:
+      context: "Assist operations and customer support with retrieval-augmented responses on WhatsApp."
+      problem: "High handle times and fragmented knowledge bases slowed regulated finance responses."
+      approach: "Webhook + media workers, pgvector retrieval, cost guardrails, and incident playbooks."
+      results: "Reliable p95s, auditable decisions, and lower agent handle time."
+      architecture: "Users -> WhatsApp Cloud API -> FastAPI webhook -> Redis/Celery -> Postgres/pgvector"
+      responsibilities: ["Design", "Implementation", "SLOs", "CI/CD", "Operations"]
+
+  - slug: "aws-iceberg-lakehouse"
+    title: "AWS Iceberg Lakehouse with Embedded BI"
+    date: "2025-04-10"
+    tags: ["iceberg", "glue", "athena", "superset", "governance"]
+    og:
+      title: "Lakehouse on AWS - <1% loss"
+      description: "Iceberg + Glue + Athena with Great Expectations and Superset 5.0 RLS."
+    schemaType: "CreativeWork"
+    metrics: ["<1% data loss", "~260k rows validated", "RLS enforced"]
+    stack:
+      [
+        "Amazon S3",
+        "AWS Glue",
+        "AWS Athena",
+        "Apache Iceberg",
+        "Great Expectations",
+        "Superset 5.0",
+        "GitHub Actions",
+      ]
+    links: { repo: "", demo: "" }
+    outline:
+      context: "Modernize analytics stack with governance and embedded dashboards."
+      problem: "Legacy pipelines and manual QA created delays and data quality issues."
+      approach: "Iceberg tables, automated validation, YAML-versioned dashboards, and RLS policy enforcement."
+      results: "Higher trust, faster iteration, and governed embedded analytics."
+
+  - slug: "gleac-chatbot"
+    title: "Engagement Bot Rollout at GLEAC"
+    date: "2025-02-15"
+    tags: ["automation", "chatbot", "enablement"]
+    og:
+      title: "GLEAC Bot - +91% interactions"
+      description: "Cross-department rollout with measurable interaction uplift."
+    schemaType: "CreativeWork"
+    metrics: ["91% increase in interactions", "33% reduction in time waste"]
+    stack: ["Automation", "Analytics", "Training"]
+    links: { repo: "", demo: "" }
+    outline:
+      context: "Improve client engagement and internal efficiency."
+      problem: "Manual responses and scattered channels blocked timely support."
+      approach: "Automation design, workflow training, analytics loops, and adoption playbooks."
+      results: "Significant lift in client interactions and reduced repetitive work."
+
+site_preferences:
+  theme: "auto"
+  show_vitals_bar: true
+  navigation:
+    - { label: "Home", href: "/" }
+    - { label: "Projects", href: "/projects" }
+    - { label: "Case Studies", href: "/case-studies" }
+    - { label: "About", href: "/about" }
+    - { label: "Contact", href: "/contact" }
+
+seo_defaults:
+  title_template: "%s - Aditya Ganesh"
+  description: "Applied ML Engineer building production RAG and AWS Iceberg platforms."
+  og_image_generator: "/api/og"
+
+schema_org:
+  person:
+    "@type": "Person"
+    name: "Aditya Ganesh"
+    jobTitle: "Applied ML Engineer"
+    email: "mailto:adigannat@gmail.com"
+    url: "https://adigannat.com"
+    sameAs:
+      - "https://www.linkedin.com/in/adityaganesh-ai"
+      - "https://github.com/adigannat"

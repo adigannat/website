@@ -1,0 +1,30 @@
+name = "aditya-portfolio"
+compatibility_date = "2024-10-28"
+pages_build_output_dir = "dist"
+
+# KV Namespaces for caching
+[[kv_namespaces]]
+binding = "GITHUB_CACHE"
+id = "your_kv_namespace_id_here"
+preview_id = "your_preview_kv_namespace_id_here"
+
+# D1 Database (optional - for future contact form storage)
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "portfolio-db"
+# database_id = "your_d1_database_id_here"
+
+# Environment variables (set via dashboard or CLI)
+# TURNSTILE_SECRET_KEY - Cloudflare Turnstile secret
+# TURNSTILE_SITE_KEY - Cloudflare Turnstile site key
+# GITHUB_TOKEN - GitHub personal access token (optional, for higher rate limits)
+# RESEND_API_KEY - Resend API key for email sending
+
+[build]
+command = "npm run build"
+
+[env.production]
+vars = { ENVIRONMENT = "production" }
+
+[env.preview]
+vars = { ENVIRONMENT = "preview" }
