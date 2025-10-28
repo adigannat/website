@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-labelledby="title desc">
+  <title id="title">Automation Chatbot Visualization</title>
+  <desc id="desc">Abstract depiction of an automation chatbot with message flows.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9333ea"/>
+      <stop offset="50%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#14b8a6"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="60%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="rgba(192,132,252,0.5)"/>
+      <stop offset="80%" stop-color="rgba(192,132,252,0)"/>
+    </radialGradient>
+  </defs>
+  <rect width="640" height="400" fill="#0f172a"/>
+  <rect x="24" y="24" width="592" height="352" rx="36" fill="url(#bg)" opacity="0.15"/>
+  <circle cx="420" cy="140" r="150" fill="url(#halo)"/>
+  <g fill="#c084fc" opacity="0.9">
+    <rect x="120" y="120" width="220" height="80" rx="24"/>
+    <rect x="360" y="200" width="180" height="70" rx="20"/>
+    <rect x="200" y="260" width="180" height="70" rx="20"/>
+  </g>
+  <g fill="none" stroke="#f472b6" stroke-width="3" opacity="0.8">
+    <path d="M190 160 C260 120, 360 120, 420 150"/>
+    <path d="M240 290 C320 260, 420 260, 470 230"/>
+  </g>
+  <g fill="none" stroke="#34d399" stroke-width="2" opacity="0.7">
+    <path d="M330 160 Q360 210 390 230"/>
+    <path d="M260 290 Q320 330 380 300"/>
+  </g>
+  <g fill="#f8fafc">
+    <circle cx="180" cy="160" r="8"/>
+    <circle cx="420" cy="150" r="8"/>
+    <circle cx="240" cy="290" r="8"/>
+    <circle cx="470" cy="230" r="8"/>
+  </g>
+  <g fill="none" stroke="#22d3ee" stroke-width="1.5" opacity="0.8">
+    <rect x="400" y="70" width="130" height="60" rx="16"/>
+    <path d="M420 90 L500 90"/>
+    <path d="M420 110 L470 110"/>
+  </g>
+</svg>

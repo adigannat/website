@@ -1,4 +1,4 @@
-﻿import { watch } from "node:fs";
+import { watch } from "node:fs";
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -193,6 +193,38 @@ function toDisplayDate(raw: string): string {
 	});
 }
 
+const techIconMap: Record<string, string> = {
+	fastapi: `<svg class="h-4 w-4 text-primary" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4.5 4.5h7.5l-2 5h4.5l-6 10v-6H4.5z"/></svg>`,
+	pgvector: `<svg class="h-4 w-4 text-accent" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5 4h14v4H5zm2 6h10v4H7zm3 6h4v4h-4z"/></svg>`,
+	slos: `<svg class="h-4 w-4 text-primary" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5 18l4.5-6 3 4L18 7l1 2-6.5 9-3-4-3.5 5z"/><circle cx="6" cy="6" r="2" fill="currentColor"/></svg>`,
+	iceberg: `<svg class="h-4 w-4 text-accent" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 18l5-11 4 5 3-6 6 12z"/></svg>`,
+	"great-expectations": `<svg class="h-4 w-4 text-primary" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 4h16v4H4zm2 6h12v2H6zm0 4h8v2H6zm0 4h5v2H6z"/></svg>`,
+	superset: `<svg class="h-4 w-4 text-accent" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 5h12v3H6zm2 5h8v3H8zm2 5h4v3h-4z"/></svg>`,
+	automation: `<svg class="h-4 w-4 text-primary" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19 13h-1.18a3 3 0 0 1-5.64 0H7a3 3 0 1 1 0-2h5.18a3 3 0 0 1 5.64 0H19z"/></svg>`,
+	enablement: `<svg class="h-4 w-4 text-accent" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4l4 4h-3v6h-2V8H8zM5 18h14v2H5z"/></svg>`,
+	analytics: `<svg class="h-4 w-4 text-primary" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5 19h2V9H5zm6 0h2V5h-2zm6 0h2v-8h-2z"/></svg>`,
+	rpa: `<svg class="h-4 w-4 text-primary" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 4h10l3 5-8 11-8-11z"/><circle cx="12" cy="9" r="1.5" fill="#1d4ed8"/></svg>`,
+	"sap-ariba": `<svg class="h-4 w-4 text-accent" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4l8 8-8 8-8-8z"/><path fill="#0ea5e9" d="M12 7l5 5-5 5-5-5z"/></svg>`,
+	default: `<svg class="h-4 w-4 text-slate-300" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.2"/><circle cx="12" cy="12" r="4" fill="currentColor"/></svg>`,
+};
+
+const metricIconMap: Record<string, string> = {
+	speed: `<svg class="h-6 w-6 text-accent" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4a8 8 0 0 0-8 8h2a6 6 0 0 1 6-6V4zm0 2a6 6 0 0 0-6 6h2a4 4 0 0 1 4-4V6zm0 6 6 6 1.5-1.5L13.5 12H12z"/></svg>`,
+	reliability: `<svg class="h-6 w-6 text-primary" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3 2 9l10 6 10-6-10-6zm0 18-8-4.8V11l8 4.8 8-4.8v5.2z"/></svg>`,
+	growth: `<svg class="h-6 w-6 text-primary" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 17h16v2H4zm3-3h2v3H7zm4-4h2v7h-2zm4-5h2v12h-2z"/><path fill="#0ea5e9" d="M10 13 7 10l1.4-1.4 1.6 1.6 3.6-3.6L15 8z"/></svg>`,
+	default: `<svg class="h-6 w-6 text-slate-300" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.2"/><circle cx="12" cy="12" r="4" fill="currentColor"/></svg>`,
+};
+
+function renderTechBadge(tag: string): string {
+	const slug = slugify(tag, { lower: true });
+	const icon = techIconMap[slug] ?? techIconMap.default;
+	return `<span class="tech-badge" data-tech="${escapeHtml(slug)}">${icon}<span>${escapeHtml(tag)}</span></span>`;
+}
+
+function renderMetricIcon(key: string): string {
+	return metricIconMap[key] ?? metricIconMap.default;
+}
+
 type LayoutOptions = {
 	title: string;
 	description?: string;
@@ -232,8 +264,8 @@ function createLayoutGenerator(
 					currentNav && normalizeHref(currentNav) === normalizeHref(item.href);
 				const aria = isCurrent ? ' aria-current="page"' : "";
 				const className = isCurrent
-					? "text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
-					: "hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary";
+					? "nav-link nav-link--active focus-ring"
+					: "nav-link focus-ring";
 				return `<li><a class="${className}" href="${href}"${aria}>${escapeHtml(item.label)}</a></li>`;
 			})
 			.join("\n          ");
@@ -241,6 +273,14 @@ function createLayoutGenerator(
 		const scriptTags = scripts
 			.map((src) => `<script type="module" src="${src}"></script>`)
 			.join("\n    ");
+
+		const vitalsBar = profile.site_preferences.show_vitals_bar
+			? `<div class="vitals-bar" role="status" aria-live="polite">
+      <div class="vitals-item" data-vital="lcp"><span class="vitals-item__label">LCP</span><span class="vitals-item__value" data-vital-value="lcp">= 2.5 s</span></div>
+      <div class="vitals-item" data-vital="inp"><span class="vitals-item__label">INP</span><span class="vitals-item__value" data-vital-value="inp">&lt; 200 ms</span></div>
+      <div class="vitals-item" data-vital="cls"><span class="vitals-item__label">CLS</span><span class="vitals-item__value" data-vital-value="cls">= 0.1</span></div>
+    </div>`
+			: "";
 
 		return `<!doctype html>
 ${generatedNotice}
@@ -255,15 +295,18 @@ ${generatedNotice}
 ${headExtra ? `    ${headExtra}\n` : ""}  </head>
   <body class="bg-slate-950 text-slate-100 antialiased">
     <a href="#main" class="absolute left-4 top-4 -translate-y-16 rounded bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground focus:translate-y-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary">Skip to content</a>
-    <header class="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-8">
-      <p class="text-sm font-semibold tracking-wide text-slate-300">${escapeHtml(name)}</p>
-      <nav aria-label="Primary">
-        <ul class="flex items-center gap-6 text-sm font-medium text-slate-300">
-          ${navHtml}
-        </ul>
-      </nav>
+    <header class="site-header bg-transparent" data-site-header>
+      <div class="site-header__inner">
+        <a class="site-logo focus-ring" href="/">${escapeHtml(name)}</a>
+        <nav aria-label="Primary" class="site-nav-wrapper">
+          <ul class="site-nav">
+            ${navHtml}
+          </ul>
+        </nav>
+        <a class="site-cta focus-ring" href="/contact/">Let's talk</a>
+      </div>
     </header>
-${body}
+${vitalsBar ? `    ${vitalsBar}\n` : ""}${body}
 ${renderFooter(profile)}
 ${scriptTags ? `    ${scriptTags}\n` : ""}${bodyExtra ? `    ${bodyExtra}\n` : ""}  </body>
 </html>`;
@@ -306,36 +349,133 @@ async function writeHtml(target: string, html: string) {
 
 function normalizeHref(href: string): string {
 	if (href === "/") return "/";
-	return href.endsWith("/") ? href : `${href}`;
+	if (
+		/^(https?:)?\/\//.test(href) ||
+		href.startsWith("mailto:") ||
+		href.startsWith("tel:")
+	) {
+		return href;
+	}
+	return href.endsWith("/") ? href : `${href}/`;
 }
 
-function renderMetricCard(value: string, label: string): string {
-	return `<div class="rounded-xl border border-slate-800 bg-slate-900/60 p-5">
-          <p class="text-3xl font-semibold text-white">${escapeHtml(value)}</p>
-          <p class="text-sm text-slate-400">${escapeHtml(label)}</p>
-        </div>`;
+function renderMetricCard(icon: string, value: string, label: string): string {
+	return `<div class="metric-card" data-animation="fade-in-up">
+            <div class="metric-card__icon" aria-hidden="true">${renderMetricIcon(icon)}</div>
+            <div class="flex flex-col gap-2">
+              <p class="text-6xl font-bold text-white leading-none" data-metric-value="${escapeHtml(value)}">${escapeHtml(
+								value,
+							)}</p>
+              <p class="text-sm text-slate-400">${escapeHtml(label)}</p>
+            </div>
+          </div>`;
 }
 
-function renderProjectCard(project: ProjectCard): string {
+function renderProjectCard(
+	project: ProjectCard,
+	options: { variant?: "default" | "featured" } = {},
+): string {
+	const { variant = "default" } = options;
 	const tags = project.tags
 		.map((tag) => slugify(tag, { lower: true }))
 		.join(",");
+
+	const firstTag = project.tags[0]?.toLowerCase() ?? "";
+	let category = "fastapi";
+	if (
+		firstTag.includes("iceberg") ||
+		firstTag.includes("lakehouse") ||
+		firstTag.includes("data")
+	) {
+		category = "iceberg";
+	} else if (
+		firstTag.includes("automation") ||
+		firstTag.includes("orchestration")
+	) {
+		category = "automation";
+	} else if (firstTag.includes("analytics") || firstTag.includes("metrics")) {
+		category = "analytics";
+	}
+
 	const metrics = project.results
 		.map(
-			(result) =>
-				`<li class="text-sm text-slate-300">${escapeHtml(result)}</li>`,
+			(result) => `<li class="project-card__metric">${escapeHtml(result)}</li>`,
 		)
 		.join("");
-	return `<article class="flex flex-col gap-4 rounded-xl border border-slate-800 bg-slate-900/60 p-6 transition hover:border-slate-700 focus-within:border-primary" data-project-card data-tags="${escapeHtml(tags)}">
-            <div class="flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-primary">
-              <span>${escapeHtml(project.tags[0] ?? "Project")}</span>
-            </div>
-            <h3 class="text-xl font-semibold text-white">${escapeHtml(project.title)}</h3>
-            <p class="text-sm text-slate-300">${escapeHtml(project.summary)}</p>
-            <ul class="flex flex-col gap-1">${metrics}</ul>
-            <div class="mt-auto flex items-center justify-between">
-              <a class="text-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="${escapeHtml(project.links.caseStudy)}">Read case study</a>
-              ${project.links.repo ? `<a class="text-sm text-slate-400 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="${escapeHtml(project.links.repo)}">Code</a>` : ""}
+
+	const techBadges = project.tags.map((tag) => renderTechBadge(tag)).join("");
+	const badgeHtml = `<span class="badge badge-${category}">${escapeHtml(project.tags[0] ?? "Project")}</span>`;
+	const classes = [
+		"project-card",
+		"card-elevated",
+		"accent-bar-left",
+		`accent-bar-left-${category}`,
+		variant === "featured" ? "project-card--featured lg:col-span-2" : "",
+	]
+		.filter(Boolean)
+		.join(" ");
+
+	const imageSrc = project.image ?? "/images/projects/rag-assistant.svg";
+	const imageAttributes =
+		variant === "featured"
+			? `fetchpriority="high" decoding="async"`
+			: `loading="lazy" decoding="async"`;
+	const imageMarkup = project.image
+		? `<figure class="project-card__media" aria-hidden="true">
+              <img class="project-card__image" src="${escapeHtml(
+								imageSrc,
+							)}" alt="" width="640" height="360" ${imageAttributes} />
+            </figure>`
+		: "";
+
+	const updatedLabel = project.updatedAt
+		? `Updated ${escapeHtml(toDisplayDate(project.updatedAt))}`
+		: "";
+	const caseStudyHref = escapeHtml(normalizeHref(project.links.caseStudy));
+	const repoLink =
+		project.links.repo && project.links.repo.trim().length > 0
+			? `<a class="project-card__secondary focus-ring" href="${escapeHtml(project.links.repo)}">View code</a>`
+			: "";
+
+	if (variant === "featured") {
+		return `<article class="${classes}" data-project-card data-tags="${escapeHtml(tags)}" data-variant="featured">
+              ${imageMarkup}
+              <div class="project-card__content">
+                <div class="project-card__eyebrow">
+                  ${badgeHtml}
+                  ${updatedLabel ? `<span class="project-card__updated">${updatedLabel}</span>` : ""}
+                </div>
+                <h3 class="project-card__title text-display-sm">
+                  <a class="focus-ring hover:text-primary" href="${caseStudyHref}">${escapeHtml(project.title)}</a>
+                </h3>
+                <p class="project-card__summary">${escapeHtml(project.summary)}</p>
+                <ul class="project-card__metrics">${metrics}</ul>
+                <div class="project-card__tech">${techBadges}</div>
+                <div class="project-card__actions">
+                  <a class="project-card__primary focus-ring" href="${caseStudyHref}">Dive into case study</a>
+                  ${repoLink}
+                </div>
+              </div>
+            </article>`;
+	}
+
+	return `<article class="${classes}" data-project-card data-tags="${escapeHtml(tags)}" data-variant="default">
+            ${imageMarkup}
+            <div class="project-card__content">
+              <div class="project-card__eyebrow">
+                ${badgeHtml}
+                ${updatedLabel ? `<span class="project-card__updated">${updatedLabel}</span>` : ""}
+              </div>
+              <h3 class="project-card__title">
+                <a class="focus-ring hover:text-primary" href="${caseStudyHref}">${escapeHtml(project.title)}</a>
+              </h3>
+              <p class="project-card__summary">${escapeHtml(project.summary)}</p>
+              <ul class="project-card__metrics">${metrics}</ul>
+              <div class="project-card__tech">${techBadges}</div>
+              <div class="project-card__actions">
+                <a class="project-card__primary focus-ring" href="${caseStudyHref}">Read case study</a>
+                ${repoLink}
+              </div>
             </div>
           </article>`;
 }
@@ -344,20 +484,19 @@ function renderCaseStudyCard(study: CaseStudy): string {
 	const meta = study.meta;
 	const metrics = meta.metrics
 		.slice(0, 2)
-		.map(
-			(metric) =>
-				`<span class="rounded-full border border-slate-700 px-3 py-1 text-xs font-semibold text-slate-200">${escapeHtml(metric)}</span>`,
-		)
+		.map((metric) => `<span class="badge">${escapeHtml(metric)}</span>`)
 		.join(" ");
-	return `<article class="flex flex-col gap-4 rounded-xl border border-slate-800 bg-slate-900/60 p-6">
-          <div class="flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-primary">
-            <span>${escapeHtml(new Date(meta.date).toLocaleDateString("en-US", { month: "short", year: "numeric" }))}</span>
+	return `<article class="card-elevated">
+          <div class="flex flex-col gap-4 p-6">
+            <div class="flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-accent">
+              <span>${escapeHtml(new Date(meta.date).toLocaleDateString("en-US", { month: "short", year: "numeric" }))}</span>
+            </div>
+            <h3 class="text-xl font-semibold text-white">
+              <a class="hover:text-primary focus-ring" href="/case-studies/${escapeHtml(meta.slug)}/">${escapeHtml(meta.title)}</a>
+            </h3>
+            <p class="text-sm text-slate-300">${escapeHtml(study.excerpt)}</p>
+            <div class="flex flex-wrap gap-2">${metrics}</div>
           </div>
-          <h3 class="text-xl font-semibold text-white">
-            <a class="hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/case-studies/${escapeHtml(meta.slug)}/">${escapeHtml(meta.title)}</a>
-          </h3>
-          <p class="text-sm text-slate-300">${escapeHtml(study.excerpt)}</p>
-          <div class="flex flex-wrap gap-2">${metrics}</div>
         </article>`;
 }
 
@@ -438,10 +577,12 @@ ${study.html.trim()}
         <h2 id="links-heading" class="text-lg font-semibold text-white">Links</h2>
         <div class="flex flex-wrap gap-4">${links.join("")}</div>
       </section>
-      <section aria-labelledby="cta-heading" class="flex flex-col gap-4 rounded-xl border border-slate-800 bg-slate-900/60 p-6">
-        <h2 id="cta-heading" class="text-lg font-semibold text-white">Need similar results?</h2>
-        <p class="text-sm text-slate-300">I help teams ship reliable assistants, governed data platforms, and automation with measurable SLOs.</p>
-        <a class="self-start rounded-full bg-primary px-6 py-2 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/40 transition hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/contact/">Work together</a>
+      <section aria-labelledby="cta-heading" class="card-elevated-primary">
+        <div class="flex flex-col gap-4 p-8">
+          <h2 id="cta-heading" class="text-xl font-semibold text-white">Need similar results?</h2>
+          <p class="text-base text-slate-300">I help teams ship reliable assistants, governed data platforms, and automation with measurable SLOs.</p>
+          <a class="btn-primary-enhanced self-start" href="/contact/">Work together</a>
+        </div>
       </section>
     </main>`;
 
@@ -451,7 +592,7 @@ ${study.html.trim()}
 		body,
 		currentNav: "/case-studies",
 		canonicalPath: `/case-studies/${meta.slug}/`,
-		scripts: ["../../../ts/main.ts"],
+		scripts: ["../../../ts/main.ts", "../../../ts/animations.ts"],
 		headExtra,
 	});
 }
@@ -462,35 +603,95 @@ function renderHomePage(
 	caseStudies: CaseStudy[],
 	layout: ReturnType<typeof createLayoutGenerator>,
 ): string {
-	const featuredProjects = projects
-		.slice(0, 3)
-		.map((project) => renderProjectCard(project))
+	const [primaryProject, ...remainingProjects] = projects;
+	const supportingProjects = remainingProjects.slice(0, 2);
+	const projectGrid = [
+		primaryProject
+			? renderProjectCard(primaryProject, { variant: "featured" })
+			: "",
+		...supportingProjects.map((project) => renderProjectCard(project)),
+	]
+		.filter(Boolean)
 		.join("\n        ");
+
+	const heroHighlights = [
+		"Production WhatsApp assistant hitting 5-8 s p95 with pgvector retrieval.",
+		"AWS Iceberg lakehouse with Superset embeds and <1% data loss.",
+		"Automation playbooks delivering +91% interaction lift across teams.",
+	]
+		.map(
+			(highlight) =>
+				`<li class="hero-panel__highlight">${escapeHtml(highlight)}</li>`,
+		)
+		.join("\n              ");
+	const heroMeta = [
+		{ label: "Location", value: profile.profile.location },
+		{
+			label: "Focus",
+			value: "Applied ML · Data Platforms · Automation",
+		},
+		{
+			label: "Availability",
+			value: "Open to senior AI & platform roles",
+		},
+	]
+		.map(
+			(item) =>
+				`<div class="hero-meta-item"><dt class="hero-meta-label">${escapeHtml(
+					item.label,
+				)}</dt><dd class="hero-meta-value">${escapeHtml(item.value)}</dd></div>`,
+		)
+		.join("\n            ");
+
 	const featuredCase = caseStudies[0];
 	const caseMarkup = featuredCase
-		? `<article class="flex flex-col gap-4 rounded-xl border border-slate-800 bg-slate-900/60 p-6">
-          <p class="text-sm uppercase tracking-[0.4em] text-primary">Case study</p>
-          <h3 class="text-2xl font-semibold text-white">
-            <a class="hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/case-studies/${escapeHtml(featuredCase.meta.slug)}/">${escapeHtml(featuredCase.meta.title)}</a>
-          </h3>
-          <p class="text-sm text-slate-300">${escapeHtml(featuredCase.excerpt)}</p>
-          <ul class="flex flex-wrap gap-2">
-            ${featuredCase.meta.metrics
-							.slice(0, 3)
-							.map(
-								(metric) =>
-									`<li class="rounded-full border border-slate-700 px-3 py-1 text-xs font-semibold text-slate-200">${escapeHtml(metric)}</li>`,
-							)
-							.join("")}
-          </ul>
-        </article>`
+		? `<article class="case-feature card-elevated-accent" data-animation="fade-in-up">
+            <div class="case-feature__meta">
+              <span class="badge badge-analytics">Case study</span>
+              <span class="case-feature__date">${escapeHtml(
+								toDisplayDate(featuredCase.meta.date),
+							)}</span>
+            </div>
+            <h3 class="case-feature__title text-3xl font-semibold text-white">
+              <a class="focus-ring hover:text-primary" href="/case-studies/${escapeHtml(
+								featuredCase.meta.slug,
+							)}/">${escapeHtml(featuredCase.meta.title)}</a>
+            </h3>
+            <p class="case-feature__summary">${escapeHtml(featuredCase.excerpt)}</p>
+            <ul class="case-feature__metrics">
+              ${featuredCase.meta.metrics
+								.slice(0, 3)
+								.map((metric) => `<li class="badge">${escapeHtml(metric)}</li>`)
+								.join("")}
+            </ul>
+            <a class="case-feature__cta focus-ring" href="/case-studies/${escapeHtml(
+							featuredCase.meta.slug,
+						)}/">Read the full breakdown</a>
+          </article>`
 		: "";
 
 	const metricsSection = [
-		renderMetricCard("5-8 s", "WhatsApp assistant p95 latency"),
-		renderMetricCard("<1%", "Iceberg lakehouse ingest loss"),
-		renderMetricCard("+91%", "Interaction lift after automation"),
+		renderMetricCard("speed", "5-8 s", "WhatsApp assistant p95 latency"),
+		renderMetricCard("reliability", "<1%", "Iceberg lakehouse ingest loss"),
+		renderMetricCard("growth", "+91%", "Interaction lift after automation"),
 	].join("\n        ");
+
+	const githubSkeleton = Array.from({ length: 3 })
+		.map(
+			(
+				_,
+				index,
+			) => `<article class="github-card card-elevated" data-github-card>
+            <div class="github-card__header shimmer">
+              <span class="github-card__repo shimmer-block" aria-hidden="true">Loading repository</span>
+              <span class="github-card__stars shimmer-block" aria-hidden="true">?</span>
+            </div>
+            <p class="github-card__summary shimmer-block" aria-hidden="true">Loading description</p>
+            <div class="github-card__topics shimmer-block" aria-hidden="true"></div>
+            <span class="sr-only">GitHub repository ${index + 1} loading...</span>
+          </article>`,
+		)
+		.join("\n            ");
 
 	const baseUrl = profile.schema_org?.person?.url ?? "https://example.com";
 	const ogImageUrl = `${baseUrl}/api/og?title=${encodeURIComponent(profile.profile.name)}&subtitle=${encodeURIComponent(profile.profile.title)}`;
@@ -508,32 +709,73 @@ function renderHomePage(
 		`<meta name="twitter:image" content="${ogImageUrl}" />`,
 	].join("\n    ");
 
-	const body = `    <main id="main" class="mx-auto flex w-full max-w-5xl flex-col gap-16 px-6 pb-24 pt-10">
-      <section class="flex flex-col gap-6">
-        <p class="text-sm uppercase tracking-[0.4em] text-primary">${escapeHtml(profile.profile.title)}</p>
-        <h1 class="text-4xl font-semibold leading-tight sm:text-5xl">${escapeHtml(profile.profile.summary)}</h1>
-        <p class="max-w-3xl text-base text-slate-300 sm:text-lg">Based in ${escapeHtml(profile.profile.location)}. I build retrieval-augmented assistants, AWS Iceberg platforms, and automation with measurable SLOs and cost controls.</p>
-        <div class="flex flex-wrap gap-3">
-          <a class="rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/40 transition hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/projects/">View projects</a>
-          <a class="rounded-full border border-slate-700 px-5 py-2 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/contact/">Work together</a>
+	const body = `    <main id="main" class="mx-auto flex w-full max-w-6xl flex-col gap-16 px-6 pb-24 pt-10">
+      <section class="hero-panel card-elevated-primary relative overflow-hidden rounded-3xl" data-animation="fade-in-up">
+        <div class="hero-panel__decor" aria-hidden="true">
+          <span class="hero-panel__orb" data-parallax="0.12"></span>
+          <span class="hero-panel__mesh" data-parallax="0.06"></span>
+        </div>
+        <div class="hero-panel__content">
+          <div class="hero-panel__eyebrow">
+            <span class="hero-chip">${escapeHtml(profile.profile.title)}</span>
+            <span class="hero-pill">Shipping RAG, Iceberg, Automation</span>
+          </div>
+          <h1 class="text-display-lg font-bold leading-tight text-gradient md:text-display-xl">${escapeHtml(profile.profile.name)}</h1>
+          <p class="hero-panel__lead">${escapeHtml(profile.profile.summary)}</p>
+          <ul class="hero-panel__highlights">
+            ${heroHighlights}
+          </ul>
+          <div class="hero-panel__cta">
+            <a class="btn-primary-enhanced" href="/projects/">Explore projects</a>
+            <a class="btn-secondary-enhanced" href="/contact/">Book a conversation</a>
+          </div>
+        </div>
+        <aside class="hero-panel__meta" aria-label="At-a-glance details">
+          <dl class="hero-meta-list">
+            ${heroMeta}
+          </dl>
+        </aside>
+      </section>
+      <section aria-labelledby="projects-heading" class="flex flex-col gap-8">
+        <div class="section-heading">
+          <h2 id="projects-heading" class="section-title">Featured projects</h2>
+          <a class="section-link focus-ring" href="/projects/">Browse all</a>
+        </div>
+        <div data-project-grid class="home-project-grid">
+          ${projectGrid}
         </div>
       </section>
-      <section aria-labelledby="projects-heading" class="flex flex-col gap-6">
-        <div class="flex items-center justify-between gap-3">
-          <h2 id="projects-heading" class="text-2xl font-semibold text-white">Featured projects</h2>
-          <a class="text-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/projects/">Browse all</a>
+      <section aria-labelledby="github-heading" class="flex flex-col gap-6">
+        <div class="section-heading">
+          <h2 id="github-heading" class="section-title">GitHub activity pulse</h2>
+          <p class="section-subtitle">Live repositories for assistants, lakehouses, and automation tooling.</p>
         </div>
-        <div data-project-grid class="grid gap-6 md:grid-cols-2">
-          ${featuredProjects}
+        <div class="github-grid" data-github-grid>
+          ${githubSkeleton}
         </div>
+        <noscript>
+          <p class="text-sm text-slate-400">Enable JavaScript to view the latest repositories from GitHub.</p>
+        </noscript>
       </section>
       <section aria-labelledby="case-heading" class="flex flex-col gap-6">
-        <h2 id="case-heading" class="text-2xl font-semibold text-white">Latest case study</h2>
+        <div class="section-heading">
+          <h2 id="case-heading" class="section-title">Latest case study</h2>
+        </div>
         ${caseMarkup}
       </section>
-      <section aria-labelledby="metrics-heading" class="grid gap-6 md:grid-cols-3">
+      <section aria-labelledby="metrics-heading" class="metrics-grid" data-animation="fade-in-up">
         <h2 id="metrics-heading" class="sr-only">Key metrics</h2>
         ${metricsSection}
+      </section>
+      <section class="cta-panel card-elevated-accent" data-animation="fade-in-up">
+        <div class="cta-panel__content">
+          <h2 class="cta-panel__title">Need someone to harden AI systems end-to-end?</h2>
+          <p class="cta-panel__body">Let's audit your data contracts, guardrails, and adoption plan together.</p>
+        </div>
+        <div class="cta-panel__actions">
+          <a class="btn-primary-enhanced" href="/contact/">Start the conversation</a>
+          <a class="btn-secondary-enhanced" href="/case-studies/">Review case studies</a>
+        </div>
       </section>
     </main>`;
 
@@ -542,7 +784,7 @@ function renderHomePage(
 		body,
 		currentNav: "/",
 		canonicalPath: "/",
-		scripts: ["../ts/main.ts"],
+		scripts: ["../ts/main.ts", "../ts/animations.ts", "../ts/home.ts"],
 		headExtra,
 	});
 }
@@ -557,33 +799,44 @@ function renderProjectsPage(
 		),
 	).sort();
 	const filterButtons = [
-		`<button type="button" class="rounded-full border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-200 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" data-filter value="all" aria-pressed="true">All</button>`,
-		...uniqueTags.map(
-			(tag) =>
-				`<button type="button" class="rounded-full border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-200 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" data-filter value="${escapeHtml(
-					slugify(tag, { lower: true }),
-				)}">${escapeHtml(tag)}</button>`,
-		),
+		`<button type="button" class="filter-pill" data-filter value="all" aria-pressed="true">All</button>`,
+		...uniqueTags.map((tag) => {
+			const value = slugify(tag, { lower: true });
+			return `<button type="button" class="filter-pill" data-filter value="${escapeHtml(
+				value,
+			)}" aria-pressed="false">${escapeHtml(tag)}</button>`;
+		}),
 	].join("\n        ");
 
-	const cards = projects
-		.map((project) => renderProjectCard(project))
+	const [featuredProject, ...otherProjects] = projects;
+	const cards = [
+		featuredProject
+			? renderProjectCard(featuredProject, { variant: "featured" })
+			: "",
+		...otherProjects.map((project) => renderProjectCard(project)),
+	]
+		.filter(Boolean)
 		.join("\n        ");
 
 	const body = `    <main id="main" class="mx-auto flex w-full max-w-6xl flex-col gap-12 px-6 pb-24 pt-10">
-      <header class="flex flex-col gap-4">
-        <p class="text-sm uppercase tracking-[0.4em] text-primary">Projects</p>
-        <h1 class="text-4xl font-semibold leading-tight sm:text-5xl">Impact-driven engineering work</h1>
-        <p class="max-w-3xl text-base text-slate-300 sm:text-lg">Outcome-first stories covering latency, reliability, cost, and adoption. Filter by domain to jump directly to relevant work.</p>
+      <header class="page-hero" data-animation="fade-in-up">
+        <p class="page-eyebrow text-primary">Projects</p>
+        <h1 class="text-display-lg font-semibold leading-tight text-white md:text-display-xl">Impact-driven engineering work</h1>
+        <p class="page-lead max-w-3xl">Outcome-first stories covering latency, reliability, cost, and adoption. Filter by domain to jump directly to relevant build logs.</p>
+        <ul class="page-metrics">
+          <li><span>5-8 s</span><span>Assistant p95 response</span></li>
+          <li><span>&lt;1%</span><span>Lakehouse ingest loss</span></li>
+          <li><span>+91%</span><span>Automation adoption lift</span></li>
+        </ul>
       </header>
-      <section aria-labelledby="filters" class="flex flex-wrap items-center gap-4">
-        <h2 id="filters" class="text-sm font-semibold uppercase tracking-[0.3em] text-slate-400">Filter</h2>
+      <section aria-labelledby="filters" class="filter-toolbar" data-animation="fade-in-up">
+        <h2 id="filters" class="filter-toolbar__label">Filter</h2>
         <div class="flex flex-wrap gap-3" data-filter-group>
           ${filterButtons}
         </div>
         <p class="sr-only" role="status" aria-live="polite" data-filter-status>Showing all projects.</p>
       </section>
-      <section aria-labelledby="project-grid" class="grid gap-6 md:grid-cols-2" data-project-grid>
+      <section aria-labelledby="project-grid" class="projects-grid" data-project-grid>
         ${cards}
       </section>
     </main>`;
@@ -595,7 +848,11 @@ function renderProjectsPage(
 		body,
 		currentNav: "/projects",
 		canonicalPath: "/projects/",
-		scripts: ["../../ts/main.ts", "../../ts/projects.ts"],
+		scripts: [
+			"../../ts/main.ts",
+			"../../ts/animations.ts",
+			"../../ts/projects.ts",
+		],
 	});
 }
 
@@ -608,10 +865,10 @@ function renderCaseStudyListing(
 		.join("\n        ");
 
 	const body = `    <main id="main" class="mx-auto flex w-full max-w-4xl flex-col gap-10 px-6 pb-24 pt-10">
-      <header class="flex flex-col gap-4">
-        <p class="text-sm uppercase tracking-[0.4em] text-primary">Case studies</p>
-        <h1 class="text-4xl font-semibold leading-tight sm:text-5xl">Outcome-first narratives</h1>
-        <p class="max-w-2xl text-base text-slate-300 sm:text-lg">Each engagement breaks down the context, problem, approach, and measurable results.</p>
+      <header class="page-hero" data-animation="fade-in-up">
+        <p class="page-eyebrow text-primary">Case studies</p>
+        <h1 class="text-display-lg font-semibold leading-tight text-white md:text-display-xl">Outcome-first narratives</h1>
+        <p class="page-lead max-w-2xl">Each engagement breaks down context, problem, approach, and measurable outcomes.</p>
       </header>
       <section aria-labelledby="case-list" class="flex flex-col gap-6" data-case-list>
         <h2 id="case-list" class="sr-only">Case study list</h2>
@@ -624,7 +881,7 @@ function renderCaseStudyListing(
 		body,
 		currentNav: "/case-studies",
 		canonicalPath: "/case-studies/",
-		scripts: ["../../ts/main.ts"],
+		scripts: ["../../ts/main.ts", "../../ts/animations.ts"],
 	});
 }
 
@@ -683,10 +940,10 @@ function renderAboutPage(
 	);
 
 	const body = `    <main id="main" class="mx-auto flex w-full max-w-4xl flex-col gap-12 px-6 pb-24 pt-10">
-      <header class="flex flex-col gap-4">
-        <p class="text-sm uppercase tracking-[0.4em] text-primary">About</p>
-        <h1 class="text-4xl font-semibold leading-tight sm:text-5xl">Principles-driven, outcome-first delivery</h1>
-        <p class="max-w-2xl text-base text-slate-300 sm:text-lg">${escapeHtml(profile.profile.summary)}</p>
+      <header class="page-hero" data-animation="fade-in-up">
+        <p class="page-eyebrow text-primary">About</p>
+        <h1 class="text-display-lg font-semibold leading-tight text-white md:text-display-xl">Principles-driven, outcome-first delivery</h1>
+        <p class="page-lead max-w-2xl">${escapeHtml(profile.profile.summary)}</p>
       </header>
       <section aria-labelledby="strengths-heading" class="flex flex-col gap-4">
         <h2 id="strengths-heading" class="text-lg font-semibold text-white">Operating principles</h2>
@@ -709,7 +966,7 @@ function renderAboutPage(
 		body,
 		currentNav: "/about",
 		canonicalPath: "/about/",
-		scripts: ["../../ts/main.ts"],
+		scripts: ["../../ts/main.ts", "../../ts/animations.ts"],
 	});
 }
 
@@ -736,10 +993,10 @@ function renderContactPage(
 	}
 
 	const body = `    <main id="main" class="mx-auto flex w-full max-w-3xl flex-col gap-12 px-6 pb-24 pt-10">
-      <header class="flex flex-col gap-4">
-        <p class="text-sm uppercase tracking-[0.4em] text-primary">Contact</p>
-        <h1 class="text-4xl font-semibold leading-tight sm:text-5xl">Let’s build resilient systems together</h1>
-        <p class="max-w-2xl text-base text-slate-300 sm:text-lg">Share project context and desired outcomes. I reply within two business days with a clear next step.</p>
+      <header class="page-hero" data-animation="fade-in-up">
+        <p class="page-eyebrow text-primary">Contact</p>
+        <h1 class="text-display-lg font-semibold leading-tight text-white md:text-display-xl">Let's build resilient systems together</h1>
+        <p class="page-lead max-w-2xl">Share project context and desired outcomes. I reply within two business days with a clear next step.</p>
       </header>
       <section>
         <form id="contact-form" method="post" action="/api/contact" class="flex flex-col gap-6" data-contact-form>
@@ -760,7 +1017,7 @@ function renderContactPage(
           <input type="hidden" name="context" value="contact-page" />
           <div data-turnstile-container class="min-h-[80px]" aria-live="polite"></div>
           <div class="flex flex-col gap-3 text-sm text-slate-300" aria-live="polite" data-form-status></div>
-          <button type="submit" class="self-start rounded-full bg-primary px-6 py-2 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/40 transition hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">Send message</button>
+          <button type="submit" class="btn-primary-enhanced self-start">Send message</button>
         </form>
       </section>
       <section aria-labelledby="alt-channels" class="flex flex-col gap-4">
@@ -774,7 +1031,11 @@ function renderContactPage(
 		body,
 		currentNav: "/contact",
 		canonicalPath: "/contact/",
-		scripts: ["../../ts/main.ts", "../../ts/contact.ts"],
+		scripts: [
+			"../../ts/main.ts",
+			"../../ts/animations.ts",
+			"../../ts/contact.ts",
+		],
 	});
 }
 
@@ -985,7 +1246,7 @@ const watchMode = process.argv.includes("--watch");
 generate()
 	.then(() => {
 		if (watchMode) {
-			console.info("[generate-content] Watching content for changes…");
+			console.info("[generate-content] Watching content for changes...");
 			setupWatchers();
 		}
 	})

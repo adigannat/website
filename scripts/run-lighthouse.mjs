@@ -1,83 +1,163 @@
 /**
  * Lighthouse CI performance test runner
- * Tests performance budgets and Core Web Vitals
+ * Boots a Vite preview server, audits key routes, and enforces score budgets.
  */
 
-import { execSync } from "node:child_process";
-import { mkdirSync, writeFileSync } from "node:fs";
+import { execSync, spawn } from "node:child_process";
+import { mkdirSync } from "node:fs";
+import { readFile, rm, writeFile } from "node:fs/promises";
+import path from "node:path";
+import { setTimeout as sleep } from "node:timers/promises";
 
-// Performance budgets
-const budgets = {
+const PREVIEW_PORT = 4173;
+const PREVIEW_HOST = "127.0.0.1";
+const PREVIEW_ORIGIN = `http://${PREVIEW_HOST}:${PREVIEW_PORT}`;
+
+const ROUTES = ["/", "/projects/", "/case-studies/", "/contact/"];
+
+const BUDGETS = {
 	performance: 90,
 	accessibility: 95,
 	"best-practices": 90,
 	seo: 95,
-	pwa: 0, // Not targeting PWA
+	pwa: 0,
 };
 
-const urls = [
-	"http://localhost:4173/",
-	"http://localhost:4173/projects/",
-	"http://localhost:4173/case-studies/",
-	"http://localhost:4173/contact/",
-];
+const isWindows = process.platform === "win32";
 
-console.log("[lighthouse] Starting Vite preview server...");
-execSync("npm run preview &", { stdio: "ignore" });
+console.log("[lighthouse] Starting Vite preview server…");
+const preview = spawn(
+	isWindows ? "npm.cmd" : "npm",
+	[
+		"run",
+		"preview",
+		"--",
+		"--host",
+		PREVIEW_HOST,
+		"--port",
+		String(PREVIEW_PORT),
+	],
+	{
+		stdio: "inherit",
+		detached: false,
+		shell: isWindows,
+	},
+);
 
-// Wait for server to start
-await new Promise((resolve) => setTimeout(resolve, 3000));
+let previewExited = false;
+preview.on("exit", (code) => {
+	if (code !== 0) {
+		previewExited = true;
+	}
+});
 
-console.log("[lighthouse] Running Lighthouse CI tests...");
+const ready = await waitForServer(`${PREVIEW_ORIGIN}/`, 20_000);
+if (!ready || previewExited) {
+	console.error("[lighthouse] Preview server did not start in time.");
+	await shutdownPreview(preview);
+	process.exit(1);
+}
+
+console.log("[lighthouse] Preview server ready. Running Lighthouse audits…");
+
+const summary = [];
 
 try {
 	mkdirSync(".lighthouseci", { recursive: true });
 
-	for (const url of urls) {
-		console.log(`[lighthouse] Testing ${url}...`);
+	for (const route of ROUTES) {
+		const url = new URL(route, PREVIEW_ORIGIN).toString();
+		const slug =
+			route === "/"
+				? "index"
+				: route.replace(/(^\/|\/$)/g, "").replace(/[^\w-]+/g, "-");
+		const basePath = path.join(".lighthouseci", slug || "index");
+		const jsonPath = `${basePath}.report.json`;
+		const htmlPath = `${basePath}.report.html`;
 
-		const output = execSync(
-			`npx lighthouse ${url} --chrome-flags="--headless --no-sandbox --disable-gpu" --output=json --output=html --output-path=.lighthouseci/report`,
-			{ encoding: "utf8" },
+		console.log(`[lighthouse] Auditing ${url}`);
+
+		execSync(
+			`npx lighthouse ${url} --chrome-flags="--headless --no-sandbox --disable-gpu" --output=json --output=html --output-path=${basePath}`,
+			{ stdio: "inherit" },
 		);
 
-		// Parse results
-		const report = JSON.parse(output);
-		const scores = report.categories;
-
-		console.log(`\nScores for ${url}:`);
-		console.log(
-			`  Performance: ${Math.round(scores.performance.score * 100)}/${budgets.performance}`,
-		);
-		console.log(
-			`  Accessibility: ${Math.round(scores.accessibility.score * 100)}/${budgets.accessibility}`,
-		);
-		console.log(
-			`  Best Practices: ${Math.round(scores["best-practices"].score * 100)}/${budgets["best-practices"]}`,
-		);
-		console.log(
-			`  SEO: ${Math.round(scores.seo.score * 100)}/${budgets.seo}\n`,
-		);
-
-		// Check budgets
-		const failed = [];
-		if (scores.performance.score * 100 < budgets.performance)
-			failed.push("Performance");
-		if (scores.accessibility.score * 100 < budgets.accessibility)
-			failed.push("Accessibility");
-		if (scores["best-practices"].score * 100 < budgets["best-practices"])
-			failed.push("Best Practices");
-		if (scores.seo.score * 100 < budgets.seo) failed.push("SEO");
-
-		if (failed.length > 0) {
-			console.error(`❌ Failed budget checks: ${failed.join(", ")}`);
-			process.exit(1);
+		let report;
+		try {
+			report = JSON.parse(await readFile(jsonPath, "utf8"));
+		} catch {
+			const fallback = path.join(".lighthouseci", "report.report.json");
+			report = JSON.parse(await readFile(fallback, "utf8"));
+			await rm(fallback, { force: true });
 		}
+
+		const scores = Object.fromEntries(
+			Object.entries(report.categories).map(([key, value]) => [
+				key,
+				Math.round(value.score * 100),
+			]),
+		);
+
+		console.log(
+			`  Scores → Perf: ${scores.performance} / ${BUDGETS.performance}, ` +
+				`Accessibility: ${scores.accessibility} / ${BUDGETS.accessibility}, ` +
+				`Best-Practices: ${scores["best-practices"]} / ${BUDGETS["best-practices"]}, ` +
+				`SEO: ${scores.seo} / ${BUDGETS.seo}`,
+		);
+
+		const failedBudgets = Object.entries(scores)
+			.filter(([key, value]) => value < BUDGETS[key])
+			.map(([key]) => key);
+
+		if (failedBudgets.length > 0) {
+			throw new Error(`Failed budgets for ${url}: ${failedBudgets.join(", ")}`);
+		}
+
+		summary.push({ url, scores });
+
+		await rm(jsonPath, { force: true });
+		await rm(htmlPath, { force: true });
 	}
 
-	console.log("[lighthouse] ✅ All Lighthouse tests passed!");
-	process.exit(0);
+	await writeFile(
+		path.join(".lighthouseci", "summary.json"),
+		JSON.stringify(summary, null, 2),
+	);
+
+	console.log("[lighthouse] All Lighthouse budgets passed.");
+	process.exitCode = 0;
 } catch (error) {
-	console.error("[lighthouse] ❌ Lighthouse tests failed:", error.message);
-	process.exit(1);
+	console.error("[lighthouse] Lighthouse run failed:", error.message);
+	process.exitCode = 1;
+} finally {
+	await shutdownPreview(preview);
+}
+
+async function waitForServer(url, timeoutMs) {
+	const start = Date.now();
+	while (Date.now() - start < timeoutMs) {
+		try {
+			const response = await fetch(url, { method: "HEAD" });
+			if (response.ok) {
+				return true;
+			}
+		} catch {
+			// Ignore and retry
+		}
+		await sleep(500);
+	}
+	return false;
+}
+
+async function shutdownPreview(child) {
+	if (child.killed) return;
+	child.kill("SIGINT");
+	await sleep(500);
+	if (!child.killed) {
+		child.kill("SIGTERM");
+		await sleep(500);
+	}
+	if (!child.killed) {
+		child.kill("SIGKILL");
+	}
 }

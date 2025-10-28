@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-labelledby="title desc">
+  <title id="title">SAP Ariba Automation Visualization</title>
+  <desc id="desc">Stylized workflow automation with gears and flow arrows.</desc>
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f97316"/>
+      <stop offset="50%" stop-color="#fb923c"/>
+      <stop offset="100%" stop-color="#facc15"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="400" fill="#0f172a"/>
+  <rect x="30" y="40" width="580" height="320" rx="32" fill="url(#gradient)" opacity="0.18"/>
+  <g fill="none" stroke="#fbbf24" stroke-width="3" opacity="0.8">
+    <path d="M140 150 H280 L320 110 H480"/>
+    <path d="M140 250 H240 L280 210 H480"/>
+  </g>
+  <g fill="none" stroke="#fb923c" stroke-width="2" opacity="0.8">
+    <path d="M220 150 Q240 200 300 200 Q360 200 380 250"/>
+    <path d="M260 250 Q320 320 420 310"/>
+  </g>
+  <g fill="#fde68a">
+    <circle cx="180" cy="150" r="10"/>
+    <circle cx="440" cy="110" r="10"/>
+    <circle cx="200" cy="250" r="10"/>
+    <circle cx="460" cy="250" r="10"/>
+  </g>
+  <g fill="#fb923c" opacity="0.8">
+    <rect x="320" y="90" width="80" height="40" rx="12"/>
+    <rect x="320" y="230" width="80" height="40" rx="12"/>
+  </g>
+  <g fill="none" stroke="#fdba74" stroke-width="4" opacity="0.8">
+    <circle cx="420" cy="180" r="50"/>
+    <circle cx="420" cy="180" r="20"/>
+  </g>
+  <g stroke="#fde68a" stroke-width="3" stroke-linecap="round">
+    <path d="M460 180 h40"/>
+    <path d="M380 180 h-40"/>
+    <path d="M420 140 v-40"/>
+    <path d="M420 260 v-40"/>
+  </g>
+</svg>

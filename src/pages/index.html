@@ -64,99 +64,218 @@
   </head>
   <body class="bg-slate-950 text-slate-100 antialiased">
     <a href="#main" class="absolute left-4 top-4 -translate-y-16 rounded bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground focus:translate-y-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary">Skip to content</a>
-    <header class="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-8">
-      <p class="text-sm font-semibold tracking-wide text-slate-300">Aditya Ganesh</p>
-      <nav aria-label="Primary">
-        <ul class="flex items-center gap-6 text-sm font-medium text-slate-300">
-          <li><a class="text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/" aria-current="page">Home</a></li>
-          <li><a class="hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/projects">Projects</a></li>
-          <li><a class="hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/case-studies">Case Studies</a></li>
-          <li><a class="hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/about">About</a></li>
-          <li><a class="hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/contact">Contact</a></li>
-        </ul>
-      </nav>
+    <header class="site-header bg-transparent" data-site-header>
+      <div class="site-header__inner">
+        <a class="site-logo focus-ring" href="/">Aditya Ganesh</a>
+        <nav aria-label="Primary" class="site-nav-wrapper">
+          <ul class="site-nav">
+            <li><a class="nav-link nav-link--active focus-ring" href="/" aria-current="page">Home</a></li>
+          <li><a class="nav-link focus-ring" href="/projects/">Projects</a></li>
+          <li><a class="nav-link focus-ring" href="/case-studies/">Case Studies</a></li>
+          <li><a class="nav-link focus-ring" href="/about/">About</a></li>
+          <li><a class="nav-link focus-ring" href="/contact/">Contact</a></li>
+          </ul>
+        </nav>
+        <a class="site-cta focus-ring" href="/contact/">Let's talk</a>
+      </div>
     </header>
-    <main id="main" class="mx-auto flex w-full max-w-5xl flex-col gap-16 px-6 pb-24 pt-10">
-      <section class="flex flex-col gap-6">
-        <p class="text-sm uppercase tracking-[0.4em] text-primary">Applied ML Engineer</p>
-        <h1 class="text-4xl font-semibold leading-tight sm:text-5xl">Applied ML Engineer delivering production retrieval-augmented assistants and governed data platforms. Ship FastAPI + Postgres/pgvector systems, AWS Iceberg analytics stacks, and automation with measurable SLOs, GitHub Actions CI/CD, and cost guardrails.
-</h1>
-        <p class="max-w-3xl text-base text-slate-300 sm:text-lg">Based in Dubai, UAE. I build retrieval-augmented assistants, AWS Iceberg platforms, and automation with measurable SLOs and cost controls.</p>
-        <div class="flex flex-wrap gap-3">
-          <a class="rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/40 transition hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/projects/">View projects</a>
-          <a class="rounded-full border border-slate-700 px-5 py-2 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/contact/">Work together</a>
+    <div class="vitals-bar" role="status" aria-live="polite">
+      <div class="vitals-item" data-vital="lcp"><span class="vitals-item__label">LCP</span><span class="vitals-item__value" data-vital-value="lcp">= 2.5 s</span></div>
+      <div class="vitals-item" data-vital="inp"><span class="vitals-item__label">INP</span><span class="vitals-item__value" data-vital-value="inp">&lt; 200 ms</span></div>
+      <div class="vitals-item" data-vital="cls"><span class="vitals-item__label">CLS</span><span class="vitals-item__value" data-vital-value="cls">= 0.1</span></div>
+    </div>
+    <main id="main" class="mx-auto flex w-full max-w-6xl flex-col gap-16 px-6 pb-24 pt-10">
+      <section class="hero-panel card-elevated-primary relative overflow-hidden rounded-3xl" data-animation="fade-in-up">
+        <div class="hero-panel__decor" aria-hidden="true">
+          <span class="hero-panel__orb" data-parallax="0.12"></span>
+          <span class="hero-panel__mesh" data-parallax="0.06"></span>
+        </div>
+        <div class="hero-panel__content">
+          <div class="hero-panel__eyebrow">
+            <span class="hero-chip">Applied ML Engineer</span>
+            <span class="hero-pill">Shipping RAG, Iceberg, Automation</span>
+          </div>
+          <h1 class="text-display-lg font-bold leading-tight text-gradient md:text-display-xl">Aditya Ganesh</h1>
+          <p class="hero-panel__lead">Applied ML Engineer delivering production retrieval-augmented assistants and governed data platforms. Ship FastAPI + Postgres/pgvector systems, AWS Iceberg analytics stacks, and automation with measurable SLOs, GitHub Actions CI/CD, and cost guardrails.
+</p>
+          <ul class="hero-panel__highlights">
+            <li class="hero-panel__highlight">Production WhatsApp assistant hitting 5-8 s p95 with pgvector retrieval.</li>
+              <li class="hero-panel__highlight">AWS Iceberg lakehouse with Superset embeds and &lt;1% data loss.</li>
+              <li class="hero-panel__highlight">Automation playbooks delivering +91% interaction lift across teams.</li>
+          </ul>
+          <div class="hero-panel__cta">
+            <a class="btn-primary-enhanced" href="/projects/">Explore projects</a>
+            <a class="btn-secondary-enhanced" href="/contact/">Book a conversation</a>
+          </div>
+        </div>
+        <aside class="hero-panel__meta" aria-label="At-a-glance details">
+          <dl class="hero-meta-list">
+            <div class="hero-meta-item"><dt class="hero-meta-label">Location</dt><dd class="hero-meta-value">Dubai, UAE</dd></div>
+            <div class="hero-meta-item"><dt class="hero-meta-label">Focus</dt><dd class="hero-meta-value">Applied ML · Data Platforms · Automation</dd></div>
+            <div class="hero-meta-item"><dt class="hero-meta-label">Availability</dt><dd class="hero-meta-value">Open to senior AI &amp; platform roles</dd></div>
+          </dl>
+        </aside>
+      </section>
+      <section aria-labelledby="projects-heading" class="flex flex-col gap-8">
+        <div class="section-heading">
+          <h2 id="projects-heading" class="section-title">Featured projects</h2>
+          <a class="section-link focus-ring" href="/projects/">Browse all</a>
+        </div>
+        <div data-project-grid class="home-project-grid">
+          <article class="project-card card-elevated accent-bar-left accent-bar-left-fastapi project-card--featured lg:col-span-2" data-project-card data-tags="fastapi,pgvector,slos" data-variant="featured">
+              <figure class="project-card__media" aria-hidden="true">
+              <img class="project-card__image" src="/images/projects/rag-assistant.svg" alt="" width="640" height="360" fetchpriority="high" decoding="async" />
+            </figure>
+              <div class="project-card__content">
+                <div class="project-card__eyebrow">
+                  <span class="badge badge-fastapi">FastAPI</span>
+                  <span class="project-card__updated">Updated May 2025</span>
+                </div>
+                <h3 class="project-card__title text-display-sm">
+                  <a class="focus-ring hover:text-primary" href="/case-studies/rag-whatsapp-assistant/">RAG Assistant for WhatsApp Support</a>
+                </h3>
+                <p class="project-card__summary">FastAPI webhook with pgvector retrieval powering regulated WhatsApp support.</p>
+                <ul class="project-card__metrics"><li class="project-card__metric">5-8 s p95 response</li><li class="project-card__metric">99% ingest success</li><li class="project-card__metric">33% time waste reduction</li></ul>
+                <div class="project-card__tech"><span class="tech-badge" data-tech="fastapi"><svg class="h-4 w-4 text-primary" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4.5 4.5h7.5l-2 5h4.5l-6 10v-6H4.5z"/></svg><span>FastAPI</span></span><span class="tech-badge" data-tech="pgvector"><svg class="h-4 w-4 text-accent" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5 4h14v4H5zm2 6h10v4H7zm3 6h4v4h-4z"/></svg><span>pgvector</span></span><span class="tech-badge" data-tech="slos"><svg class="h-4 w-4 text-primary" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5 18l4.5-6 3 4L18 7l1 2-6.5 9-3-4-3.5 5z"/><circle cx="6" cy="6" r="2" fill="currentColor"/></svg><span>SLOs</span></span></div>
+                <div class="project-card__actions">
+                  <a class="project-card__primary focus-ring" href="/case-studies/rag-whatsapp-assistant/">Dive into case study</a>
+                  
+                </div>
+              </div>
+            </article>
+        <article class="project-card card-elevated accent-bar-left accent-bar-left-iceberg" data-project-card data-tags="iceberg,great-expectations,superset" data-variant="default">
+            <figure class="project-card__media" aria-hidden="true">
+              <img class="project-card__image" src="/images/projects/iceberg-lakehouse.svg" alt="" width="640" height="360" loading="lazy" decoding="async" />
+            </figure>
+            <div class="project-card__content">
+              <div class="project-card__eyebrow">
+                <span class="badge badge-iceberg">Iceberg</span>
+                <span class="project-card__updated">Updated Apr 2025</span>
+              </div>
+              <h3 class="project-card__title">
+                <a class="focus-ring hover:text-primary" href="/case-studies/aws-iceberg-lakehouse/">AWS Iceberg Lakehouse with Embedded BI</a>
+              </h3>
+              <p class="project-card__summary">Iceberg on S3 with Glue, Athena, Great Expectations, and Superset 5.0 embeds.</p>
+              <ul class="project-card__metrics"><li class="project-card__metric">&lt;1% data loss across 260k rows</li><li class="project-card__metric">RLS for 7 business units</li><li class="project-card__metric">CI/CD dashboards</li></ul>
+              <div class="project-card__tech"><span class="tech-badge" data-tech="iceberg"><svg class="h-4 w-4 text-accent" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 18l5-11 4 5 3-6 6 12z"/></svg><span>Iceberg</span></span><span class="tech-badge" data-tech="great-expectations"><svg class="h-4 w-4 text-primary" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 4h16v4H4zm2 6h12v2H6zm0 4h8v2H6zm0 4h5v2H6z"/></svg><span>Great Expectations</span></span><span class="tech-badge" data-tech="superset"><svg class="h-4 w-4 text-accent" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 5h12v3H6zm2 5h8v3H8zm2 5h4v3h-4z"/></svg><span>Superset</span></span></div>
+              <div class="project-card__actions">
+                <a class="project-card__primary focus-ring" href="/case-studies/aws-iceberg-lakehouse/">Read case study</a>
+                
+              </div>
+            </div>
+          </article>
+        <article class="project-card card-elevated accent-bar-left accent-bar-left-automation" data-project-card data-tags="automation,enablement,analytics" data-variant="default">
+            <figure class="project-card__media" aria-hidden="true">
+              <img class="project-card__image" src="/images/projects/gleac-chatbot.svg" alt="" width="640" height="360" loading="lazy" decoding="async" />
+            </figure>
+            <div class="project-card__content">
+              <div class="project-card__eyebrow">
+                <span class="badge badge-automation">Automation</span>
+                <span class="project-card__updated">Updated Feb 2025</span>
+              </div>
+              <h3 class="project-card__title">
+                <a class="focus-ring hover:text-primary" href="/case-studies/gleac-chatbot/">GLEAC Client Interaction Chatbot</a>
+              </h3>
+              <p class="project-card__summary">Automation rollout delivering a 91% lift in interactions and measurable adoption.</p>
+              <ul class="project-card__metrics"><li class="project-card__metric">91% interactions lift</li><li class="project-card__metric">33% time waste reduction</li></ul>
+              <div class="project-card__tech"><span class="tech-badge" data-tech="automation"><svg class="h-4 w-4 text-primary" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19 13h-1.18a3 3 0 0 1-5.64 0H7a3 3 0 1 1 0-2h5.18a3 3 0 0 1 5.64 0H19z"/></svg><span>Automation</span></span><span class="tech-badge" data-tech="enablement"><svg class="h-4 w-4 text-accent" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4l4 4h-3v6h-2V8H8zM5 18h14v2H5z"/></svg><span>Enablement</span></span><span class="tech-badge" data-tech="analytics"><svg class="h-4 w-4 text-primary" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5 19h2V9H5zm6 0h2V5h-2zm6 0h2v-8h-2z"/></svg><span>Analytics</span></span></div>
+              <div class="project-card__actions">
+                <a class="project-card__primary focus-ring" href="/case-studies/gleac-chatbot/">Read case study</a>
+                
+              </div>
+            </div>
+          </article>
         </div>
       </section>
-      <section aria-labelledby="projects-heading" class="flex flex-col gap-6">
-        <div class="flex items-center justify-between gap-3">
-          <h2 id="projects-heading" class="text-2xl font-semibold text-white">Featured projects</h2>
-          <a class="text-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/projects/">Browse all</a>
+      <section aria-labelledby="github-heading" class="flex flex-col gap-6">
+        <div class="section-heading">
+          <h2 id="github-heading" class="section-title">GitHub activity pulse</h2>
+          <p class="section-subtitle">Live repositories for assistants, lakehouses, and automation tooling.</p>
         </div>
-        <div data-project-grid class="grid gap-6 md:grid-cols-2">
-          <article class="flex flex-col gap-4 rounded-xl border border-slate-800 bg-slate-900/60 p-6 transition hover:border-slate-700 focus-within:border-primary" data-project-card data-tags="fastapi,pgvector,slos">
-            <div class="flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-primary">
-              <span>FastAPI</span>
+        <div class="github-grid" data-github-grid>
+          <article class="github-card card-elevated" data-github-card>
+            <div class="github-card__header shimmer">
+              <span class="github-card__repo shimmer-block" aria-hidden="true">Loading repository</span>
+              <span class="github-card__stars shimmer-block" aria-hidden="true">?</span>
             </div>
-            <h3 class="text-xl font-semibold text-white">RAG Assistant for WhatsApp Support</h3>
-            <p class="text-sm text-slate-300">FastAPI webhook with pgvector retrieval powering regulated WhatsApp support.</p>
-            <ul class="flex flex-col gap-1"><li class="text-sm text-slate-300">5-8 s p95 response</li><li class="text-sm text-slate-300">99% ingest success</li><li class="text-sm text-slate-300">33% time waste reduction</li></ul>
-            <div class="mt-auto flex items-center justify-between">
-              <a class="text-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/case-studies/rag-whatsapp-assistant">Read case study</a>
-              
-            </div>
+            <p class="github-card__summary shimmer-block" aria-hidden="true">Loading description</p>
+            <div class="github-card__topics shimmer-block" aria-hidden="true"></div>
+            <span class="sr-only">GitHub repository 1 loading...</span>
           </article>
-        <article class="flex flex-col gap-4 rounded-xl border border-slate-800 bg-slate-900/60 p-6 transition hover:border-slate-700 focus-within:border-primary" data-project-card data-tags="iceberg,great-expectations,superset">
-            <div class="flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-primary">
-              <span>Iceberg</span>
+            <article class="github-card card-elevated" data-github-card>
+            <div class="github-card__header shimmer">
+              <span class="github-card__repo shimmer-block" aria-hidden="true">Loading repository</span>
+              <span class="github-card__stars shimmer-block" aria-hidden="true">?</span>
             </div>
-            <h3 class="text-xl font-semibold text-white">AWS Iceberg Lakehouse with Embedded BI</h3>
-            <p class="text-sm text-slate-300">Iceberg on S3 with Glue, Athena, Great Expectations, and Superset 5.0 embeds.</p>
-            <ul class="flex flex-col gap-1"><li class="text-sm text-slate-300">&lt;1% data loss across 260k rows</li><li class="text-sm text-slate-300">RLS for 7 business units</li><li class="text-sm text-slate-300">CI/CD dashboards</li></ul>
-            <div class="mt-auto flex items-center justify-between">
-              <a class="text-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/case-studies/aws-iceberg-lakehouse">Read case study</a>
-              
-            </div>
+            <p class="github-card__summary shimmer-block" aria-hidden="true">Loading description</p>
+            <div class="github-card__topics shimmer-block" aria-hidden="true"></div>
+            <span class="sr-only">GitHub repository 2 loading...</span>
           </article>
-        <article class="flex flex-col gap-4 rounded-xl border border-slate-800 bg-slate-900/60 p-6 transition hover:border-slate-700 focus-within:border-primary" data-project-card data-tags="automation,enablement,analytics">
-            <div class="flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-primary">
-              <span>Automation</span>
+            <article class="github-card card-elevated" data-github-card>
+            <div class="github-card__header shimmer">
+              <span class="github-card__repo shimmer-block" aria-hidden="true">Loading repository</span>
+              <span class="github-card__stars shimmer-block" aria-hidden="true">?</span>
             </div>
-            <h3 class="text-xl font-semibold text-white">GLEAC Client Interaction Chatbot</h3>
-            <p class="text-sm text-slate-300">Automation rollout delivering a 91% lift in interactions and measurable adoption.</p>
-            <ul class="flex flex-col gap-1"><li class="text-sm text-slate-300">91% interactions lift</li><li class="text-sm text-slate-300">33% time waste reduction</li></ul>
-            <div class="mt-auto flex items-center justify-between">
-              <a class="text-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/case-studies/gleac-chatbot">Read case study</a>
-              
-            </div>
+            <p class="github-card__summary shimmer-block" aria-hidden="true">Loading description</p>
+            <div class="github-card__topics shimmer-block" aria-hidden="true"></div>
+            <span class="sr-only">GitHub repository 3 loading...</span>
           </article>
         </div>
+        <noscript>
+          <p class="text-sm text-slate-400">Enable JavaScript to view the latest repositories from GitHub.</p>
+        </noscript>
       </section>
       <section aria-labelledby="case-heading" class="flex flex-col gap-6">
-        <h2 id="case-heading" class="text-2xl font-semibold text-white">Latest case study</h2>
-        <article class="flex flex-col gap-4 rounded-xl border border-slate-800 bg-slate-900/60 p-6">
-          <p class="text-sm uppercase tracking-[0.4em] text-primary">Case study</p>
-          <h3 class="text-2xl font-semibold text-white">
-            <a class="hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/case-studies/rag-whatsapp-assistant/">RAG Assistant - Production WhatsApp Chatbot</a>
-          </h3>
-          <p class="text-sm text-slate-300">Context</p>
-          <ul class="flex flex-wrap gap-2">
-            <li class="rounded-full border border-slate-700 px-3 py-1 text-xs font-semibold text-slate-200">5-8 s p95 response</li><li class="rounded-full border border-slate-700 px-3 py-1 text-xs font-semibold text-slate-200">60 s ingest p95</li><li class="rounded-full border border-slate-700 px-3 py-1 text-xs font-semibold text-slate-200">99% ingest success</li>
-          </ul>
-        </article>
+        <div class="section-heading">
+          <h2 id="case-heading" class="section-title">Latest case study</h2>
+        </div>
+        <article class="case-feature card-elevated-accent" data-animation="fade-in-up">
+            <div class="case-feature__meta">
+              <span class="badge badge-analytics">Case study</span>
+              <span class="case-feature__date">May 2025</span>
+            </div>
+            <h3 class="case-feature__title text-3xl font-semibold text-white">
+              <a class="focus-ring hover:text-primary" href="/case-studies/rag-whatsapp-assistant/">RAG Assistant - Production WhatsApp Chatbot</a>
+            </h3>
+            <p class="case-feature__summary">Context</p>
+            <ul class="case-feature__metrics">
+              <li class="badge">5-8 s p95 response</li><li class="badge">60 s ingest p95</li><li class="badge">99% ingest success</li>
+            </ul>
+            <a class="case-feature__cta focus-ring" href="/case-studies/rag-whatsapp-assistant/">Read the full breakdown</a>
+          </article>
       </section>
-      <section aria-labelledby="metrics-heading" class="grid gap-6 md:grid-cols-3">
+      <section aria-labelledby="metrics-heading" class="metrics-grid" data-animation="fade-in-up">
         <h2 id="metrics-heading" class="sr-only">Key metrics</h2>
-        <div class="rounded-xl border border-slate-800 bg-slate-900/60 p-5">
-          <p class="text-3xl font-semibold text-white">5-8 s</p>
-          <p class="text-sm text-slate-400">WhatsApp assistant p95 latency</p>
+        <div class="metric-card" data-animation="fade-in-up">
+            <div class="metric-card__icon" aria-hidden="true"><svg class="h-6 w-6 text-accent" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4a8 8 0 0 0-8 8h2a6 6 0 0 1 6-6V4zm0 2a6 6 0 0 0-6 6h2a4 4 0 0 1 4-4V6zm0 6 6 6 1.5-1.5L13.5 12H12z"/></svg></div>
+            <div class="flex flex-col gap-2">
+              <p class="text-6xl font-bold text-white leading-none" data-metric-value="5-8 s">5-8 s</p>
+              <p class="text-sm text-slate-400">WhatsApp assistant p95 latency</p>
+            </div>
+          </div>
+        <div class="metric-card" data-animation="fade-in-up">
+            <div class="metric-card__icon" aria-hidden="true"><svg class="h-6 w-6 text-primary" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3 2 9l10 6 10-6-10-6zm0 18-8-4.8V11l8 4.8 8-4.8v5.2z"/></svg></div>
+            <div class="flex flex-col gap-2">
+              <p class="text-6xl font-bold text-white leading-none" data-metric-value="&lt;1%">&lt;1%</p>
+              <p class="text-sm text-slate-400">Iceberg lakehouse ingest loss</p>
+            </div>
+          </div>
+        <div class="metric-card" data-animation="fade-in-up">
+            <div class="metric-card__icon" aria-hidden="true"><svg class="h-6 w-6 text-primary" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 17h16v2H4zm3-3h2v3H7zm4-4h2v7h-2zm4-5h2v12h-2z"/><path fill="#0ea5e9" d="M10 13 7 10l1.4-1.4 1.6 1.6 3.6-3.6L15 8z"/></svg></div>
+            <div class="flex flex-col gap-2">
+              <p class="text-6xl font-bold text-white leading-none" data-metric-value="+91%">+91%</p>
+              <p class="text-sm text-slate-400">Interaction lift after automation</p>
+            </div>
+          </div>
+      </section>
+      <section class="cta-panel card-elevated-accent" data-animation="fade-in-up">
+        <div class="cta-panel__content">
+          <h2 class="cta-panel__title">Need someone to harden AI systems end-to-end?</h2>
+          <p class="cta-panel__body">Let's audit your data contracts, guardrails, and adoption plan together.</p>
         </div>
-        <div class="rounded-xl border border-slate-800 bg-slate-900/60 p-5">
-          <p class="text-3xl font-semibold text-white">&lt;1%</p>
-          <p class="text-sm text-slate-400">Iceberg lakehouse ingest loss</p>
-        </div>
-        <div class="rounded-xl border border-slate-800 bg-slate-900/60 p-5">
-          <p class="text-3xl font-semibold text-white">+91%</p>
-          <p class="text-sm text-slate-400">Interaction lift after automation</p>
+        <div class="cta-panel__actions">
+          <a class="btn-primary-enhanced" href="/contact/">Start the conversation</a>
+          <a class="btn-secondary-enhanced" href="/case-studies/">Review case studies</a>
         </div>
       </section>
     </main>
@@ -171,5 +290,7 @@
       </div>
     </footer>
     <script type="module" src="../ts/main.ts"></script>
+    <script type="module" src="../ts/animations.ts"></script>
+    <script type="module" src="../ts/home.ts"></script>
   </body>
 </html>

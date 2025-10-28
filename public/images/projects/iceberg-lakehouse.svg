@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-labelledby="title desc">
+  <title id="title">AWS Iceberg Lakehouse Visualization</title>
+  <desc id="desc">Stylized iceberg with layered data planes and analytics signals.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0ea5e9"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+    <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(14,165,233,0.35)"/>
+      <stop offset="100%" stop-color="rgba(8,47,73,0.9)"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="180" fill="#0f172a"/>
+  <rect y="180" width="640" height="220" fill="url(#water)"/>
+  <path d="M120 200 L220 80 L320 200 Z" fill="url(#sky)" opacity="0.85"/>
+  <path d="M220 200 L320 80 L420 200 Z" fill="#22d3ee" opacity="0.6"/>
+  <path d="M320 200 L420 120 L520 200 Z" fill="#38bdf8" opacity="0.7"/>
+  <path d="M120 200 L225 260 L330 200 Z" fill="#0ea5e9" opacity="0.45"/>
+  <path d="M225 260 L320 320 L420 200 Z" fill="#0891b2" opacity="0.6"/>
+  <path d="M320 320 L430 280 L520 200 Z" fill="#06b6d4" opacity="0.5"/>
+  <g stroke="#bae6fd" stroke-width="2" opacity="0.8">
+    <line x1="200" y1="70" x2="260" y2="50"/>
+    <line x1="260" y1="50" x2="420" y2="120"/>
+    <line x1="420" y1="120" x2="500" y2="100"/>
+  </g>
+  <g fill="#e0f2fe" opacity="0.9">
+    <circle cx="210" cy="60" r="6"/>
+    <circle cx="305" cy="90" r="6"/>
+    <circle cx="420" cy="120" r="6"/>
+    <circle cx="500" cy="100" r="6"/>
+  </g>
+  <g fill="none" stroke="#67e8f9" stroke-width="1.5" opacity="0.7">
+    <rect x="440" y="240" width="140" height="90" rx="16"/>
+    <path d="M460 260 L560 260"/>
+    <path d="M460 285 L540 285"/>
+    <path d="M460 310 L520 310"/>
+  </g>
+</svg>

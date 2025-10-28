@@ -9,7 +9,7 @@
 			"33% time waste reduction"
 		],
 		"tags": ["FastAPI", "pgvector", "SLOs"],
-		"image": "/images/projects/rag-assistant.jpg",
+		"image": "/images/projects/rag-assistant.svg",
 		"links": {
 			"caseStudy": "/case-studies/rag-whatsapp-assistant",
 			"repo": ""
@@ -26,7 +26,7 @@
 			"CI/CD dashboards"
 		],
 		"tags": ["Iceberg", "Great Expectations", "Superset"],
-		"image": "/images/projects/iceberg-lakehouse.jpg",
+		"image": "/images/projects/iceberg-lakehouse.svg",
 		"links": {
 			"caseStudy": "/case-studies/aws-iceberg-lakehouse",
 			"repo": ""
@@ -39,7 +39,7 @@
 		"summary": "Automation rollout delivering a 91% lift in interactions and measurable adoption.",
 		"results": ["91% interactions lift", "33% time waste reduction"],
 		"tags": ["Automation", "Enablement", "Analytics"],
-		"image": "/images/projects/gleac-chatbot.jpg",
+		"image": "/images/projects/gleac-chatbot.svg",
 		"links": {
 			"caseStudy": "/case-studies/gleac-chatbot",
 			"repo": ""
@@ -55,7 +55,7 @@
 			"20k+ client records automated"
 		],
 		"tags": ["RPA", "SAP Ariba", "Automation"],
-		"image": "/images/projects/ariba-automation.jpg",
+		"image": "/images/projects/ariba-automation.svg",
 		"links": {
 			"caseStudy": "/case-studies/estee-lauder-automation",
 			"repo": ""

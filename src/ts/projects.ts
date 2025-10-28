@@ -1,4 +1,4 @@
-﻿const filterButtons = Array.from(
+const filterButtons = Array.from(
 	document.querySelectorAll<HTMLButtonElement>("[data-filter]"),
 );
 const cards = Array.from(
@@ -10,7 +10,7 @@ const grid = document.querySelector<HTMLElement>("[data-project-grid]");
 if (filterButtons.length && cards.length && grid) {
 	const emptyState = document.createElement("p");
 	emptyState.className =
-		"rounded-xl border border-dashed border-slate-700 bg-slate-900/40 p-6 text-sm text-slate-300";
+		"rounded-xl border border-dashed border-slate-700 bg-slate-900/40 p-6 text-sm text-slate-300 md:col-span-2";
 	emptyState.hidden = true;
 	emptyState.textContent =
 		"No projects match this filter yet. Choose another filter to explore more work.";

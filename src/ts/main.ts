@@ -15,9 +15,32 @@ interface Metric {
 	id: string;
 }
 
+function updateVitalDisplay(metric: Metric): void {
+	const key = metric.name.toLowerCase();
+	const target = document.querySelector<HTMLElement>(
+		`[data-vital-value="${key}"]`,
+	);
+	if (!target) return;
+
+	let displayValue = metric.value;
+	if (metric.name === "LCP") {
+		displayValue = metric.value / 1000;
+		target.textContent = `${displayValue.toFixed(2)} s`;
+	} else if (metric.name === "INP") {
+		target.textContent = `${Math.round(displayValue)} ms`;
+	} else if (metric.name === "CLS") {
+		target.textContent = displayValue.toFixed(2);
+	} else {
+		target.textContent = displayValue.toString();
+	}
+
+	target.dataset.rating = metric.rating;
+}
+
 function sendToAnalytics(metric: Metric): void {
 	// Log to console in development
 	console.log("[web-vitals]", metric.name, metric.value, metric.rating);
+	updateVitalDisplay(metric);
 }
 
 // Lightweight Web Vitals implementation
@@ -49,29 +72,39 @@ function observeLCP(): void {
 	}
 }
 
-function observeFID(): void {
-	const observer = new PerformanceObserver((list) => {
-		const entries = list.getEntries();
-		for (const entry of entries) {
-			const fidEntry = entry as PerformanceEventTiming;
-			const value = fidEntry.processingStart - fidEntry.startTime;
-			const rating =
-				value <= 100 ? "good" : value <= 300 ? "needs-improvement" : "poor";
-
-			sendToAnalytics({
-				name: "FID",
-				value,
-				rating,
-				delta: value,
-				id: crypto.randomUUID(),
-			});
-		}
-	});
+function observeINP(): void {
+	let maxValue = 0;
 
 	try {
-		observer.observe({ type: "first-input", buffered: true });
+		const observer = new PerformanceObserver((list) => {
+			const entries = list.getEntries() as PerformanceEventTiming[];
+
+			for (const entry of entries) {
+				const duration = entry.duration;
+				if (duration < 40) continue;
+				if (duration > maxValue) {
+					maxValue = duration;
+					const rating =
+						duration <= 200
+							? "good"
+							: duration <= 500
+								? "needs-improvement"
+								: "poor";
+
+					sendToAnalytics({
+						name: "INP",
+						value: duration,
+						rating,
+						delta: duration,
+						id: crypto.randomUUID(),
+					});
+				}
+			}
+		});
+
+		observer.observe({ type: "event", buffered: true });
 	} catch (e) {
-		// FID not supported
+		// INP not supported
 	}
 }
 
@@ -120,6 +153,6 @@ function observeCLS(): void {
 // Initialize Web Vitals tracking
 if (typeof PerformanceObserver !== "undefined") {
 	observeLCP();
-	observeFID();
+	observeINP();
 	observeCLS();
 }

@@ -1,15 +1,17 @@
 {
-  "permissions": {
-    "allow": [
-      "Bash(npm run build:*)",
-      "Bash(npm run format:*)",
-      "Bash(npm run build:content:*)",
-      "Bash(npx biome:*)",
-      "Bash(npm outdated:*)",
-      "Bash(npm install)",
-      "Bash(npm audit:*)"
-    ],
-    "deny": [],
-    "ask": []
-  }
+	"permissions": {
+		"allow": [
+			"Bash(npm run build:*)",
+			"Bash(npm run format:*)",
+			"Bash(npm run build:content:*)",
+			"Bash(npx biome:*)",
+			"Bash(npm outdated:*)",
+			"Bash(npm install)",
+			"Bash(npm audit:*)",
+			"Bash(cat:*)",
+			"Bash(npm run test:lh:*)"
+		],
+		"deny": [],
+		"ask": []
+	}
 }

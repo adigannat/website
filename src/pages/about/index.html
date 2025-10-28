@@ -11,23 +11,31 @@
   </head>
   <body class="bg-slate-950 text-slate-100 antialiased">
     <a href="#main" class="absolute left-4 top-4 -translate-y-16 rounded bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground focus:translate-y-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary">Skip to content</a>
-    <header class="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-8">
-      <p class="text-sm font-semibold tracking-wide text-slate-300">Aditya Ganesh</p>
-      <nav aria-label="Primary">
-        <ul class="flex items-center gap-6 text-sm font-medium text-slate-300">
-          <li><a class="hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/">Home</a></li>
-          <li><a class="hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/projects">Projects</a></li>
-          <li><a class="hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/case-studies">Case Studies</a></li>
-          <li><a class="text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/about" aria-current="page">About</a></li>
-          <li><a class="hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/contact">Contact</a></li>
-        </ul>
-      </nav>
+    <header class="site-header bg-transparent" data-site-header>
+      <div class="site-header__inner">
+        <a class="site-logo focus-ring" href="/">Aditya Ganesh</a>
+        <nav aria-label="Primary" class="site-nav-wrapper">
+          <ul class="site-nav">
+            <li><a class="nav-link focus-ring" href="/">Home</a></li>
+          <li><a class="nav-link focus-ring" href="/projects/">Projects</a></li>
+          <li><a class="nav-link focus-ring" href="/case-studies/">Case Studies</a></li>
+          <li><a class="nav-link nav-link--active focus-ring" href="/about/" aria-current="page">About</a></li>
+          <li><a class="nav-link focus-ring" href="/contact/">Contact</a></li>
+          </ul>
+        </nav>
+        <a class="site-cta focus-ring" href="/contact/">Let's talk</a>
+      </div>
     </header>
+    <div class="vitals-bar" role="status" aria-live="polite">
+      <div class="vitals-item" data-vital="lcp"><span class="vitals-item__label">LCP</span><span class="vitals-item__value" data-vital-value="lcp">= 2.5 s</span></div>
+      <div class="vitals-item" data-vital="inp"><span class="vitals-item__label">INP</span><span class="vitals-item__value" data-vital-value="inp">&lt; 200 ms</span></div>
+      <div class="vitals-item" data-vital="cls"><span class="vitals-item__label">CLS</span><span class="vitals-item__value" data-vital-value="cls">= 0.1</span></div>
+    </div>
     <main id="main" class="mx-auto flex w-full max-w-4xl flex-col gap-12 px-6 pb-24 pt-10">
-      <header class="flex flex-col gap-4">
-        <p class="text-sm uppercase tracking-[0.4em] text-primary">About</p>
-        <h1 class="text-4xl font-semibold leading-tight sm:text-5xl">Principles-driven, outcome-first delivery</h1>
-        <p class="max-w-2xl text-base text-slate-300 sm:text-lg">Applied ML Engineer delivering production retrieval-augmented assistants and governed data platforms. Ship FastAPI + Postgres/pgvector systems, AWS Iceberg analytics stacks, and automation with measurable SLOs, GitHub Actions CI/CD, and cost guardrails.
+      <header class="page-hero" data-animation="fade-in-up">
+        <p class="page-eyebrow text-primary">About</p>
+        <h1 class="text-display-lg font-semibold leading-tight text-white md:text-display-xl">Principles-driven, outcome-first delivery</h1>
+        <p class="page-lead max-w-2xl">Applied ML Engineer delivering production retrieval-augmented assistants and governed data platforms. Ship FastAPI + Postgres/pgvector systems, AWS Iceberg analytics stacks, and automation with measurable SLOs, GitHub Actions CI/CD, and cost guardrails.
 </p>
       </header>
       <section aria-labelledby="strengths-heading" class="flex flex-col gap-4">
@@ -127,5 +135,6 @@
       </div>
     </footer>
     <script type="module" src="../../ts/main.ts"></script>
+    <script type="module" src="../../ts/animations.ts"></script>
   </body>
 </html>

@@ -11,89 +11,138 @@
   </head>
   <body class="bg-slate-950 text-slate-100 antialiased">
     <a href="#main" class="absolute left-4 top-4 -translate-y-16 rounded bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground focus:translate-y-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary">Skip to content</a>
-    <header class="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-8">
-      <p class="text-sm font-semibold tracking-wide text-slate-300">Aditya Ganesh</p>
-      <nav aria-label="Primary">
-        <ul class="flex items-center gap-6 text-sm font-medium text-slate-300">
-          <li><a class="hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/">Home</a></li>
-          <li><a class="text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/projects" aria-current="page">Projects</a></li>
-          <li><a class="hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/case-studies">Case Studies</a></li>
-          <li><a class="hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/about">About</a></li>
-          <li><a class="hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/contact">Contact</a></li>
-        </ul>
-      </nav>
+    <header class="site-header bg-transparent" data-site-header>
+      <div class="site-header__inner">
+        <a class="site-logo focus-ring" href="/">Aditya Ganesh</a>
+        <nav aria-label="Primary" class="site-nav-wrapper">
+          <ul class="site-nav">
+            <li><a class="nav-link focus-ring" href="/">Home</a></li>
+          <li><a class="nav-link nav-link--active focus-ring" href="/projects/" aria-current="page">Projects</a></li>
+          <li><a class="nav-link focus-ring" href="/case-studies/">Case Studies</a></li>
+          <li><a class="nav-link focus-ring" href="/about/">About</a></li>
+          <li><a class="nav-link focus-ring" href="/contact/">Contact</a></li>
+          </ul>
+        </nav>
+        <a class="site-cta focus-ring" href="/contact/">Let's talk</a>
+      </div>
     </header>
+    <div class="vitals-bar" role="status" aria-live="polite">
+      <div class="vitals-item" data-vital="lcp"><span class="vitals-item__label">LCP</span><span class="vitals-item__value" data-vital-value="lcp">= 2.5 s</span></div>
+      <div class="vitals-item" data-vital="inp"><span class="vitals-item__label">INP</span><span class="vitals-item__value" data-vital-value="inp">&lt; 200 ms</span></div>
+      <div class="vitals-item" data-vital="cls"><span class="vitals-item__label">CLS</span><span class="vitals-item__value" data-vital-value="cls">= 0.1</span></div>
+    </div>
     <main id="main" class="mx-auto flex w-full max-w-6xl flex-col gap-12 px-6 pb-24 pt-10">
-      <header class="flex flex-col gap-4">
-        <p class="text-sm uppercase tracking-[0.4em] text-primary">Projects</p>
-        <h1 class="text-4xl font-semibold leading-tight sm:text-5xl">Impact-driven engineering work</h1>
-        <p class="max-w-3xl text-base text-slate-300 sm:text-lg">Outcome-first stories covering latency, reliability, cost, and adoption. Filter by domain to jump directly to relevant work.</p>
+      <header class="page-hero" data-animation="fade-in-up">
+        <p class="page-eyebrow text-primary">Projects</p>
+        <h1 class="text-display-lg font-semibold leading-tight text-white md:text-display-xl">Impact-driven engineering work</h1>
+        <p class="page-lead max-w-3xl">Outcome-first stories covering latency, reliability, cost, and adoption. Filter by domain to jump directly to relevant build logs.</p>
+        <ul class="page-metrics">
+          <li><span>5-8 s</span><span>Assistant p95 response</span></li>
+          <li><span>&lt;1%</span><span>Lakehouse ingest loss</span></li>
+          <li><span>+91%</span><span>Automation adoption lift</span></li>
+        </ul>
       </header>
-      <section aria-labelledby="filters" class="flex flex-wrap items-center gap-4">
-        <h2 id="filters" class="text-sm font-semibold uppercase tracking-[0.3em] text-slate-400">Filter</h2>
+      <section aria-labelledby="filters" class="filter-toolbar" data-animation="fade-in-up">
+        <h2 id="filters" class="filter-toolbar__label">Filter</h2>
         <div class="flex flex-wrap gap-3" data-filter-group>
-          <button type="button" class="rounded-full border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-200 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" data-filter value="all" aria-pressed="true">All</button>
-        <button type="button" class="rounded-full border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-200 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" data-filter value="analytics">Analytics</button>
-        <button type="button" class="rounded-full border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-200 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" data-filter value="automation">Automation</button>
-        <button type="button" class="rounded-full border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-200 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" data-filter value="enablement">Enablement</button>
-        <button type="button" class="rounded-full border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-200 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" data-filter value="fastapi">FastAPI</button>
-        <button type="button" class="rounded-full border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-200 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" data-filter value="great-expectations">Great Expectations</button>
-        <button type="button" class="rounded-full border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-200 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" data-filter value="iceberg">Iceberg</button>
-        <button type="button" class="rounded-full border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-200 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" data-filter value="rpa">RPA</button>
-        <button type="button" class="rounded-full border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-200 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" data-filter value="sap-ariba">SAP Ariba</button>
-        <button type="button" class="rounded-full border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-200 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" data-filter value="slos">SLOs</button>
-        <button type="button" class="rounded-full border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-200 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" data-filter value="superset">Superset</button>
-        <button type="button" class="rounded-full border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-200 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" data-filter value="pgvector">pgvector</button>
+          <button type="button" class="filter-pill" data-filter value="all" aria-pressed="true">All</button>
+        <button type="button" class="filter-pill" data-filter value="analytics" aria-pressed="false">Analytics</button>
+        <button type="button" class="filter-pill" data-filter value="automation" aria-pressed="false">Automation</button>
+        <button type="button" class="filter-pill" data-filter value="enablement" aria-pressed="false">Enablement</button>
+        <button type="button" class="filter-pill" data-filter value="fastapi" aria-pressed="false">FastAPI</button>
+        <button type="button" class="filter-pill" data-filter value="great-expectations" aria-pressed="false">Great Expectations</button>
+        <button type="button" class="filter-pill" data-filter value="iceberg" aria-pressed="false">Iceberg</button>
+        <button type="button" class="filter-pill" data-filter value="rpa" aria-pressed="false">RPA</button>
+        <button type="button" class="filter-pill" data-filter value="sap-ariba" aria-pressed="false">SAP Ariba</button>
+        <button type="button" class="filter-pill" data-filter value="slos" aria-pressed="false">SLOs</button>
+        <button type="button" class="filter-pill" data-filter value="superset" aria-pressed="false">Superset</button>
+        <button type="button" class="filter-pill" data-filter value="pgvector" aria-pressed="false">pgvector</button>
         </div>
         <p class="sr-only" role="status" aria-live="polite" data-filter-status>Showing all projects.</p>
       </section>
-      <section aria-labelledby="project-grid" class="grid gap-6 md:grid-cols-2" data-project-grid>
-        <article class="flex flex-col gap-4 rounded-xl border border-slate-800 bg-slate-900/60 p-6 transition hover:border-slate-700 focus-within:border-primary" data-project-card data-tags="fastapi,pgvector,slos">
-            <div class="flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-primary">
-              <span>FastAPI</span>
-            </div>
-            <h3 class="text-xl font-semibold text-white">RAG Assistant for WhatsApp Support</h3>
-            <p class="text-sm text-slate-300">FastAPI webhook with pgvector retrieval powering regulated WhatsApp support.</p>
-            <ul class="flex flex-col gap-1"><li class="text-sm text-slate-300">5-8 s p95 response</li><li class="text-sm text-slate-300">99% ingest success</li><li class="text-sm text-slate-300">33% time waste reduction</li></ul>
-            <div class="mt-auto flex items-center justify-between">
-              <a class="text-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/case-studies/rag-whatsapp-assistant">Read case study</a>
-              
+      <section aria-labelledby="project-grid" class="projects-grid" data-project-grid>
+        <article class="project-card card-elevated accent-bar-left accent-bar-left-fastapi project-card--featured lg:col-span-2" data-project-card data-tags="fastapi,pgvector,slos" data-variant="featured">
+              <figure class="project-card__media" aria-hidden="true">
+              <img class="project-card__image" src="/images/projects/rag-assistant.svg" alt="" width="640" height="360" fetchpriority="high" decoding="async" />
+            </figure>
+              <div class="project-card__content">
+                <div class="project-card__eyebrow">
+                  <span class="badge badge-fastapi">FastAPI</span>
+                  <span class="project-card__updated">Updated May 2025</span>
+                </div>
+                <h3 class="project-card__title text-display-sm">
+                  <a class="focus-ring hover:text-primary" href="/case-studies/rag-whatsapp-assistant/">RAG Assistant for WhatsApp Support</a>
+                </h3>
+                <p class="project-card__summary">FastAPI webhook with pgvector retrieval powering regulated WhatsApp support.</p>
+                <ul class="project-card__metrics"><li class="project-card__metric">5-8 s p95 response</li><li class="project-card__metric">99% ingest success</li><li class="project-card__metric">33% time waste reduction</li></ul>
+                <div class="project-card__tech"><span class="tech-badge" data-tech="fastapi"><svg class="h-4 w-4 text-primary" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4.5 4.5h7.5l-2 5h4.5l-6 10v-6H4.5z"/></svg><span>FastAPI</span></span><span class="tech-badge" data-tech="pgvector"><svg class="h-4 w-4 text-accent" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5 4h14v4H5zm2 6h10v4H7zm3 6h4v4h-4z"/></svg><span>pgvector</span></span><span class="tech-badge" data-tech="slos"><svg class="h-4 w-4 text-primary" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5 18l4.5-6 3 4L18 7l1 2-6.5 9-3-4-3.5 5z"/><circle cx="6" cy="6" r="2" fill="currentColor"/></svg><span>SLOs</span></span></div>
+                <div class="project-card__actions">
+                  <a class="project-card__primary focus-ring" href="/case-studies/rag-whatsapp-assistant/">Dive into case study</a>
+                  
+                </div>
+              </div>
+            </article>
+        <article class="project-card card-elevated accent-bar-left accent-bar-left-iceberg" data-project-card data-tags="iceberg,great-expectations,superset" data-variant="default">
+            <figure class="project-card__media" aria-hidden="true">
+              <img class="project-card__image" src="/images/projects/iceberg-lakehouse.svg" alt="" width="640" height="360" loading="lazy" decoding="async" />
+            </figure>
+            <div class="project-card__content">
+              <div class="project-card__eyebrow">
+                <span class="badge badge-iceberg">Iceberg</span>
+                <span class="project-card__updated">Updated Apr 2025</span>
+              </div>
+              <h3 class="project-card__title">
+                <a class="focus-ring hover:text-primary" href="/case-studies/aws-iceberg-lakehouse/">AWS Iceberg Lakehouse with Embedded BI</a>
+              </h3>
+              <p class="project-card__summary">Iceberg on S3 with Glue, Athena, Great Expectations, and Superset 5.0 embeds.</p>
+              <ul class="project-card__metrics"><li class="project-card__metric">&lt;1% data loss across 260k rows</li><li class="project-card__metric">RLS for 7 business units</li><li class="project-card__metric">CI/CD dashboards</li></ul>
+              <div class="project-card__tech"><span class="tech-badge" data-tech="iceberg"><svg class="h-4 w-4 text-accent" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 18l5-11 4 5 3-6 6 12z"/></svg><span>Iceberg</span></span><span class="tech-badge" data-tech="great-expectations"><svg class="h-4 w-4 text-primary" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 4h16v4H4zm2 6h12v2H6zm0 4h8v2H6zm0 4h5v2H6z"/></svg><span>Great Expectations</span></span><span class="tech-badge" data-tech="superset"><svg class="h-4 w-4 text-accent" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 5h12v3H6zm2 5h8v3H8zm2 5h4v3h-4z"/></svg><span>Superset</span></span></div>
+              <div class="project-card__actions">
+                <a class="project-card__primary focus-ring" href="/case-studies/aws-iceberg-lakehouse/">Read case study</a>
+                
+              </div>
             </div>
           </article>
-        <article class="flex flex-col gap-4 rounded-xl border border-slate-800 bg-slate-900/60 p-6 transition hover:border-slate-700 focus-within:border-primary" data-project-card data-tags="iceberg,great-expectations,superset">
-            <div class="flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-primary">
-              <span>Iceberg</span>
-            </div>
-            <h3 class="text-xl font-semibold text-white">AWS Iceberg Lakehouse with Embedded BI</h3>
-            <p class="text-sm text-slate-300">Iceberg on S3 with Glue, Athena, Great Expectations, and Superset 5.0 embeds.</p>
-            <ul class="flex flex-col gap-1"><li class="text-sm text-slate-300">&lt;1% data loss across 260k rows</li><li class="text-sm text-slate-300">RLS for 7 business units</li><li class="text-sm text-slate-300">CI/CD dashboards</li></ul>
-            <div class="mt-auto flex items-center justify-between">
-              <a class="text-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/case-studies/aws-iceberg-lakehouse">Read case study</a>
-              
-            </div>
-          </article>
-        <article class="flex flex-col gap-4 rounded-xl border border-slate-800 bg-slate-900/60 p-6 transition hover:border-slate-700 focus-within:border-primary" data-project-card data-tags="automation,enablement,analytics">
-            <div class="flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-primary">
-              <span>Automation</span>
-            </div>
-            <h3 class="text-xl font-semibold text-white">GLEAC Client Interaction Chatbot</h3>
-            <p class="text-sm text-slate-300">Automation rollout delivering a 91% lift in interactions and measurable adoption.</p>
-            <ul class="flex flex-col gap-1"><li class="text-sm text-slate-300">91% interactions lift</li><li class="text-sm text-slate-300">33% time waste reduction</li></ul>
-            <div class="mt-auto flex items-center justify-between">
-              <a class="text-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/case-studies/gleac-chatbot">Read case study</a>
-              
+        <article class="project-card card-elevated accent-bar-left accent-bar-left-automation" data-project-card data-tags="automation,enablement,analytics" data-variant="default">
+            <figure class="project-card__media" aria-hidden="true">
+              <img class="project-card__image" src="/images/projects/gleac-chatbot.svg" alt="" width="640" height="360" loading="lazy" decoding="async" />
+            </figure>
+            <div class="project-card__content">
+              <div class="project-card__eyebrow">
+                <span class="badge badge-automation">Automation</span>
+                <span class="project-card__updated">Updated Feb 2025</span>
+              </div>
+              <h3 class="project-card__title">
+                <a class="focus-ring hover:text-primary" href="/case-studies/gleac-chatbot/">GLEAC Client Interaction Chatbot</a>
+              </h3>
+              <p class="project-card__summary">Automation rollout delivering a 91% lift in interactions and measurable adoption.</p>
+              <ul class="project-card__metrics"><li class="project-card__metric">91% interactions lift</li><li class="project-card__metric">33% time waste reduction</li></ul>
+              <div class="project-card__tech"><span class="tech-badge" data-tech="automation"><svg class="h-4 w-4 text-primary" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19 13h-1.18a3 3 0 0 1-5.64 0H7a3 3 0 1 1 0-2h5.18a3 3 0 0 1 5.64 0H19z"/></svg><span>Automation</span></span><span class="tech-badge" data-tech="enablement"><svg class="h-4 w-4 text-accent" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4l4 4h-3v6h-2V8H8zM5 18h14v2H5z"/></svg><span>Enablement</span></span><span class="tech-badge" data-tech="analytics"><svg class="h-4 w-4 text-primary" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5 19h2V9H5zm6 0h2V5h-2zm6 0h2v-8h-2z"/></svg><span>Analytics</span></span></div>
+              <div class="project-card__actions">
+                <a class="project-card__primary focus-ring" href="/case-studies/gleac-chatbot/">Read case study</a>
+                
+              </div>
             </div>
           </article>
-        <article class="flex flex-col gap-4 rounded-xl border border-slate-800 bg-slate-900/60 p-6 transition hover:border-slate-700 focus-within:border-primary" data-project-card data-tags="rpa,sap-ariba,automation">
-            <div class="flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-primary">
-              <span>RPA</span>
-            </div>
-            <h3 class="text-xl font-semibold text-white">SAP Ariba Workflow Automations</h3>
-            <p class="text-sm text-slate-300">Process mining and scripted automations delivering 48% less repetitive work.</p>
-            <ul class="flex flex-col gap-1"><li class="text-sm text-slate-300">48% repetitive work reduction</li><li class="text-sm text-slate-300">20k+ client records automated</li></ul>
-            <div class="mt-auto flex items-center justify-between">
-              <a class="text-sm font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/case-studies/estee-lauder-automation">Read case study</a>
-              
+        <article class="project-card card-elevated accent-bar-left accent-bar-left-fastapi" data-project-card data-tags="rpa,sap-ariba,automation" data-variant="default">
+            <figure class="project-card__media" aria-hidden="true">
+              <img class="project-card__image" src="/images/projects/ariba-automation.svg" alt="" width="640" height="360" loading="lazy" decoding="async" />
+            </figure>
+            <div class="project-card__content">
+              <div class="project-card__eyebrow">
+                <span class="badge badge-fastapi">RPA</span>
+                <span class="project-card__updated">Updated Mar 2023</span>
+              </div>
+              <h3 class="project-card__title">
+                <a class="focus-ring hover:text-primary" href="/case-studies/estee-lauder-automation/">SAP Ariba Workflow Automations</a>
+              </h3>
+              <p class="project-card__summary">Process mining and scripted automations delivering 48% less repetitive work.</p>
+              <ul class="project-card__metrics"><li class="project-card__metric">48% repetitive work reduction</li><li class="project-card__metric">20k+ client records automated</li></ul>
+              <div class="project-card__tech"><span class="tech-badge" data-tech="rpa"><svg class="h-4 w-4 text-primary" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 4h10l3 5-8 11-8-11z"/><circle cx="12" cy="9" r="1.5" fill="#1d4ed8"/></svg><span>RPA</span></span><span class="tech-badge" data-tech="sap-ariba"><svg class="h-4 w-4 text-accent" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4l8 8-8 8-8-8z"/><path fill="#0ea5e9" d="M12 7l5 5-5 5-5-5z"/></svg><span>SAP Ariba</span></span><span class="tech-badge" data-tech="automation"><svg class="h-4 w-4 text-primary" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19 13h-1.18a3 3 0 0 1-5.64 0H7a3 3 0 1 1 0-2h5.18a3 3 0 0 1 5.64 0H19z"/></svg><span>Automation</span></span></div>
+              <div class="project-card__actions">
+                <a class="project-card__primary focus-ring" href="/case-studies/estee-lauder-automation/">Read case study</a>
+                
+              </div>
             </div>
           </article>
       </section>
@@ -109,6 +158,7 @@
       </div>
     </footer>
     <script type="module" src="../../ts/main.ts"></script>
+    <script type="module" src="../../ts/animations.ts"></script>
     <script type="module" src="../../ts/projects.ts"></script>
   </body>
 </html>
