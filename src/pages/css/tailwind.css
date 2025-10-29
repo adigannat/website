@@ -1,0 +1,2 @@
+/* Proxy stylesheet so `/css/tailwind.css` works when Vite serves from /src/pages. */
+@import "../../css/tailwind.css";

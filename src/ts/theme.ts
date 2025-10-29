@@ -21,10 +21,20 @@ export class ThemeManager {
 	 * Get initial theme from localStorage or system preference
 	 */
 	private getInitialTheme(): Theme {
+		const html = document.documentElement;
+		const preset = html.dataset.theme as Theme | undefined;
+		if (preset === "light" || preset === "dark") {
+			return preset;
+		}
+
 		// Check localStorage first
-		const stored = localStorage.getItem(STORAGE_KEY) as Theme | null;
-		if (stored === "light" || stored === "dark") {
-			return stored;
+		try {
+			const stored = localStorage.getItem(STORAGE_KEY) as Theme | null;
+			if (stored === "light" || stored === "dark") {
+				return stored;
+			}
+		} catch (error) {
+			// Ignore storage access issues and fallback to system preference
 		}
 
 		// Fall back to system preference
@@ -47,6 +57,8 @@ export class ThemeManager {
 		} else {
 			html.classList.remove("dark");
 		}
+		html.dataset.theme = theme;
+		html.style.colorScheme = theme === "dark" ? "dark light" : "light dark";
 
 		// Update meta theme-color for mobile browsers
 		this.updateMetaThemeColor(theme);
@@ -88,8 +100,16 @@ export class ThemeManager {
 	 * Set specific theme
 	 */
 	public setTheme(theme: Theme): void {
+		if (this.currentTheme === theme) {
+			return;
+		}
+
 		this.applyTheme(theme);
-		localStorage.setItem(STORAGE_KEY, theme);
+		try {
+			localStorage.setItem(STORAGE_KEY, theme);
+		} catch (error) {
+			// Ignore storage write failures (e.g., privacy mode)
+		}
 
 		// Dispatch custom event for other components
 		window.dispatchEvent(
@@ -116,7 +136,12 @@ export class ThemeManager {
 		if (mediaQuery.addEventListener) {
 			mediaQuery.addEventListener("change", (e) => {
 				// Only auto-switch if user hasn't manually set a preference
-				const hasManualPreference = localStorage.getItem(STORAGE_KEY);
+				let hasManualPreference = false;
+				try {
+					hasManualPreference = Boolean(localStorage.getItem(STORAGE_KEY));
+				} catch (error) {
+					hasManualPreference = false;
+				}
 				if (!hasManualPreference) {
 					this.setTheme(e.matches ? "dark" : "light");
 				}

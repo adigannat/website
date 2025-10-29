@@ -4,6 +4,31 @@ import { initMobileMenu } from "./mobile-menu";
 import { ThemeManager, initThemeToggle } from "./theme";
 import "./site-search";
 
+function initStickyHeader(): void {
+	const header = document.querySelector<HTMLElement>("[data-site-header]");
+	if (!header) return;
+
+	const update = () => {
+		const shouldActivate = window.scrollY > 16;
+		header.classList.toggle("site-header--scrolled", shouldActivate);
+	};
+
+	let ticking = false;
+	const handleScroll = () => {
+		if (!ticking) {
+			window.requestAnimationFrame(() => {
+				update();
+				ticking = false;
+			});
+			ticking = true;
+		}
+	};
+
+	window.addEventListener("scroll", handleScroll, { passive: true });
+	window.addEventListener("resize", update);
+	update();
+}
+
 // Initialize theme (before other UI initializes)
 const themeManager = new ThemeManager();
 themeManager.watchSystemPreference();
@@ -11,6 +36,7 @@ initThemeToggle(themeManager);
 
 // Initialize mobile menu
 initMobileMenu();
+initStickyHeader();
 
 const yearEl = document.querySelector("[data-current-year]");
 if (yearEl) {

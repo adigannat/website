@@ -254,6 +254,25 @@
 	.site-header {
 		@apply sticky top-0 z-40 transition-all duration-300;
 		background-color: transparent;
+		border-bottom: 1px solid transparent;
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
+	}
+
+	html:not(.dark) .site-header {
+		--header-bg: rgba(248, 250, 252, 0.9);
+		--header-border: rgba(148, 163, 184, 0.35);
+	}
+
+	html.dark .site-header {
+		--header-bg: rgba(2, 6, 23, 0.88);
+		--header-border: rgba(51, 65, 85, 0.65);
+	}
+
+	.site-header--scrolled {
+		background-color: var(--header-bg);
+		border-bottom-color: var(--header-border);
+		@apply shadow-lg;
 	}
 
 	.site-header__inner {
@@ -476,17 +495,28 @@
 		@apply max-w-2xl text-lg text-slate-200 sm:text-xl;
 	}
 
+	.hero-panel__title {
+		@apply inline-block;
+		padding-bottom: 0.6rem;
+		overflow: visible;
+		line-height: 1.1;
+	}
+
 	.hero-panel__highlights {
-		@apply grid gap-2 text-sm text-slate-300 md:grid-cols-2;
+		@apply grid gap-3 text-sm text-slate-300 md:grid-cols-2;
 	}
 
 	.hero-panel__highlight {
-		@apply flex items-start gap-2 rounded-lg border border-slate-800 bg-slate-900/40 p-3;
+		@apply relative flex items-center gap-3 rounded-lg border border-slate-800 bg-slate-900/40 p-4 pl-7;
+		min-height: 3.5rem;
 	}
 
 	.hero-panel__highlight::before {
 		content: "";
-		@apply mt-1 h-2 w-2 rounded-full bg-accent;
+		@apply absolute h-1.5 w-1.5 rounded-full bg-accent;
+		left: 1.25rem;
+		top: 50%;
+		transform: translateY(-50%);
 	}
 
 	.hero-panel__cta {
@@ -594,7 +624,8 @@
 
 	.project-card__metric::before {
 		content: "";
-		@apply absolute left-0 top-2 h-1 w-1 rounded-full bg-accent;
+		@apply absolute left-0 h-1.5 w-1.5 rounded-full bg-accent;
+		top: 0.5em;
 	}
 
 	.project-card__tech {
@@ -676,6 +707,14 @@
 
 	.case-feature__cta {
 		@apply inline-flex items-center gap-2 text-sm font-semibold text-primary underline-offset-4 hover:underline;
+	}
+
+	.case-study__tags,
+	.case-study__metrics {
+		@apply flex flex-wrap items-center gap-2;
+		list-style: none;
+		margin: 0;
+		padding: 0;
 	}
 
 	/* GitHub cards */

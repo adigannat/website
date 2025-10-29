@@ -5,6 +5,9 @@
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="/theme-init.js"></script>
+    <link rel="preload" href="/css/tailwind.css" as="style" />
+    <link rel="stylesheet" href="/css/tailwind.css" />
     <title>RAG Assistant - Production WhatsApp Chatbot - Aditya Ganesh</title>
     <meta name="description" content="WhatsApp chatbot with pgvector retrieval, cost guardrails, and incident runbooks." />
     <link rel="canonical" href="https://adigannat.com/case-studies/rag-whatsapp-assistant/" />
@@ -123,9 +126,13 @@
               <p class="text-sm uppercase tracking-[0.4em] text-primary">Case Study</p>
               <h1 class="text-4xl font-semibold leading-tight text-white sm:text-5xl">RAG Assistant - Production WhatsApp Chatbot</h1>
             </div>
-            <div class="flex flex-wrap gap-2"><li class="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">fastapi</li><li class="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">pgvector</li><li class="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">whatsapp</li><li class="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">slo</li></div>
+            <ul class="case-study__tags">
+              <li class="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">fastapi</li><li class="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">pgvector</li><li class="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">whatsapp</li><li class="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">slo</li>
+            </ul>
           </div>
-          <div class="flex flex-wrap gap-3"><li class="rounded-full border border-slate-700 px-3 py-1 text-xs font-semibold text-slate-200">5-8 s p95 response</li><li class="rounded-full border border-slate-700 px-3 py-1 text-xs font-semibold text-slate-200">60 s ingest p95</li><li class="rounded-full border border-slate-700 px-3 py-1 text-xs font-semibold text-slate-200">99% ingest success</li></div>
+          <ul class="case-study__metrics">
+          <li class="rounded-full border border-slate-700 px-3 py-1 text-xs font-semibold text-slate-200">5-8 s p95 response</li><li class="rounded-full border border-slate-700 px-3 py-1 text-xs font-semibold text-slate-200">60 s ingest p95</li><li class="rounded-full border border-slate-700 px-3 py-1 text-xs font-semibold text-slate-200">99% ingest success</li>
+        </ul>
           <p class="text-sm text-slate-400">Published May 2025</p>
         </header>
         <article class="prose prose-invert max-w-none prose-headings:text-white prose-p:text-slate-200 prose-a:text-primary prose-strong:text-white" data-toc-content>

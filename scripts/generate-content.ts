@@ -337,6 +337,9 @@ ${generatedNotice}
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="/theme-init.js"></script>
+    <link rel="preload" href="/css/tailwind.css" as="style" />
+    <link rel="stylesheet" href="/css/tailwind.css" />
     <title>${escapeHtml(fullTitle)}</title>
     <meta name="description" content="${escapeHtml(metaDescription)}" />
     <link rel="canonical" href="${escapeHtml(canonicalUrl)}" />
@@ -624,12 +627,22 @@ function renderCaseStudyPage(
 				`<li class="rounded-full border border-slate-700 px-3 py-1 text-xs font-semibold text-slate-200">${escapeHtml(metric)}</li>`,
 		)
 		.join("");
+	const metricsList = metrics
+		? `<ul class="case-study__metrics">
+          ${metrics}
+        </ul>`
+		: "";
 	const tags = meta.tags
 		.map(
 			(tag) =>
 				`<li class="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">${escapeHtml(tag)}</li>`,
 		)
 		.join("");
+	const tagsList = tags
+		? `<ul class="case-study__tags">
+              ${tags}
+            </ul>`
+		: "";
 	const stack = meta.stack
 		.map(
 			(item) =>
@@ -674,9 +687,9 @@ function renderCaseStudyPage(
               <p class="text-sm uppercase tracking-[0.4em] text-primary">Case Study</p>
               <h1 class="text-4xl font-semibold leading-tight text-white sm:text-5xl">${escapeHtml(meta.title)}</h1>
             </div>
-            <div class="flex flex-wrap gap-2">${tags}</div>
+            ${tagsList}
           </div>
-          <div class="flex flex-wrap gap-3">${metrics}</div>
+          ${metricsList}
           <p class="text-sm text-slate-400">Published ${escapeHtml(toDisplayDate(meta.date))}</p>
         </header>
         <article class="prose prose-invert max-w-none prose-headings:text-white prose-p:text-slate-200 prose-a:text-primary prose-strong:text-white" data-toc-content>
@@ -839,7 +852,7 @@ function renderHomePage(
             <span class="hero-chip">${escapeHtml(profile.profile.title)}</span>
             <span class="hero-pill">Shipping RAG, Iceberg, Automation</span>
           </div>
-          <h1 class="text-display-lg font-bold leading-tight text-gradient md:text-display-xl">${escapeHtml(profile.profile.name)}</h1>
+          <h1 class="hero-panel__title text-display-lg font-bold leading-tight text-gradient md:text-display-xl">${escapeHtml(profile.profile.name)}</h1>
           <p class="hero-panel__lead">${escapeHtml(profile.profile.summary)}</p>
           <ul class="hero-panel__highlights">
             ${heroHighlights}
@@ -1565,11 +1578,51 @@ async function generateSearchIndex(
 		})),
 	];
 
+	const serializedIndex = serializeSearchIndex(searchIndex);
 	await writeFile(
 		path.join(publicDir, "search-index.json"),
-		JSON.stringify(searchIndex, null, 2),
+		serializedIndex,
 		"utf8",
 	);
+}
+
+function serializeSearchIndex(
+	entries: Array<{
+		type: string;
+		title: string;
+		excerpt: string;
+		url: string;
+		tags: string[];
+	}>,
+): string {
+	const serializedEntries = entries
+		.map((entry) => {
+			const fields: Array<{ key: string; value: string | string[] }> = [
+				{ key: "type", value: entry.type },
+				{ key: "title", value: entry.title },
+				{ key: "excerpt", value: entry.excerpt },
+				{ key: "url", value: entry.url },
+				{ key: "tags", value: entry.tags },
+			];
+
+			const lines = fields
+				.map(({ key, value }) => {
+					if (Array.isArray(value)) {
+						const tags =
+							value.length === 0
+								? "[]"
+								: `[${value.map((tag) => JSON.stringify(tag)).join(", ")}]`;
+						return `\t\t"${key}": ${tags}`;
+					}
+					return `\t\t"${key}": ${JSON.stringify(value)}`;
+				})
+				.join(",\n");
+
+			return `\t{\n${lines}\n\t}`;
+		})
+		.join(",\n");
+
+	return `[\n${serializedEntries}\n]\n`;
 }
 
 async function generateRssFeed(
