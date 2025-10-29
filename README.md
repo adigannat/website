@@ -1,145 +1,95 @@
-# Aditya Ganesh – Portfolio Platform
+# Aditya Ganesh - Applied ML Engineer
 
-Handcrafted, high-performance portfolio for Aditya Ganesh. The site elevates outcome-driven case studies, GitHub work, and career narrative with production-grade performance, accessibility, security, and shareability—built for Cloudflare Pages with minimal runtime JavaScript.
+Outcome-first portfolio that shows how I ship production ML systems and the engineering craft that supports them. Built as a fast, secure Cloudflare Pages deployment with vanilla HTML + TypeScript + Tailwind, automated quality gates, and measurable performance budgets so recruiters can evaluate both my work and my process.
 
-## Project Highlights
+## Quick links
+- Live site: https://adigannat.com
+- Case studies: https://adigannat.com/case-studies
+- Blog and RSS: https://adigannat.com/blog
+- Resume (PDF): docs/Aditya%20Ganesh%20-%20Applied%20ML%20Engineer%20-%20Resume.pdf
+- Email: adigannat@gmail.com | LinkedIn: https://www.linkedin.com/in/adityaganesh-ai | GitHub: https://github.com/adigannat
 
-- **Performance first**: Targets LCP ≤ 2.5 s, INP < 200 ms, CLS ≤ 0.1 on every key page.
-- **WCAG 2.2 AA**: Keyboard-first journeys, visible focus, high contrast, reduced-motion support.
-- **Security by default**: Strict CSP, hardened headers, Turnstile-protected contact form, least-privilege bindings.
-- **Content built for outcomes**: Each project is a one-page case study with concrete metrics and stack notes.
-- **Share-ready**: Per-page OG images, Schema.org JSON-LD, sitemap + robots for discoverability.
-- **Production domain**: Live site served via Cloudflare Pages at [https://adigannat.com](https://adigannat.com).
-- **Automated checks**: Lighthouse, Axe, lint/typecheck/testing paths wired into the toolchain (CI to be finalized).
+## Why recruiters care
+- Three production-grade case studies with real metrics on latency, data quality, and adoption, each documented as a one-page deep dive.
+- Portfolio itself is engineered like a production product: progressive enhancement, accessibility, observability, and security shipped end to end.
+- Automated Lighthouse and Axe gates keep Core Web Vitals in budget (LCP <= 2.5 s, INP < 200 ms, CLS <= 0.1) on every key page.
+- Turnstile-protected contact workflow with Resend email delivery demonstrates secure, auditable forms.
+- Content pipeline keeps GitHub activity, testimonials, blog posts, and resume in sync so hiring teams always see the latest signal.
 
-> 📘 Deep-dive architecture, routing, and bindings live in [`docs/architecture.md`](docs/architecture.md).
+## Flagship case studies
 
-## Repository Map
+| Case study | Outcomes | Stack highlights |
+| --- | --- | --- |
+| [RAG Assistant for WhatsApp Support](https://adigannat.com/case-studies/rag-whatsapp-assistant/) | 5-8 s p95 response, 99% ingest success, 33% less handle time | FastAPI, Postgres, pgvector, Redis, Celery, WhatsApp Cloud API |
+| [AWS Iceberg Lakehouse with Embedded BI](https://adigannat.com/case-studies/aws-iceberg-lakehouse/) | < 1% data loss across 260k rows, RLS for 7 business units, GitHub Actions CI/CD | Amazon S3, AWS Glue, AWS Athena, Apache Iceberg, Great Expectations, Superset 5.0 |
+| [GLEAC Client Interaction Chatbot](https://adigannat.com/case-studies/gleac-chatbot/) | 91% lift in interactions, 33% less time waste | Automation playbooks, analytics loops, enablement training |
+| [SAP Ariba Workflow Automations](https://adigannat.com/case-studies/estee-lauder-automation/) | 48% drop in repetitive work, 20k+ client records automated | SAP Ariba, RPA, process mining, orchestration |
 
+## What this site demonstrates
+- Theme manager with persisted dark and light mode plus mobile drawer navigation (src/ts/theme.ts, src/ts/mobile-menu.ts).
+- Skills visualization dashboard with SVG donut and animated bar charts for data storytelling (src/ts/skills-viz.ts).
+- Universal site search (Ctrl or Cmd + K) powered by Fuse.js with keyboard-first navigation and content-type badges (src/ts/site-search.ts, public/search-index.json).
+- Testimonials carousel with autoplay, keyboard, and touch support (src/ts/testimonials-carousel.ts).
+- Blog engine, RSS feed, sitemap, robots, and JSON-LD generated from structured content (scripts/generate-content.ts, content/blog/**).
+- Live Core Web Vitals bar instrumented with PerformanceObserver to surface LCP, INP, and CLS in real time (src/ts/main.ts).
+- Cloudflare Pages Functions: Turnstile-verified contact form with Resend email delivery (functions/api/contact.ts), GitHub proxy cached in KV (functions/api/github.ts), dynamic SVG OG image generator (functions/api/og.ts).
+- Strict CSP, HSTS, Permissions-Policy, COOP, CORP, and cache directives documented in docs/architecture.md.
+- Motion system driven by IntersectionObserver that respects prefers-reduced-motion and adds polish without hurting performance (src/ts/animations.ts).
+
+## Architecture at a glance
+- Stack: Vite, TypeScript, Tailwind JIT, vanilla HTML. Total shipped JavaScript stays under 20 KB gzipped per page via code-splitting and lazy enhancement.
+- Content pipeline: scripts/generate-content.ts ingests YAML, JSON, and Markdown to render static HTML plus sitemap.xml, rss.xml, search-index.json, and robots.txt.
+- Data sources: projects.json, case studies, blog posts, testimonials, and profile.yaml under content/ provide a single editorial workflow.
+- Hosting: Cloudflare Pages serves the static bundle; Pages Functions add secure API endpoints. KV namespaces and optional D1 bindings are managed through wrangler.toml.
+- Styling: Tailwind tokens and component primitives live in src/css/tailwind.css with critical CSS extraction for the hero and other LCP elements.
+- Accessibility: Semantic HTML, skip links, focus rings, ARIA live regions, reduced-motion variants, and keyboard-first controls baked into every interactive feature.
+
+## Proof and quality gates
+
+| Proof point | How it is verified |
+| --- | --- |
+| Core Web Vitals budgets | `npm run test:lh` runs Lighthouse CI against `/`, `/projects/`, `/case-studies/`, `/contact/` with perf >= 90, accessibility >= 95, best-practices >= 90, and SEO >= 95. |
+| Accessibility | `npm run test:a11y` executes Pa11y CI (WCAG 2.2 AA) against the Vite preview build. |
+| Linting and types | `npm run lint` (Biome) and `npm run typecheck` (`tsc --noEmit`). |
+| Runtime metrics | Vitals bar and console logging capture live LCP, INP, and CLS in production. |
+| CI/CD | .github/workflows/ci.yml runs lint -> typecheck -> build -> accessibility -> Lighthouse -> Cloudflare Pages deploy (preview and production). |
+| Security headers | CSP, HSTS, Permissions-Policy, COOP, CORP, and cache policies defined in docs/architecture.md and enforced via `_headers` or Pages Functions. |
+
+Vitest, Miniflare, and Playwright are configured in package.json for unit, function, and integration tests as new features land.
+
+## Evaluate locally
+
+```bash
+git clone https://github.com/adigannat/portfolio.git
+cd portfolio
+npm install
+npm run dev
 ```
-.
-├── content/                 # Authoring sources (profile YAML, projects.json, case-studies/*.md)
-├── docs/architecture.md     # Canonical architecture plan and interfaces
-├── functions/               # Cloudflare Pages Functions (API endpoints; implement via Edge/API agent)
-├── public/                  # Static assets copied verbatim to build output
-├── scripts/
-│   └── generate-content.ts  # Builds HTML pages from content into src/pages/**
-├── src/
-│   ├── css/tailwind.css     # Tailwind entry point + tokens
-│   ├── pages/**/index.html  # Generated static pages (do not edit manually)
-│   └── ts/                  # Minimal enhancement modules (main.ts, projects.ts, etc.)
-├── tailwind.config.js       # Tailwind configuration
-├── postcss.config.cjs       # PostCSS (Tailwind + autoprefixer)
-├── vite.config.ts           # Vite build with multi-entry HTML
-├── wrangler.toml            # Cloudflare bindings (KV, D1, secrets) – fill per environment
-└── .github/workflows/       # CI pipelines (to be completed by Release/DevEx agent)
+
+Additional scripts:
+
+```bash
+npm run build          # lint + content build + typecheck + production bundle
+npm run preview        # serve dist/ locally
+npm run test           # Vitest harness (add suites as needed)
+npm run test:functions # Pages Functions with Miniflare
 ```
 
-Generated output:
+Generated HTML lives in src/pages/**/index.html; edit the structured content in content/ and re-run `npm run build:content` instead of touching generated files.
 
-- `src/pages/**/index.html` – regenerated by `npm run build:content`; edit `content/` instead.
-- `dist/` – production bundle produced by `npm run build`.
+## Deployment and environment
+- Deployment target: Cloudflare Pages using the dist/ output. Preview deploys attach to pull requests; pushes to main promote to https://adigannat.com.
+- Required environment: `GITHUB_USER`, `GITHUB_TOKEN`, `TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET`, `RESEND_API_KEY`, `GITHUB_CACHE` KV binding. Optional `EMAIL_API_KEY` and `DB` (Cloudflare D1) support extended logging or persistence.
+- Security headers can be delivered via `_headers` or response headers in Pages Functions; CSP allows only self-hosted assets plus Cloudflare Turnstile and GitHub avatars.
+- Fonts and hero imagery are preloaded, remaining media is lazy-loaded, and Tailwind purges unused classes to keep LCP inside budget.
 
-## Getting Started
+## Roadmap snapshot
+- Tier 1 enhancements shipped: theme toggle, mobile menu, resume download, skills dashboard, table of contents scroll spy.
+- Tier 2 enhancements shipped: blog and RSS, testimonials carousel, universal search. Interactive demos and advanced GitHub analytics are queued for the next pass.
+- Tier 3+ candidate work: PWA mode, public analytics dashboard, WebGL hero concepts, and experimentation tooling (see PLANS.md sections 16-19 for prioritisation notes).
 
-1. **Prerequisites**
-   - Node.js 20 LTS (or newer 18+ compatible with Vite 7).
-   - npm 10+.
+## Contact
+- Fastest response: submit the Turnstile-protected form at https://adigannat.com/contact or email adigannat@gmail.com.
+- I reply within two business days and can share additional runbooks, dashboards, or code samples under NDA if needed.
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Local development**
-   ```bash
-   npm run dev          # Generate pages then start Vite dev server
-   # or watch content changes + dev server in parallel
-   npm run dev:watch
-   ```
-
-4. **Build for production**
-   ```bash
-   npm run build        # lint → generate content → typecheck → vite build
-   npm run preview      # serve dist/ build locally
-   ```
-
-## Content Workflow
-
-- Source-of-truth lives in `content/`:
-  - `profile.yaml` (profile, navigation, SEO defaults).
-  - `projects.json` (cards for Projects grid + homepage).
-  - `case-studies/*.md` (front matter + markdown body).
-- `npm run build:content` (or any dev/build command) renders these into static HTML under `src/pages/`.
-- Avoid editing generated HTML—regenerate from content instead.
-- `scripts/generate-content.ts --watch` (via `npm run dev:watch`) monitors content and regenerates pages automatically.
-
-## Quality & Tooling
-
-| Command | Purpose |
-|---------|---------|
-| `npm run lint` | Biome formatting + linting across project. |
-| `npm run format` | Auto-format via Biome. |
-| `npm run typecheck` | `tsc --noEmit` validation. |
-| `npm run test` / `npm run test:watch` | Vitest suite (extend with component/function tests). |
-| `npm run test:functions` | Placeholder for Miniflare-based function tests. |
-| `npm run test:a11y` | Stub script (Pa11y/Axe) – Accessibility Agent to implement. |
-| `npm run test:lh` | Stub Lighthouse CI runner – Performance Agent to implement. |
-
-Additional tooling to be delivered by respective agents:
-
-- **Accessibility Agent** – Fill in `scripts/run-a11y.mjs`, add Pa11y/Axe automation, and document keyboard/SR walkthroughs.
-- **Performance Engineer** – Complete `scripts/run-lighthouse.mjs`, establish perf budgets, preload strategy, Vitals bar.
-- **Edge/API Agent** – Implement Pages Functions + tests in `functions/api/`.
-- **Release/DevEx Agent** – Create `.github/workflows/ci.yml`, CONTRIBUTING.md, Conventional Commits guide, pre-commit hooks.
-
-## Environment & Deployment
-
-### Required environment variables (per `wrangler.toml`)
-
-| Variable | Purpose |
-|----------|---------|
-| `GITHUB_USER` | GitHub username for repo fetches. |
-| `GITHUB_TOKEN` | GitHub REST token for `/api/github`. |
-| `GITHUB_CACHE` | KV namespace binding for GitHub response cache. |
-| `TURNSTILE_SITE_KEY` / `TURNSTILE_SECRET` | Cloudflare Turnstile keys for contact form validation. |
-| `EMAIL_API_KEY` | (Optional) Email provider key for contact notifications. |
-| `DB` | (Optional) Cloudflare D1 binding for contact storage. |
-| `ORIGIN` | Canonical site origin (used in generated metadata). |
-
-### Deploying to Cloudflare Pages
-
-1. Wire CI (GitHub Actions) to run `npm run build` and upload `dist/`.
-2. Configure Cloudflare Pages project:
-   - Build command: `npm run build`
-   - Output directory: `dist`
-3. Set environment variables + KV/D1 bindings via Pages dashboard or `wrangler`.
-4. `wrangler.toml` can mirror production settings under `[env.production]`.
-5. Add `_headers` or function-based headers for CSP/HSTS/Permissions-Policy (Privacy/Security agent to finalize).
-
-## Design Principles Recap
-
-- Outcome-first storytelling (metrics in hero cards, case studies).
-- Minimal, purposeful JS with progressive enhancement.
-- Dark theme with visible focus states and reduced-motion fallbacks.
-- Strict security posture (no inline code, least-privilege origins).
-- Automated observability (Lighthouse, Axe, Vitals bar, optional RUM).
-
-## Agent Playbook
-
-- Refer to [`AGENTS.md`](AGENTS.md) for mission details, responsibilities, and handoffs.
-- Coordination expectations:
-  - Architect ➔ downstream agents with schemas/interfaces.
-  - Content Strategist ➔ UI/UX + SEO/Schema with final copy + metadata.
-  - Edge/API ➔ UI/UX + Performance + Security for API responses, caching, headers.
-  - Performance/A11y/SEO/Security ➔ Release for CI enforcement.
-
-## Roadmap Snapshot
-
-- ✅ Architecture plan, content schema, Tailwind/Vite scaffold, content-driven build pipeline.
-- 🚧 Implement Pages Functions + tests (`functions/api/*`).
-- 🚧 Finalize accessibility and performance automation (Axe, Lighthouse, RUM/Vitals).
-- 🚧 Harden security headers and consent UX.
-- 🚧 Complete CI/CD, CONTRIBUTING, PR templates, preview deployments.
-
-Stay aligned with `PLANS.md` for sprint sequencing and deliverable milestones.
+Thanks for reviewing the portfolio. If you are hiring for applied ML, retrieval-augmented systems, or governed data platforms, I would love to connect.
