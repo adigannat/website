@@ -5,34 +5,20 @@
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SAP Ariba Workflow Automations - Aditya Ganesh</title>
-    <meta name="description" content="Process mining and scripted automations for a 20k client dataset." />
-    <link rel="canonical" href="https://adigannat.com/case-studies/estee-lauder-automation/" />
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "CreativeWork",
-  "name": "SAP Ariba Workflow Automations",
-  "description": "Process mining and scripted automations for a 20k client dataset.",
-  "author": {
-    "@type": "Person",
-    "name": "Aditya Ganesh"
-  },
-  "datePublished": "2023-03-01",
-  "keywords": "automation, sap, process-mining",
-  "url": "https://adigannat.com/case-studies/estee-lauder-automation/"
-}
-    </script>
-    <meta property="og:title" content="SAP Ariba Automation - 48% less repetitive work" />
-    <meta property="og:description" content="Process mining and scripted automations for a 20k client dataset." />
+    <title>Building Scalable RAG Systems: Lessons from Production - Aditya Ganesh</title>
+    <meta name="description" content="Five critical lessons learned from deploying retrieval-augmented generation systems in regulated environments with strict SLO requirements." />
+    <link rel="canonical" href="https://adigannat.com/blog/building-scalable-rag-systems/" />
+    <meta property="og:title" content="Building Scalable RAG Systems: Lessons from Production" />
+    <meta property="og:description" content="Five critical lessons learned from deploying retrieval-augmented generation systems in regulated environments with strict SLO requirements." />
     <meta property="og:type" content="article" />
-    <meta property="og:url" content="https://adigannat.com/case-studies/estee-lauder-automation/" />
-    <meta property="og:image" content="https://adigannat.com/api/og?title=SAP%20Ariba%20Automation%20-%2048%25%20less%20repetitive%20work&metric=48%25%20reduction%20in%20repetitive%20work" />
-    <meta property="article:published_time" content="2023-03-01" />
+    <meta property="og:url" content="https://adigannat.com/blog/building-scalable-rag-systems/" />
+    <meta property="og:image" content="https://adigannat.com/api/og?title=Building%20Scalable%20RAG%20Systems%3A%20Lessons%20from%20Production&subtitle=Blog" />
+    <meta property="article:published_time" content="2025-10-15" />
+    <meta property="article:author" content="Aditya Ganesh" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="SAP Ariba Automation - 48% less repetitive work" />
-    <meta name="twitter:description" content="Process mining and scripted automations for a 20k client dataset." />
-    <meta name="twitter:image" content="https://adigannat.com/api/og?title=SAP%20Ariba%20Automation%20-%2048%25%20less%20repetitive%20work&metric=48%25%20reduction%20in%20repetitive%20work" />
+    <meta name="twitter:title" content="Building Scalable RAG Systems: Lessons from Production" />
+    <meta name="twitter:description" content="Five critical lessons learned from deploying retrieval-augmented generation systems in regulated environments with strict SLO requirements." />
+    <meta name="twitter:image" content="https://adigannat.com/api/og?title=Building%20Scalable%20RAG%20Systems%3A%20Lessons%20from%20Production&subtitle=Blog" />
   </head>
   <body class="bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
     <a href="#main" class="absolute left-4 top-4 -translate-y-16 rounded bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground focus:translate-y-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary">Skip to content</a>
@@ -43,8 +29,8 @@
           <ul class="site-nav">
             <li><a class="nav-link focus-ring" href="/">Home</a></li>
           <li><a class="nav-link focus-ring" href="/projects/">Projects</a></li>
-          <li><a class="nav-link nav-link--active focus-ring" href="/case-studies/" aria-current="page">Case Studies</a></li>
-          <li><a class="nav-link focus-ring" href="/blog/">Blog</a></li>
+          <li><a class="nav-link focus-ring" href="/case-studies/">Case Studies</a></li>
+          <li><a class="nav-link nav-link--active focus-ring" href="/blog/" aria-current="page">Blog</a></li>
           <li><a class="nav-link focus-ring" href="/about/">About</a></li>
           <li><a class="nav-link focus-ring" href="/contact/">Contact</a></li>
           </ul>
@@ -92,8 +78,8 @@
       <nav class="mobile-menu-drawer__nav" aria-label="Mobile primary navigation">
         <a class="mobile-menu-drawer__link" href="/">Home</a>
         <a class="mobile-menu-drawer__link" href="/projects/">Projects</a>
-        <a class="mobile-menu-drawer__link mobile-menu-drawer__link--active" href="/case-studies/" aria-current="page">Case Studies</a>
-        <a class="mobile-menu-drawer__link" href="/blog/">Blog</a>
+        <a class="mobile-menu-drawer__link" href="/case-studies/">Case Studies</a>
+        <a class="mobile-menu-drawer__link mobile-menu-drawer__link--active" href="/blog/" aria-current="page">Blog</a>
         <a class="mobile-menu-drawer__link" href="/about/">About</a>
         <a class="mobile-menu-drawer__link" href="/contact/">Contact</a>
       </nav>
@@ -117,64 +103,93 @@
     <main id="main" class="mx-auto flex w-full max-w-6xl gap-8 px-6 pb-24 pt-10">
       <div class="flex flex-1 flex-col gap-12">
         <header class="flex flex-col gap-6">
-          <a class="text-xs font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/case-studies/">Case studies</a>
+          <a class="text-xs font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/blog/">Blog</a>
           <div class="flex flex-wrap items-center justify-between gap-4">
             <div>
-              <p class="text-sm uppercase tracking-[0.4em] text-primary">Case Study</p>
-              <h1 class="text-4xl font-semibold leading-tight text-white sm:text-5xl">SAP Ariba Workflow Automations</h1>
+              <p class="text-sm uppercase tracking-[0.4em] text-primary">Blog Post</p>
+              <h1 class="text-4xl font-semibold leading-tight text-white sm:text-5xl">Building Scalable RAG Systems: Lessons from Production</h1>
             </div>
-            <div class="flex flex-wrap gap-2"><li class="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">automation</li><li class="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">sap</li><li class="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">process-mining</li></div>
+            <div class="flex flex-wrap gap-2"><span class="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">RAG</span><span class="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">FastAPI</span><span class="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">Production</span><span class="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">Architecture</span></div>
           </div>
-          <div class="flex flex-wrap gap-3"><li class="rounded-full border border-slate-700 px-3 py-1 text-xs font-semibold text-slate-200">48% reduction in repetitive work</li><li class="rounded-full border border-slate-700 px-3 py-1 text-xs font-semibold text-slate-200">20k+ client records automated</li></div>
-          <p class="text-sm text-slate-400">Published Mar 2023</p>
+          <div class="flex items-center gap-4 text-sm text-slate-400">
+            <time datetime="2025-10-15">Oct 2025</time>
+            <span>·</span>
+            <span>8 min read</span>
+            <span>·</span>
+            <span>By Aditya Ganesh</span>
+          </div>
         </header>
-        <article class="prose prose-invert max-w-none prose-headings:text-white prose-p:text-slate-200 prose-a:text-primary prose-strong:text-white" data-toc-content>
-<h2>Context</h2>
-<p>EstAce Lauder manages procurement for more than 20,000 clients on SAP Ariba. The finance team spent entire sprints reconciling supplier data, updating spreadsheets, and chasing manual approvals. I joined as a digital transformation intern to accelerate these workflows.</p>
-<h2>Problem</h2>
+        <article class="prose prose-invert max-w-none prose-headings:text-white prose-p:text-slate-200 prose-a:text-primary prose-strong:text-white prose-code:text-accent prose-pre:bg-slate-900 prose-pre:border prose-pre:border-slate-800" data-toc-content>
+<h2>Introduction</h2>
+<p>Over the past year, I've deployed multiple RAG (Retrieval-Augmented Generation) systems in production, handling thousands of queries daily with strict SLO requirements. Here are the key lessons that made the difference between a proof-of-concept and a reliable production system.</p>
+<h2>Lesson 1: Hybrid Search is Non-Negotiable</h2>
+<p>Pure semantic search sounds elegant, but in practice, users expect exact keyword matches to work. I learned this the hard way when a system couldn't find &quot;Form W-9&quot; despite having perfect embeddings, because users typed the exact form number.</p>
+<p><strong>The Solution:</strong></p>
 <ul>
-<li>Four core processes (supplier onboarding, invoice validation, exception handling, reporting) consumed 70 percent of analyst capacity.</li>
-<li>Manual edits introduced inconsistent data, requiring late-night corrections before quarterly closes.</li>
-<li>Leadership demanded visibility into automation efficacy before approving further investment.</li>
+<li>Implement hybrid search combining pgvector semantic search with PostgreSQL full-text search</li>
+<li>Weight keyword matches higher for short, specific queries</li>
+<li>Use semantic search for exploratory questions</li>
 </ul>
-<h2>Approach</h2>
-<ol>
-<li><strong>Process mining</strong> — Collected Ariba event logs, mapped frequent paths, and quantified delays. Identified the top five friction points responsible for 62 percent of wasted hours.</li>
-<li><strong>Automation design</strong> — Built RPA bots for onboarding and invoice validation using UiPath, with deterministic fallbacks to the analyst queue. Wrote custom Python scripts for bulk data reconciliation with checksum validation.</li>
-<li><strong>Quality loops</strong> — Introduced QA checklists, version-controlled scripts, and automated regression runs on anonymized data before deployment.</li>
-<li><strong>Reporting</strong> — Surfaced automation status in Power BI dashboards, showing cycle time, savings, and exceptions by team.</li>
-</ol>
-<h2>Results</h2>
+<pre><code class="language-python"># Hybrid search example
+semantic_results = await search_embeddings(query_vector, limit=20)
+keyword_results = await search_fulltext(query, limit=20)
+
+# Merge and rerank
+combined = rerank_results(semantic_results, keyword_results, query)
+</code></pre>
+<h2>Lesson 2: Cost Guardrails Are Critical</h2>
+<p>LLM costs can spiral quickly. On day one of a production deployment, a retry loop cost us $180 in 4 hours before we caught it.</p>
+<p><strong>Guard Rails Implemented:</strong></p>
 <ul>
-<li>48 percent reduction in repetitive work across four automation flows.</li>
-<li>20,000+ client records maintained with higher accuracy and fewer escalations.</li>
-<li>Cycle time for invoice validation dropped from 3.5 days to 18 hours.</li>
-<li>Finance leadership approved expansion to two additional processes backed by the savings data.</li>
+<li>Token budgets per user/session with graceful degradation</li>
+<li>Cost caps that trigger alerts at 80% of budget</li>
+<li>Automatic fallback to smaller models</li>
+<li>Circuit breakers for runaway retry loops</li>
 </ul>
-<h2>Stack</h2>
+<h2>Lesson 3: Observability Makes or Breaks Debugging</h2>
+<p>When response quality degrades, you need to know WHY. Was it retrieval? Generation? A prompt change?</p>
+<p><strong>Instrumentation Strategy:</strong></p>
 <ul>
-<li>UiPath bots orchestrating SAP Ariba web flows.</li>
-<li>Python scripts for reconciliation and QA checks.</li>
-<li>Power BI dashboards for operations and leadership visibility.</li>
+<li>OpenTelemetry traces linking retrieval → prompt → generation</li>
+<li>Structured logs with query embeddings, chunk IDs, and token counts</li>
+<li>Metrics tracked: p95 latency, chunk relevance scores, generation costs</li>
+<li>Daily Superset dashboards for operations team</li>
 </ul>
-<h2>Links</h2>
+<h2>Lesson 4: Version Everything</h2>
+<p>Knowledge bases evolve. When users report &quot;it used to work,&quot; you need to reproduce the exact state.</p>
+<p><strong>Versioning Approach:</strong></p>
 <ul>
-<li>Automation playbooks and KPI dashboards available upon request.</li>
+<li>Git-backed markdown sources with conventional commits</li>
+<li>Immutable chunk IDs with content hashes</li>
+<li>Embedding version tags in metadata</li>
+<li>Blue-green deployments for knowledge updates</li>
 </ul>
+<h2>Lesson 5: SLOs Drive Architecture</h2>
+<p>Our target was p95 ≤ 8s including media handling. This constraint shaped every decision:</p>
+<p><strong>Optimizations:</strong></p>
+<ul>
+<li>Async workers (Celery) for media normalization</li>
+<li>Response streaming for perceived performance</li>
+<li>Cached embeddings with invalidation strategy</li>
+<li>Separate slow/fast paths based on query complexity</li>
+</ul>
+<h2>Conclusion</h2>
+<p>Production RAG systems require more than good embeddings. Cost control, observability, and operational discipline are equally critical. Start with these patterns early—retrofitting them later is expensive.</p>
+<p><strong>Key Takeaways:</strong></p>
+<ul>
+<li>Hybrid search beats pure semantic</li>
+<li>Guard rails prevent cost disasters</li>
+<li>Deep observability enables debugging</li>
+<li>Version control everything</li>
+<li>SLOs drive architectural choices</li>
+</ul>
+<hr>
+<p><em>Want to discuss RAG architecture or SLO design? <a href="/contact/">Let's connect</a>.</em></p>
         </article>
-        <section aria-labelledby="stack-heading" class="flex flex-col gap-4">
-          <h2 id="stack-heading" class="text-lg font-semibold text-white">Stack and tooling</h2>
-          <ul class="flex flex-wrap gap-2"><li class="rounded-md border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">SAP Ariba</li><li class="rounded-md border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">RPA</li><li class="rounded-md border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">Automation scripts</li></ul>
-        </section>
-        <section aria-labelledby="links-heading" class="flex flex-col gap-4">
-          <h2 id="links-heading" class="text-lg font-semibold text-white">Links</h2>
-          <div class="flex flex-wrap gap-4"></div>
-        </section>
         <section aria-labelledby="cta-heading" class="card-elevated-primary">
           <div class="flex flex-col gap-4 p-8">
-            <h2 id="cta-heading" class="text-xl font-semibold text-white">Need similar results?</h2>
-          <p class="text-base text-slate-300">I help teams ship reliable assistants, governed data platforms, and automation with measurable SLOs.</p>
-            <a class="btn-primary-enhanced self-start" href="/contact/">Work together</a>
+            <h2 id="cta-heading" class="text-xl font-semibold text-white">Enjoyed this article?</h2>
+            <p class="text-base text-slate-300">I write about production ML systems, data platforms, and engineering best practices. <a href="/blog/" class="text-primary hover:underline">Read more posts</a> or <a href="/contact/" class="text-primary hover:underline">let's connect</a>.</p>
           </div>
         </section>
       </div>

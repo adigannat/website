@@ -1,0 +1,152 @@
+[
+  {
+    "type": "page",
+    "title": "Home",
+    "excerpt": "Applied ML Engineer building production RAG and AWS Iceberg platforms.",
+    "url": "/",
+    "tags": []
+  },
+  {
+    "type": "page",
+    "title": "Projects",
+    "excerpt": "Technical projects and case studies showcasing production systems.",
+    "url": "/projects/",
+    "tags": []
+  },
+  {
+    "type": "page",
+    "title": "About",
+    "excerpt": "Applied ML Engineer delivering production retrieval-augmented assistants and governed data platforms. Ship FastAPI + Postgres/pgvector systems, AWS Iceberg analytics stacks, and automation with measurable SLOs, GitHub Actions CI/CD, and cost guardrails.\n SLO definition, Cost governance, Edge/webhook design, Incident runbooks, Security and data validation",
+    "url": "/about/",
+    "tags": []
+  },
+  {
+    "type": "page",
+    "title": "Contact",
+    "excerpt": "Get in touch to discuss ML projects, data platforms, or collaboration opportunities.",
+    "url": "/contact/",
+    "tags": []
+  },
+  {
+    "type": "page",
+    "title": "Blog",
+    "excerpt": "Technical articles on software engineering, ML systems, and architecture.",
+    "url": "/blog/",
+    "tags": []
+  },
+  {
+    "type": "project",
+    "title": "RAG Assistant for WhatsApp Support",
+    "excerpt": "FastAPI webhook with pgvector retrieval powering regulated WhatsApp support.",
+    "url": "/projects/#rag-whatsapp-assistant",
+    "tags": [
+      "FastAPI",
+      "pgvector",
+      "SLOs"
+    ]
+  },
+  {
+    "type": "project",
+    "title": "AWS Iceberg Lakehouse with Embedded BI",
+    "excerpt": "Iceberg on S3 with Glue, Athena, Great Expectations, and Superset 5.0 embeds.",
+    "url": "/projects/#aws-iceberg-lakehouse",
+    "tags": [
+      "Iceberg",
+      "Great Expectations",
+      "Superset"
+    ]
+  },
+  {
+    "type": "project",
+    "title": "GLEAC Client Interaction Chatbot",
+    "excerpt": "Automation rollout delivering a 91% lift in interactions and measurable adoption.",
+    "url": "/projects/#gleac-chatbot-impact",
+    "tags": [
+      "Automation",
+      "Enablement",
+      "Analytics"
+    ]
+  },
+  {
+    "type": "project",
+    "title": "SAP Ariba Workflow Automations",
+    "excerpt": "Process mining and scripted automations delivering 48% less repetitive work.",
+    "url": "/projects/#estee-lauder-ariba-automation",
+    "tags": [
+      "RPA",
+      "SAP Ariba",
+      "Automation"
+    ]
+  },
+  {
+    "type": "case-study",
+    "title": "RAG Assistant - Production WhatsApp Chatbot",
+    "excerpt": "Context",
+    "url": "/case-studies/rag-whatsapp-assistant/",
+    "tags": [
+      "fastapi",
+      "pgvector",
+      "whatsapp",
+      "slo"
+    ]
+  },
+  {
+    "type": "case-study",
+    "title": "AWS Iceberg Lakehouse with Embedded BI",
+    "excerpt": "Context",
+    "url": "/case-studies/aws-iceberg-lakehouse/",
+    "tags": [
+      "iceberg",
+      "glue",
+      "athena",
+      "superset",
+      "governance"
+    ]
+  },
+  {
+    "type": "case-study",
+    "title": "Engagement Bot Rollout at GLEAC",
+    "excerpt": "Context",
+    "url": "/case-studies/gleac-chatbot/",
+    "tags": [
+      "automation",
+      "chatbot",
+      "enablement"
+    ]
+  },
+  {
+    "type": "case-study",
+    "title": "SAP Ariba Workflow Automations",
+    "excerpt": "Context",
+    "url": "/case-studies/estee-lauder-automation/",
+    "tags": [
+      "automation",
+      "sap",
+      "process-mining"
+    ]
+  },
+  {
+    "type": "blog",
+    "title": "Building Scalable RAG Systems: Lessons from Production",
+    "excerpt": "Five critical lessons learned from deploying retrieval-augmented generation systems in regulated environments with strict SLO requirements.",
+    "url": "/blog/building-scalable-rag-systems/",
+    "tags": [
+      "RAG",
+      "FastAPI",
+      "Production",
+      "Architecture"
+    ]
+  },
+  {
+    "type": "blog",
+    "title": "Data Quality Gates with Great Expectations: A Practical Guide",
+    "excerpt": "How to implement automated data validation in production pipelines using Great Expectations, with real examples from Iceberg ingestion workflows.",
+    "url": "/blog/data-quality-great-expectations/",
+    "tags": [
+      "Data Quality",
+      "Great Expectations",
+      "Python",
+      "Testing"
+    ]
+  }
+]

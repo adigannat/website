@@ -1,5 +1,16 @@
 import "../css/tailwind.css";
 import "./animations";
+import { initMobileMenu } from "./mobile-menu";
+import { ThemeManager, initThemeToggle } from "./theme";
+import "./site-search";
+
+// Initialize theme (before other UI initializes)
+const themeManager = new ThemeManager();
+themeManager.watchSystemPreference();
+initThemeToggle(themeManager);
+
+// Initialize mobile menu
+initMobileMenu();
 
 const yearEl = document.querySelector("[data-current-year]");
 if (yearEl) {

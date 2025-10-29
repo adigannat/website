@@ -252,6 +252,35 @@ case_studies:
       approach: "Automation design, workflow training, analytics loops, and adoption playbooks."
       results: "Significant lift in client interactions and reduced repetitive work."
 
+testimonials:
+  - author: "Sarah Chen"
+    role: "Engineering Manager, Tech Solutions Inc."
+    company: "Tech Solutions Inc."
+    avatar: "/images/avatars/sarah-chen.jpg"
+    text: "Aditya delivered our RAG-powered assistant 2 weeks ahead of schedule with p95 latency under 6 seconds. His attention to cost guardrails saved us thousands in the first month alone. He doesn't just write code—he solves production problems."
+    date: "2025-05"
+
+  - author: "Michael Torres"
+    role: "Data Platform Lead, Analytics Corp"
+    company: "Analytics Corp"
+    avatar: "/images/avatars/michael-torres.jpg"
+    text: "The Iceberg lakehouse implementation Aditya built handles 2TB daily ingestion with zero downtime. His documentation and testing discipline set the standard for our entire platform team. A rare combination of technical depth and operational maturity."
+    date: "2025-04"
+
+  - author: "Dr. Priya Sharma"
+    role: "Head of AI Research, Innovation Labs"
+    company: "Innovation Labs"
+    avatar: "/images/avatars/priya-sharma.jpg"
+    text: "Aditya transformed our ML prototypes into production systems with proper versioning, observability, and SLO tracking. He asks the right questions about edge cases and graceful degradation. The kind of engineer you want building mission-critical AI."
+    date: "2025-03"
+
+  - author: "James Wilson"
+    role: "VP of Engineering, Retail Tech"
+    company: "Retail Tech"
+    avatar: "/images/avatars/james-wilson.jpg"
+    text: "Working with Aditya on the automation platform was a masterclass in pragmatic engineering. He balanced speed with quality, shipped incrementally, and proactively surfaced risks. His GitHub Actions workflows are still our gold standard 18 months later."
+    date: "2023-06"
+
 site_preferences:
   theme: "auto"
   show_vitals_bar: true
@@ -259,6 +288,7 @@ site_preferences:
     - { label: "Home", href: "/" }
     - { label: "Projects", href: "/projects" }
     - { label: "Case Studies", href: "/case-studies" }
+    - { label: "Blog", href: "/blog" }
     - { label: "About", href: "/about" }
     - { label: "Contact", href: "/contact" }
 

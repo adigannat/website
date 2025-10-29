@@ -16,6 +16,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://adigannat.com/blog/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://adigannat.com/about/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -47,6 +52,18 @@
     <loc>https://adigannat.com/case-studies/estee-lauder-automation/</loc>
     <lastmod>2023-03-01</lastmod>
     <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://adigannat.com/blog/building-scalable-rag-systems/</loc>
+    <lastmod>2025-10-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://adigannat.com/blog/data-quality-great-expectations/</loc>
+    <lastmod>2025-09-28</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 </urlset>

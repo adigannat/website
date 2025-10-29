@@ -2,6 +2,8 @@ Mission
 -------
 Design and ship a handcrafted, high-performance portfolio for Aditya Ganesh. The site must highlight projects, GitHub activity, and in-depth case studies. Deploy to Cloudflare Pages with minimal JavaScript, production-grade quality, and verifiable Proof (Core Web Vitals, accessibility, SEO, security headers).
 
+**v2 Enhancement Mission**: Evolve the portfolio beyond a showcase into a technical demonstration that impresses recruiters by showcasing both the work AND the site itself as a sophisticated engineering project. See `PLANS.md` section 15-19 for enhancement tiers and implementation details.
+
 Global Principles
 -----------------
 - **Performance**: LCP <= 2.5 s, INP < 200 ms, CLS <= 0.1 on every key page.
@@ -14,15 +16,27 @@ Global Principles
 
 Repository Navigation
 ---------------------
+- `PLANS.md` – Master planning document including v1 foundations and v2 enhancement tiers (sections 15-19).
+- `AGENTS.md` – This file; agent roster and responsibilities.
 - `docs/architecture.md` – Canonical architecture brief (routes, CSP, bindings, interface map).
 - `content/` – Authoring source (profile YAML, `projects.json`, case-study markdown).
 - `scripts/generate-content.ts` – Builds pages from content into `src/pages/**/index.html`.
 - `src/` – Source assets.
   - `src/pages/` – Generated static HTML entry points by route.
-  - `src/css/tailwind.css` – Tailwind entry with custom tokens.
-  - `src/ts/` – Minimal progressive enhancement modules (`main.ts`, `projects.ts`, etc.).
+  - `src/css/tailwind.css` – Tailwind entry with custom tokens and enhancement component styles.
+  - `src/ts/` – Progressive enhancement modules:
+    - `main.ts` – Core initialization (theme, mobile menu, vitals, year)
+    - `animations.ts` – Scroll-triggered animations with IntersectionObserver
+    - `projects.ts` – Tag-based filtering with accessibility
+    - `contact.ts` – Form handling with Turnstile
+    - `home.ts` – GitHub API integration with shimmer loading
+    - **v2 Enhancements:**
+      - `theme.ts` – Dark/light mode with localStorage persistence
+      - `mobile-menu.ts` – Drawer navigation for mobile/tablet
+      - `skills-viz.ts` – Interactive data visualization (donut + bar charts)
+      - `toc.ts` – Table of contents with scroll spy
 - `functions/` – Cloudflare Pages Functions (to be implemented for `/api/contact`, `/api/github`, optional `/api/og`).
-- `public/` – Static assets published verbatim (favicons, robots, fonts, images).
+- `public/` – Static assets published verbatim (favicons, robots, fonts, images, resume.pdf).
 - `postcss.config.cjs`, `tailwind.config.js`, `vite.config.ts` – Build configuration.
 - `wrangler.toml` – Environment bindings for Pages Functions (KV, D1, secrets).
 - `.github/workflows/` – CI pipelines (to be completed by Release/DevEx agent).
@@ -120,17 +134,69 @@ Agent Roster
   - Keep CI green; enforce quality gates before deploy.
 - **Acceptance**: CI pipeline green on sample PR, previews functional, documentation clear.
 
+### 10. Enhancement Engineer Agent (v2)
+- **Goal**: Implement post-launch enhancements that showcase technical depth while maintaining performance and accessibility standards.
+- **Inputs**: `PLANS.md` sections 15-19, feature tier prioritization, recruiter feedback.
+- **Deliverables**: TypeScript modules for interactive features, CSS component styles, enhanced page layouts, documentation updates.
+- **Directives**:
+  - Follow tiered implementation approach (see PLANS.md §16)
+  - Each feature must be:
+    - Self-contained TypeScript module with clear interface
+    - Code-split and lazy-loaded where appropriate
+    - Fully accessible (WCAG 2.2 AA)
+    - Performance-neutral (no Core Web Vitals regression)
+    - Mobile-responsive with progressive enhancement
+  - Maintain bundle budget: ≤20KB gzipped per page
+  - Document each feature in PLANS.md with implementation details
+  - Update tracking in PLANS.md §18 after completion
+- **Current Status**:
+  - ✅ Tier 1 Complete (5/5 features)
+    - `src/ts/theme.ts` - Dark/light mode toggle
+    - `src/ts/mobile-menu.ts` - Mobile hamburger navigation
+    - `src/ts/skills-viz.ts` - Interactive skills dashboard
+    - `src/ts/toc.ts` - Table of contents with scroll spy
+    - Resume download buttons in header + mobile menu
+  - Next: Tier 2 features pending prioritization
+- **Acceptance**:
+  - Build passes with zero regressions
+  - Lighthouse ≥ 95 maintained
+  - Biome linting clean
+  - Feature demonstrates technical capability
+  - Improves recruiter/user experience measurably
+
 Handoffs & Communication
 ------------------------
+**v1 Foundation:**
 - Architect ➔ UI/UX, Edge/API, Performance, Privacy/Security (interfaces, headers, env map).
 - Content Strategist ➔ UI/UX (copy lengths, tone), SEO/Schema (front matter, metadata).
 - Edge/API ➔ UI/UX (API response contracts), Performance (cache strategy), Privacy/Security (headers, secrets).
 - Performance/Accessibility/SEO/Security ➔ Release (CI checks, budgets, gating rules).
 
+**v2 Enhancements:**
+- Enhancement Engineer ➔ All agents (feature compliance verification)
+  - Performance: Bundle budgets, Core Web Vitals monitoring
+  - Accessibility: WCAG compliance, keyboard/SR testing
+  - UI/UX: Component consistency, responsive behavior
+  - Release: CI integration, documentation updates
+- Enhancement Engineer ➔ PLANS.md (feature tracking, metrics, status updates)
+
 Definition of Done
 ------------------
+**v1 Foundation:**
 - CI green (typecheck, tests, build, Lighthouse >= 95, Axe clean).
 - CSP and security headers enforced; Turnstile verified server-side.
 - OG images render; JSON-LD validated; sitemap + robots shipped.
 - GitHub projects load via KV-cached API; contact form delivers successfully.
 - Core Web Vitals meet stated targets in lab data; manual accessibility checks complete.
+
+**v2 Enhancements (per feature):**
+- TypeScript module passes strict type checking
+- Biome linting clean with zero warnings
+- Build completes without errors or performance regression
+- Feature documented in PLANS.md with implementation details
+- Lighthouse score ≥ 95 maintained (no regression)
+- Accessibility verified (keyboard navigation, screen reader, ARIA)
+- Mobile responsive behavior confirmed
+- Cross-browser testing passed (Chrome, Firefox, Safari)
+- Bundle size impact measured and within budget
+- Feature tracking updated in PLANS.md §18

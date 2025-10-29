@@ -5,9 +5,9 @@
 	},
 	"linter": {
 		"enabled": true,
-		"ignore": ["dist", "node_modules"]
+		"ignore": ["dist", "node_modules", ".lighthouseci"]
 	},
 	"files": {
-		"ignore": ["dist/**", "node_modules/**"]
+		"ignore": ["dist/**", "node_modules/**", ".lighthouseci/**"]
 	}
 }

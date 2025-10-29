@@ -9,7 +9,8 @@
 			"Bash(npm install)",
 			"Bash(npm audit:*)",
 			"Bash(cat:*)",
-			"Bash(npm run test:lh:*)"
+			"Bash(npm run test:lh:*)",
+			"Bash(npm install:*)"
 		],
 		"deny": [],
 		"ask": []

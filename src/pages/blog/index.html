@@ -5,9 +5,9 @@
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Case Studies - Aditya Ganesh</title>
+    <title>Blog - Aditya Ganesh</title>
     <meta name="description" content="Applied ML Engineer building production RAG and AWS Iceberg platforms." />
-    <link rel="canonical" href="https://adigannat.com/case-studies/" />
+    <link rel="canonical" href="https://adigannat.com/blog/" />
   </head>
   <body class="bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
     <a href="#main" class="absolute left-4 top-4 -translate-y-16 rounded bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground focus:translate-y-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary">Skip to content</a>
@@ -18,8 +18,8 @@
           <ul class="site-nav">
             <li><a class="nav-link focus-ring" href="/">Home</a></li>
           <li><a class="nav-link focus-ring" href="/projects/">Projects</a></li>
-          <li><a class="nav-link nav-link--active focus-ring" href="/case-studies/" aria-current="page">Case Studies</a></li>
-          <li><a class="nav-link focus-ring" href="/blog/">Blog</a></li>
+          <li><a class="nav-link focus-ring" href="/case-studies/">Case Studies</a></li>
+          <li><a class="nav-link nav-link--active focus-ring" href="/blog/" aria-current="page">Blog</a></li>
           <li><a class="nav-link focus-ring" href="/about/">About</a></li>
           <li><a class="nav-link focus-ring" href="/contact/">Contact</a></li>
           </ul>
@@ -67,8 +67,8 @@
       <nav class="mobile-menu-drawer__nav" aria-label="Mobile primary navigation">
         <a class="mobile-menu-drawer__link" href="/">Home</a>
         <a class="mobile-menu-drawer__link" href="/projects/">Projects</a>
-        <a class="mobile-menu-drawer__link mobile-menu-drawer__link--active" href="/case-studies/" aria-current="page">Case Studies</a>
-        <a class="mobile-menu-drawer__link" href="/blog/">Blog</a>
+        <a class="mobile-menu-drawer__link" href="/case-studies/">Case Studies</a>
+        <a class="mobile-menu-drawer__link mobile-menu-drawer__link--active" href="/blog/" aria-current="page">Blog</a>
         <a class="mobile-menu-drawer__link" href="/about/">About</a>
         <a class="mobile-menu-drawer__link" href="/contact/">Contact</a>
       </nav>
@@ -91,58 +91,36 @@
     </div>
     <main id="main" class="mx-auto flex w-full max-w-4xl flex-col gap-10 px-6 pb-24 pt-10">
       <header class="page-hero" data-animation="fade-in-up">
-        <p class="page-eyebrow text-primary">Case studies</p>
-        <h1 class="text-display-lg font-semibold leading-tight text-white md:text-display-xl">Outcome-first narratives</h1>
-        <p class="page-lead max-w-2xl">Each engagement breaks down context, problem, approach, and measurable outcomes.</p>
+        <p class="page-eyebrow text-primary">Blog</p>
+        <h1 class="text-display-lg font-semibold leading-tight text-white md:text-display-xl">Technical writings</h1>
+        <p class="page-lead max-w-2xl">Insights from building production ML systems, data platforms, and automation at scale.</p>
       </header>
-      <section aria-labelledby="case-list" class="flex flex-col gap-6" data-case-list>
-        <h2 id="case-list" class="sr-only">Case study list</h2>
-        <article class="card-elevated">
+      <section aria-labelledby="blog-list" class="flex flex-col gap-6" data-blog-list>
+        <h2 id="blog-list" class="sr-only">Blog post list</h2>
+        <article class="card-elevated hover:shadow-primary transition-shadow">
           <div class="flex flex-col gap-4 p-6">
-            <div class="flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-accent">
-              <span>May 2025</span>
+            <div class="flex items-center justify-between gap-3 text-xs text-slate-400">
+              <time datetime="2025-10-15">Oct 2025</time>
+              <span>8 min read</span>
             </div>
             <h3 class="text-xl font-semibold text-white">
-              <a class="hover:text-primary focus-ring" href="/case-studies/rag-whatsapp-assistant/">RAG Assistant - Production WhatsApp Chatbot</a>
+              <a class="hover:text-primary focus-ring" href="/blog/building-scalable-rag-systems/">Building Scalable RAG Systems: Lessons from Production</a>
             </h3>
-            <p class="text-sm text-slate-300">Context</p>
-            <div class="flex flex-wrap gap-2"><span class="badge">5-8 s p95 response</span> <span class="badge">60 s ingest p95</span></div>
+            <p class="text-sm text-slate-300">Five critical lessons learned from deploying retrieval-augmented generation systems in regulated environments with strict SLO requirements.</p>
+            <div class="flex flex-wrap gap-2"><span class="badge">RAG</span> <span class="badge">FastAPI</span> <span class="badge">Production</span></div>
           </div>
         </article>
-        <article class="card-elevated">
+        <article class="card-elevated hover:shadow-primary transition-shadow">
           <div class="flex flex-col gap-4 p-6">
-            <div class="flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-accent">
-              <span>Apr 2025</span>
+            <div class="flex items-center justify-between gap-3 text-xs text-slate-400">
+              <time datetime="2025-09-28">Sep 2025</time>
+              <span>6 min read</span>
             </div>
             <h3 class="text-xl font-semibold text-white">
-              <a class="hover:text-primary focus-ring" href="/case-studies/aws-iceberg-lakehouse/">AWS Iceberg Lakehouse with Embedded BI</a>
+              <a class="hover:text-primary focus-ring" href="/blog/data-quality-great-expectations/">Data Quality Gates with Great Expectations: A Practical Guide</a>
             </h3>
-            <p class="text-sm text-slate-300">Context</p>
-            <div class="flex flex-wrap gap-2"><span class="badge">&lt;1% data loss across ~260k rows</span> <span class="badge">Row-level security for 7 business units</span></div>
-          </div>
-        </article>
-        <article class="card-elevated">
-          <div class="flex flex-col gap-4 p-6">
-            <div class="flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-accent">
-              <span>Feb 2025</span>
-            </div>
-            <h3 class="text-xl font-semibold text-white">
-              <a class="hover:text-primary focus-ring" href="/case-studies/gleac-chatbot/">Engagement Bot Rollout at GLEAC</a>
-            </h3>
-            <p class="text-sm text-slate-300">Context</p>
-            <div class="flex flex-wrap gap-2"><span class="badge">91% increase in client interactions</span> <span class="badge">33% reduction in time waste</span></div>
-          </div>
-        </article>
-        <article class="card-elevated">
-          <div class="flex flex-col gap-4 p-6">
-            <div class="flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-accent">
-              <span>Mar 2023</span>
-            </div>
-            <h3 class="text-xl font-semibold text-white">
-              <a class="hover:text-primary focus-ring" href="/case-studies/estee-lauder-automation/">SAP Ariba Workflow Automations</a>
-            </h3>
-            <p class="text-sm text-slate-300">Context</p>
-            <div class="flex flex-wrap gap-2"><span class="badge">48% reduction in repetitive work</span> <span class="badge">20k+ client records automated</span></div>
+            <p class="text-sm text-slate-300">How to implement automated data validation in production pipelines using Great Expectations, with real examples from Iceberg ingestion workflows.</p>
+            <div class="flex flex-wrap gap-2"><span class="badge">Data Quality</span> <span class="badge">Great Expectations</span> <span class="badge">Python</span></div>
           </div>
         </article>
       </section>

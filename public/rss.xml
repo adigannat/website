@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Aditya Ganesh's Blog</title>
+    <link>https://adigannat.com/blog/</link>
+    <description>Technical articles on software engineering, ML, and system design</description>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 15 Oct 2025 00:00:00 GMT</lastBuildDate>
+    <atom:link href="https://adigannat.com/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Building Scalable RAG Systems: Lessons from Production</title>
+      <link>https://adigannat.com/blog/building-scalable-rag-systems/</link>
+      <guid isPermaLink="true">https://adigannat.com/blog/building-scalable-rag-systems/</guid>
+      <pubDate>Wed, 15 Oct 2025 00:00:00 GMT</pubDate>
+      <author>adigannat@gmail.com (Aditya Ganesh)</author>
+      <description>Five critical lessons learned from deploying retrieval-augmented generation systems in regulated environments with strict SLO requirements.</description>
+      <category>RAG</category>
+      <category>FastAPI</category>
+      <category>Production</category>
+      <category>Architecture</category>
+    </item>
+    <item>
+      <title>Data Quality Gates with Great Expectations: A Practical Guide</title>
+      <link>https://adigannat.com/blog/data-quality-great-expectations/</link>
+      <guid isPermaLink="true">https://adigannat.com/blog/data-quality-great-expectations/</guid>
+      <pubDate>Sun, 28 Sep 2025 00:00:00 GMT</pubDate>
+      <author>adigannat@gmail.com (Aditya Ganesh)</author>
+      <description>How to implement automated data validation in production pipelines using Great Expectations, with real examples from Iceberg ingestion workflows.</description>
+      <category>Data Quality</category>
+      <category>Great Expectations</category>
+      <category>Python</category>
+      <category>Testing</category>
+    </item>
+  </channel>
+</rss>

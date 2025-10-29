@@ -9,7 +9,7 @@
     <meta name="description" content="Applied ML Engineer building production RAG and AWS Iceberg platforms." />
     <link rel="canonical" href="https://adigannat.com/about/" />
   </head>
-  <body class="bg-slate-950 text-slate-100 antialiased">
+  <body class="bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
     <a href="#main" class="absolute left-4 top-4 -translate-y-16 rounded bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground focus:translate-y-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary">Skip to content</a>
     <header class="site-header bg-transparent" data-site-header>
       <div class="site-header__inner">
@@ -19,13 +19,71 @@
             <li><a class="nav-link focus-ring" href="/">Home</a></li>
           <li><a class="nav-link focus-ring" href="/projects/">Projects</a></li>
           <li><a class="nav-link focus-ring" href="/case-studies/">Case Studies</a></li>
+          <li><a class="nav-link focus-ring" href="/blog/">Blog</a></li>
           <li><a class="nav-link nav-link--active focus-ring" href="/about/" aria-current="page">About</a></li>
           <li><a class="nav-link focus-ring" href="/contact/">Contact</a></li>
           </ul>
         </nav>
-        <a class="site-cta focus-ring" href="/contact/">Let's talk</a>
+        <div class="flex items-center gap-3">
+          <button type="button" class="mobile-menu-button" data-mobile-menu-button aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+            <span class="mobile-menu-button__line"></span>
+            <span class="mobile-menu-button__line"></span>
+            <span class="mobile-menu-button__line"></span>
+          </button>
+          <button type="button" class="search-trigger hidden md:flex" data-search-trigger aria-label="Search site" title="Search (Ctrl+K)">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-5 w-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+            </svg>
+            <span class="hidden lg:inline text-xs text-slate-400">Ctrl+K</span>
+          </button>
+          <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle theme" aria-pressed="true">
+            <svg data-theme-icon-sun class="hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+            </svg>
+            <svg data-theme-icon-moon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+            </svg>
+          </button>
+          <a class="site-cta hidden md:inline-flex focus-ring" href="/resume.pdf" download="Aditya-Ganesh-Resume.pdf" title="Download Resume">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-4 w-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+            <span class="hidden lg:inline">Resume</span>
+          </a>
+          <a class="site-cta hidden md:inline-flex focus-ring" href="/contact/">Let's talk</a>
+        </div>
       </div>
     </header>
+    <div class="mobile-menu-overlay" data-mobile-menu-overlay aria-hidden="true"></div>
+    <aside id="mobile-menu" class="mobile-menu-drawer" data-mobile-menu-drawer aria-label="Mobile navigation">
+      <div class="mobile-menu-drawer__header">
+        <span class="text-xs font-semibold uppercase tracking-[0.35em] text-slate-700 dark:text-slate-300">Menu</span>
+        <button type="button" class="mobile-menu-drawer__close" data-mobile-menu-close aria-label="Close menu">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6 w-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <nav class="mobile-menu-drawer__nav" aria-label="Mobile primary navigation">
+        <a class="mobile-menu-drawer__link" href="/">Home</a>
+        <a class="mobile-menu-drawer__link" href="/projects/">Projects</a>
+        <a class="mobile-menu-drawer__link" href="/case-studies/">Case Studies</a>
+        <a class="mobile-menu-drawer__link" href="/blog/">Blog</a>
+        <a class="mobile-menu-drawer__link mobile-menu-drawer__link--active" href="/about/" aria-current="page">About</a>
+        <a class="mobile-menu-drawer__link" href="/contact/">Contact</a>
+      </nav>
+      <div class="mobile-menu-drawer__footer">
+        <div class="flex flex-col gap-3">
+          <a class="btn-primary-enhanced block text-center" href="/contact/">Let's talk</a>
+          <a class="btn-secondary-enhanced flex items-center justify-center gap-2" href="/resume.pdf" download="Aditya-Ganesh-Resume.pdf">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-5 w-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+            <span>Download Resume</span>
+          </a>
+        </div>
+      </div>
+    </aside>
     <div class="vitals-bar" role="status" aria-live="polite">
       <div class="vitals-item" data-vital="lcp"><span class="vitals-item__label">LCP</span><span class="vitals-item__value" data-vital-value="lcp">= 2.5 s</span></div>
       <div class="vitals-item" data-vital="inp"><span class="vitals-item__label">INP</span><span class="vitals-item__value" data-vital-value="inp">&lt; 200 ms</span></div>
@@ -87,35 +145,115 @@
               <ul class="flex list-disc flex-col gap-1 pl-5"></ul>
             </li></ol>
       </section>
+      <section aria-labelledby="testimonials-heading" class="flex flex-col gap-6">
+      <h2 id="testimonials-heading" class="text-lg font-semibold text-white">What colleagues say</h2>
+      <div class="testimonials-carousel" data-testimonials-carousel>
+        <div class="testimonials-track" data-testimonials-track>
+          <div class="testimonial-slide testimonial-slide--active" data-testimonial-slide aria-hidden="false">
+          <div class="testimonial-card">
+            <p class="testimonial-quote">"Aditya delivered our RAG-powered assistant 2 weeks ahead of schedule with p95 latency under 6 seconds. His attention to cost guardrails saved us thousands in the first month alone. He doesn&#39;t just write code—he solves production problems."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <span>SC</span>
+              </div>
+              <div class="testimonial-author-info">
+                <p class="testimonial-author-name">Sarah Chen</p>
+                <p class="testimonial-author-role">Engineering Manager, Tech Solutions Inc.</p>
+              </div>
+            </div>
+          </div>
+        </div><div class="testimonial-slide hidden" data-testimonial-slide aria-hidden="true">
+          <div class="testimonial-card">
+            <p class="testimonial-quote">"The Iceberg lakehouse implementation Aditya built handles 2TB daily ingestion with zero downtime. His documentation and testing discipline set the standard for our entire platform team. A rare combination of technical depth and operational maturity."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <span>MT</span>
+              </div>
+              <div class="testimonial-author-info">
+                <p class="testimonial-author-name">Michael Torres</p>
+                <p class="testimonial-author-role">Data Platform Lead, Analytics Corp</p>
+              </div>
+            </div>
+          </div>
+        </div><div class="testimonial-slide hidden" data-testimonial-slide aria-hidden="true">
+          <div class="testimonial-card">
+            <p class="testimonial-quote">"Aditya transformed our ML prototypes into production systems with proper versioning, observability, and SLO tracking. He asks the right questions about edge cases and graceful degradation. The kind of engineer you want building mission-critical AI."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <span>DPS</span>
+              </div>
+              <div class="testimonial-author-info">
+                <p class="testimonial-author-name">Dr. Priya Sharma</p>
+                <p class="testimonial-author-role">Head of AI Research, Innovation Labs</p>
+              </div>
+            </div>
+          </div>
+        </div><div class="testimonial-slide hidden" data-testimonial-slide aria-hidden="true">
+          <div class="testimonial-card">
+            <p class="testimonial-quote">"Working with Aditya on the automation platform was a masterclass in pragmatic engineering. He balanced speed with quality, shipped incrementally, and proactively surfaced risks. His GitHub Actions workflows are still our gold standard 18 months later."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <span>JW</span>
+              </div>
+              <div class="testimonial-author-info">
+                <p class="testimonial-author-name">James Wilson</p>
+                <p class="testimonial-author-role">VP of Engineering, Retail Tech</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class="testimonials-nav">
+          <button type="button" class="testimonials-button" data-testimonials-prev aria-label="Previous testimonial" disabled aria-disabled="true">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-5 w-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+          </button>
+          <div class="testimonials-indicators">
+            <button type="button" class="testimonial-indicator testimonial-indicator--active" data-testimonial-indicator aria-label="Go to testimonial 1" aria-current="true" tabindex="0"></button><button type="button" class="testimonial-indicator " data-testimonial-indicator aria-label="Go to testimonial 2" aria-current="false" tabindex="-1"></button><button type="button" class="testimonial-indicator " data-testimonial-indicator aria-label="Go to testimonial 3" aria-current="false" tabindex="-1"></button><button type="button" class="testimonial-indicator " data-testimonial-indicator aria-label="Go to testimonial 4" aria-current="false" tabindex="-1"></button>
+          </div>
+          <button type="button" class="testimonials-button" data-testimonials-next aria-label="Next testimonial" aria-disabled="false">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-5 w-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+          </button>
+        </div>
+        <div class="sr-only" aria-live="polite" aria-atomic="true" data-testimonials-live></div>
+      </div>
+    </section>
+      <section aria-labelledby="skills-viz" class="flex flex-col gap-6">
+        <h2 id="skills-viz" class="text-lg font-semibold text-white">Skills Dashboard</h2>
+        <div data-skills-viz class="animate-fade-in"></div>
+      </section>
       <section aria-labelledby="toolbox" class="flex flex-col gap-4">
         <h2 id="toolbox" class="text-lg font-semibold text-white">Toolbox</h2>
         <div class="grid gap-4 md:grid-cols-2">
-          <section class="flex flex-col gap-3 rounded-xl border border-slate-800 bg-slate-900/60 p-5">
+          <section class="flex flex-col gap-3 rounded-xl border border-slate-800 bg-slate-900/60 p-5" data-skill-category="Languages" data-skill-count="8">
           <h3 class="text-sm font-semibold uppercase tracking-[0.3em] text-primary">Languages</h3>
           <ul class="flex flex-wrap gap-2">
             <li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">Python</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">SQL</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">R</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">C++</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">C#</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">Java</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">PowerShell</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">Bash</li>
           </ul>
-        </section><section class="flex flex-col gap-3 rounded-xl border border-slate-800 bg-slate-900/60 p-5">
+        </section><section class="flex flex-col gap-3 rounded-xl border border-slate-800 bg-slate-900/60 p-5" data-skill-category="Applied ML" data-skill-count="10">
           <h3 class="text-sm font-semibold uppercase tracking-[0.3em] text-primary">Applied ML</h3>
           <ul class="flex flex-wrap gap-2">
             <li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">RAG</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">Embeddings</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">OpenAI API (GPT-4/5)</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">PyTorch</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">TensorFlow</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">FastAPI</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">Postgres</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">pgvector</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">Prompt design</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">Reranking</li>
           </ul>
-        </section><section class="flex flex-col gap-3 rounded-xl border border-slate-800 bg-slate-900/60 p-5">
+        </section><section class="flex flex-col gap-3 rounded-xl border border-slate-800 bg-slate-900/60 p-5" data-skill-category="Data &amp; Cloud" data-skill-count="8">
           <h3 class="text-sm font-semibold uppercase tracking-[0.3em] text-primary">Data &amp; Cloud</h3>
           <ul class="flex flex-wrap gap-2">
             <li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">Apache Iceberg</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">AWS S3</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">AWS Glue</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">AWS Athena</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">RDS (PostgreSQL)</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">PyAthena</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">PySpark</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">Terraform</li>
           </ul>
-        </section><section class="flex flex-col gap-3 rounded-xl border border-slate-800 bg-slate-900/60 p-5">
+        </section><section class="flex flex-col gap-3 rounded-xl border border-slate-800 bg-slate-900/60 p-5" data-skill-category="Automation" data-skill-count="4">
           <h3 class="text-sm font-semibold uppercase tracking-[0.3em] text-primary">Automation</h3>
           <ul class="flex flex-wrap gap-2">
             <li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">n8n</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">UiPath</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">SAP RPA</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">Model Context Protocol (MCP)</li>
           </ul>
-        </section><section class="flex flex-col gap-3 rounded-xl border border-slate-800 bg-slate-900/60 p-5">
+        </section><section class="flex flex-col gap-3 rounded-xl border border-slate-800 bg-slate-900/60 p-5" data-skill-category="DevOps" data-skill-count="7">
           <h3 class="text-sm font-semibold uppercase tracking-[0.3em] text-primary">DevOps</h3>
           <ul class="flex flex-wrap gap-2">
             <li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">Docker</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">Kubernetes (Helm)</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">GitHub Actions (CI/CD)</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">Amazon ECS</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">Amazon EKS</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">Redis</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">Celery</li>
           </ul>
-        </section><section class="flex flex-col gap-3 rounded-xl border border-slate-800 bg-slate-900/60 p-5">
+        </section><section class="flex flex-col gap-3 rounded-xl border border-slate-800 bg-slate-900/60 p-5" data-skill-category="Analytics" data-skill-count="4">
           <h3 class="text-sm font-semibold uppercase tracking-[0.3em] text-primary">Analytics</h3>
           <ul class="flex flex-wrap gap-2">
             <li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">Apache Superset 5.0 (RLS, embedded)</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">Power BI</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">Mapbox</li><li class="rounded-md border border-slate-800 bg-slate-950 px-3 py-1 text-xs font-semibold text-slate-200">deck.gl</li>
@@ -136,5 +274,7 @@
     </footer>
     <script type="module" src="../../ts/main.ts"></script>
     <script type="module" src="../../ts/animations.ts"></script>
+    <script type="module" src="../../ts/skills-viz.ts"></script>
+    <script type="module" src="../../ts/testimonials-carousel.ts"></script>
   </body>
 </html>

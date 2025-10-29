@@ -40,6 +40,14 @@ type ProfileYaml = {
 		summary?: string;
 		achievements: string[];
 	}>;
+	testimonials?: Array<{
+		author: string;
+		role: string;
+		company: string;
+		avatar: string;
+		text: string;
+		date: string;
+	}>;
 	projects: ProjectSummary[];
 	case_studies: CaseStudyOutline[];
 	site_preferences: {
@@ -115,6 +123,22 @@ type CaseStudy = {
 	excerpt: string;
 };
 
+type BlogPost = {
+	meta: BlogPostMeta;
+	html: string;
+	excerpt: string;
+};
+
+type BlogPostMeta = {
+	title: string;
+	date: string;
+	slug: string;
+	tags: string[];
+	excerpt?: string;
+	author: string;
+	readingTime: string;
+};
+
 type CaseStudyMeta = {
 	title: string;
 	date: string;
@@ -168,6 +192,30 @@ async function loadCaseStudies(): Promise<CaseStudy[]> {
 
 	studies.sort((a, b) => (a.meta.date < b.meta.date ? 1 : -1));
 	return studies;
+}
+
+async function loadBlogPosts(): Promise<BlogPost[]> {
+	const dir = path.join(contentDir, "blog");
+	try {
+		const files = await readdir(dir);
+		const posts: BlogPost[] = [];
+
+		for (const file of files) {
+			if (!file.endsWith(".md")) continue;
+			const raw = await readFile(path.join(dir, file), "utf8");
+			const parsed = matter(raw);
+			const meta = parsed.data as BlogPostMeta;
+			const html = markdown.render(parsed.content);
+			const excerpt = meta.excerpt || createExcerpt(parsed.content);
+			posts.push({ meta, html, excerpt });
+		}
+
+		posts.sort((a, b) => (a.meta.date < b.meta.date ? 1 : -1));
+		return posts;
+	} catch (error) {
+		// Blog directory doesn't exist yet, return empty array
+		return [];
+	}
 }
 
 function createExcerpt(markdownContent: string): string {
@@ -293,7 +341,7 @@ ${generatedNotice}
     <meta name="description" content="${escapeHtml(metaDescription)}" />
     <link rel="canonical" href="${escapeHtml(canonicalUrl)}" />
 ${headExtra ? `    ${headExtra}\n` : ""}  </head>
-  <body class="bg-slate-950 text-slate-100 antialiased">
+  <body class="bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
     <a href="#main" class="absolute left-4 top-4 -translate-y-16 rounded bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground focus:translate-y-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary">Skip to content</a>
     <header class="site-header bg-transparent" data-site-header>
       <div class="site-header__inner">
@@ -303,9 +351,73 @@ ${headExtra ? `    ${headExtra}\n` : ""}  </head>
             ${navHtml}
           </ul>
         </nav>
-        <a class="site-cta focus-ring" href="/contact/">Let's talk</a>
+        <div class="flex items-center gap-3">
+          <button type="button" class="mobile-menu-button" data-mobile-menu-button aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+            <span class="mobile-menu-button__line"></span>
+            <span class="mobile-menu-button__line"></span>
+            <span class="mobile-menu-button__line"></span>
+          </button>
+          <button type="button" class="search-trigger hidden md:flex" data-search-trigger aria-label="Search site" title="Search (Ctrl+K)">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-5 w-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+            </svg>
+            <span class="hidden lg:inline text-xs text-slate-400">Ctrl+K</span>
+          </button>
+          <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle theme" aria-pressed="true">
+            <svg data-theme-icon-sun class="hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+            </svg>
+            <svg data-theme-icon-moon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+            </svg>
+          </button>
+          <a class="site-cta hidden md:inline-flex focus-ring" href="/resume.pdf" download="Aditya-Ganesh-Resume.pdf" title="Download Resume">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-4 w-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+            <span class="hidden lg:inline">Resume</span>
+          </a>
+          <a class="site-cta hidden md:inline-flex focus-ring" href="/contact/">Let's talk</a>
+        </div>
       </div>
     </header>
+    <div class="mobile-menu-overlay" data-mobile-menu-overlay aria-hidden="true"></div>
+    <aside id="mobile-menu" class="mobile-menu-drawer" data-mobile-menu-drawer aria-label="Mobile navigation">
+      <div class="mobile-menu-drawer__header">
+        <span class="text-xs font-semibold uppercase tracking-[0.35em] text-slate-700 dark:text-slate-300">Menu</span>
+        <button type="button" class="mobile-menu-drawer__close" data-mobile-menu-close aria-label="Close menu">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6 w-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <nav class="mobile-menu-drawer__nav" aria-label="Mobile primary navigation">
+        ${navItems
+					.map((item) => {
+						const href = normalizeHref(item.href);
+						const isCurrent =
+							currentNav &&
+							normalizeHref(currentNav) === normalizeHref(item.href);
+						const className = isCurrent
+							? "mobile-menu-drawer__link mobile-menu-drawer__link--active"
+							: "mobile-menu-drawer__link";
+						const ariaCurrent = isCurrent ? ' aria-current="page"' : "";
+						return `<a class="${className}" href="${href}"${ariaCurrent}>${escapeHtml(item.label)}</a>`;
+					})
+					.join("\n        ")}
+      </nav>
+      <div class="mobile-menu-drawer__footer">
+        <div class="flex flex-col gap-3">
+          <a class="btn-primary-enhanced block text-center" href="/contact/">Let's talk</a>
+          <a class="btn-secondary-enhanced flex items-center justify-center gap-2" href="/resume.pdf" download="Aditya-Ganesh-Resume.pdf">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-5 w-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+            <span>Download Resume</span>
+          </a>
+        </div>
+      </div>
+    </aside>
 ${vitalsBar ? `    ${vitalsBar}\n` : ""}${body}
 ${renderFooter(profile)}
 ${scriptTags ? `    ${scriptTags}\n` : ""}${bodyExtra ? `    ${bodyExtra}\n` : ""}  </body>
@@ -553,37 +665,40 @@ function renderCaseStudyPage(
 		`<meta name="twitter:image" content="${ogImageUrl}" />`,
 	].join("\n    ");
 
-	const body = `    <main id="main" class="mx-auto flex w-full max-w-3xl flex-col gap-12 px-6 pb-24 pt-10">
-      <header class="flex flex-col gap-6">
-        <a class="text-xs font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/case-studies/">Case studies</a>
-        <div class="flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <p class="text-sm uppercase tracking-[0.4em] text-primary">Case Study</p>
-            <h1 class="text-4xl font-semibold leading-tight text-white sm:text-5xl">${escapeHtml(meta.title)}</h1>
+	const body = `    <main id="main" class="mx-auto flex w-full max-w-6xl gap-8 px-6 pb-24 pt-10">
+      <div class="flex flex-1 flex-col gap-12">
+        <header class="flex flex-col gap-6">
+          <a class="text-xs font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/case-studies/">Case studies</a>
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <p class="text-sm uppercase tracking-[0.4em] text-primary">Case Study</p>
+              <h1 class="text-4xl font-semibold leading-tight text-white sm:text-5xl">${escapeHtml(meta.title)}</h1>
+            </div>
+            <div class="flex flex-wrap gap-2">${tags}</div>
           </div>
-          <div class="flex flex-wrap gap-2">${tags}</div>
-        </div>
-        <div class="flex flex-wrap gap-3">${metrics}</div>
-        <p class="text-sm text-slate-400">Published ${escapeHtml(toDisplayDate(meta.date))}</p>
-      </header>
-      <article class="prose prose-invert max-w-none prose-headings:text-white prose-p:text-slate-200 prose-a:text-primary prose-strong:text-white">
+          <div class="flex flex-wrap gap-3">${metrics}</div>
+          <p class="text-sm text-slate-400">Published ${escapeHtml(toDisplayDate(meta.date))}</p>
+        </header>
+        <article class="prose prose-invert max-w-none prose-headings:text-white prose-p:text-slate-200 prose-a:text-primary prose-strong:text-white" data-toc-content>
 ${study.html.trim()}
-      </article>
-      <section aria-labelledby="stack-heading" class="flex flex-col gap-4">
-        <h2 id="stack-heading" class="text-lg font-semibold text-white">Stack and tooling</h2>
-        <ul class="flex flex-wrap gap-2">${stack}</ul>
-      </section>
-      <section aria-labelledby="links-heading" class="flex flex-col gap-4">
-        <h2 id="links-heading" class="text-lg font-semibold text-white">Links</h2>
-        <div class="flex flex-wrap gap-4">${links.join("")}</div>
-      </section>
-      <section aria-labelledby="cta-heading" class="card-elevated-primary">
-        <div class="flex flex-col gap-4 p-8">
-          <h2 id="cta-heading" class="text-xl font-semibold text-white">Need similar results?</h2>
+        </article>
+        <section aria-labelledby="stack-heading" class="flex flex-col gap-4">
+          <h2 id="stack-heading" class="text-lg font-semibold text-white">Stack and tooling</h2>
+          <ul class="flex flex-wrap gap-2">${stack}</ul>
+        </section>
+        <section aria-labelledby="links-heading" class="flex flex-col gap-4">
+          <h2 id="links-heading" class="text-lg font-semibold text-white">Links</h2>
+          <div class="flex flex-wrap gap-4">${links.join("")}</div>
+        </section>
+        <section aria-labelledby="cta-heading" class="card-elevated-primary">
+          <div class="flex flex-col gap-4 p-8">
+            <h2 id="cta-heading" class="text-xl font-semibold text-white">Need similar results?</h2>
           <p class="text-base text-slate-300">I help teams ship reliable assistants, governed data platforms, and automation with measurable SLOs.</p>
-          <a class="btn-primary-enhanced self-start" href="/contact/">Work together</a>
-        </div>
-      </section>
+            <a class="btn-primary-enhanced self-start" href="/contact/">Work together</a>
+          </div>
+        </section>
+      </div>
+      <aside class="hidden lg:block lg:w-64" data-toc aria-label="Table of contents"></aside>
     </main>`;
 
 	return layout({
@@ -592,7 +707,11 @@ ${study.html.trim()}
 		body,
 		currentNav: "/case-studies",
 		canonicalPath: `/case-studies/${meta.slug}/`,
-		scripts: ["../../../ts/main.ts", "../../../ts/animations.ts"],
+		scripts: [
+			"../../../ts/main.ts",
+			"../../../ts/animations.ts",
+			"../../../ts/toc.ts",
+		],
 		headExtra,
 	});
 }
@@ -885,6 +1004,133 @@ function renderCaseStudyListing(
 	});
 }
 
+function renderBlogPostCard(post: BlogPost): string {
+	const meta = post.meta;
+	const tags = meta.tags
+		.slice(0, 3)
+		.map((tag) => `<span class="badge">${escapeHtml(tag)}</span>`)
+		.join(" ");
+	return `<article class="card-elevated hover:shadow-primary transition-shadow">
+          <div class="flex flex-col gap-4 p-6">
+            <div class="flex items-center justify-between gap-3 text-xs text-slate-400">
+              <time datetime="${escapeHtml(meta.date)}">${escapeHtml(toDisplayDate(meta.date))}</time>
+              <span>${escapeHtml(meta.readingTime)}</span>
+            </div>
+            <h3 class="text-xl font-semibold text-white">
+              <a class="hover:text-primary focus-ring" href="/blog/${escapeHtml(meta.slug)}/">${escapeHtml(meta.title)}</a>
+            </h3>
+            <p class="text-sm text-slate-300">${escapeHtml(post.excerpt)}</p>
+            <div class="flex flex-wrap gap-2">${tags}</div>
+          </div>
+        </article>`;
+}
+
+function renderBlogPost(
+	post: BlogPost,
+	layout: ReturnType<typeof createLayoutGenerator>,
+	profile: ProfileYaml,
+): string {
+	const meta = post.meta;
+	const tags = meta.tags
+		.map(
+			(tag) =>
+				`<span class="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">${escapeHtml(tag)}</span>`,
+		)
+		.join("");
+
+	const baseUrl = profile.schema_org?.person?.url ?? "https://example.com";
+	const ogImageUrl = `${baseUrl}/api/og?title=${encodeURIComponent(meta.title)}&subtitle=Blog`;
+
+	const headExtra = [
+		`<meta property="og:title" content="${escapeHtml(meta.title)}" />`,
+		`<meta property="og:description" content="${escapeHtml(post.excerpt)}" />`,
+		`<meta property="og:type" content="article" />`,
+		`<meta property="og:url" content="${baseUrl}/blog/${meta.slug}/" />`,
+		`<meta property="og:image" content="${ogImageUrl}" />`,
+		`<meta property="article:published_time" content="${escapeHtml(meta.date)}" />`,
+		`<meta property="article:author" content="${escapeHtml(meta.author)}" />`,
+		`<meta name="twitter:card" content="summary_large_image" />`,
+		`<meta name="twitter:title" content="${escapeHtml(meta.title)}" />`,
+		`<meta name="twitter:description" content="${escapeHtml(post.excerpt)}" />`,
+		`<meta name="twitter:image" content="${ogImageUrl}" />`,
+	].join("\n    ");
+
+	const body = `    <main id="main" class="mx-auto flex w-full max-w-6xl gap-8 px-6 pb-24 pt-10">
+      <div class="flex flex-1 flex-col gap-12">
+        <header class="flex flex-col gap-6">
+          <a class="text-xs font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/blog/">Blog</a>
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <p class="text-sm uppercase tracking-[0.4em] text-primary">Blog Post</p>
+              <h1 class="text-4xl font-semibold leading-tight text-white sm:text-5xl">${escapeHtml(meta.title)}</h1>
+            </div>
+            <div class="flex flex-wrap gap-2">${tags}</div>
+          </div>
+          <div class="flex items-center gap-4 text-sm text-slate-400">
+            <time datetime="${escapeHtml(meta.date)}">${escapeHtml(toDisplayDate(meta.date))}</time>
+            <span>·</span>
+            <span>${escapeHtml(meta.readingTime)}</span>
+            <span>·</span>
+            <span>By ${escapeHtml(meta.author)}</span>
+          </div>
+        </header>
+        <article class="prose prose-invert max-w-none prose-headings:text-white prose-p:text-slate-200 prose-a:text-primary prose-strong:text-white prose-code:text-accent prose-pre:bg-slate-900 prose-pre:border prose-pre:border-slate-800" data-toc-content>
+${post.html.trim()}
+        </article>
+        <section aria-labelledby="cta-heading" class="card-elevated-primary">
+          <div class="flex flex-col gap-4 p-8">
+            <h2 id="cta-heading" class="text-xl font-semibold text-white">Enjoyed this article?</h2>
+            <p class="text-base text-slate-300">I write about production ML systems, data platforms, and engineering best practices. <a href="/blog/" class="text-primary hover:underline">Read more posts</a> or <a href="/contact/" class="text-primary hover:underline">let's connect</a>.</p>
+          </div>
+        </section>
+      </div>
+      <aside class="hidden lg:block lg:w-64" data-toc aria-label="Table of contents"></aside>
+    </main>`;
+
+	return layout({
+		title: meta.title,
+		description: post.excerpt,
+		body,
+		currentNav: "/blog",
+		canonicalPath: `/blog/${meta.slug}/`,
+		scripts: [
+			"../../../ts/main.ts",
+			"../../../ts/animations.ts",
+			"../../../ts/toc.ts",
+		],
+		headExtra,
+	});
+}
+
+function renderBlogListing(
+	blogPosts: BlogPost[],
+	layout: ReturnType<typeof createLayoutGenerator>,
+): string {
+	const cards = blogPosts
+		.map((post) => renderBlogPostCard(post))
+		.join("\n        ");
+
+	const body = `    <main id="main" class="mx-auto flex w-full max-w-4xl flex-col gap-10 px-6 pb-24 pt-10">
+      <header class="page-hero" data-animation="fade-in-up">
+        <p class="page-eyebrow text-primary">Blog</p>
+        <h1 class="text-display-lg font-semibold leading-tight text-white md:text-display-xl">Technical writings</h1>
+        <p class="page-lead max-w-2xl">Insights from building production ML systems, data platforms, and automation at scale.</p>
+      </header>
+      <section aria-labelledby="blog-list" class="flex flex-col gap-6" data-blog-list>
+        <h2 id="blog-list" class="sr-only">Blog post list</h2>
+        ${cards}
+      </section>
+    </main>`;
+
+	return layout({
+		title: "Blog",
+		body,
+		currentNav: "/blog",
+		canonicalPath: "/blog/",
+		scripts: ["../../ts/main.ts", "../../ts/animations.ts"],
+	});
+}
+
 function renderAboutPage(
 	profile: ProfileYaml,
 	layout: ReturnType<typeof createLayoutGenerator>,
@@ -917,16 +1163,18 @@ function renderAboutPage(
 		})
 		.join("");
 
-	const toolSections = [
+	const skillCategories = [
 		["Languages", profile.skills.languages],
 		["Applied ML", profile.skills.applied_ml],
 		["Data & Cloud", profile.skills.data_cloud],
 		["Automation", profile.skills.automation],
 		["DevOps", profile.skills.devops],
 		["Analytics", profile.skills.analytics],
-	].map(
+	];
+
+	const toolSections = skillCategories.map(
 		([title, items]) =>
-			`<section class="flex flex-col gap-3 rounded-xl border border-slate-800 bg-slate-900/60 p-5">
+			`<section class="flex flex-col gap-3 rounded-xl border border-slate-800 bg-slate-900/60 p-5" data-skill-category="${escapeHtml(title as string)}" data-skill-count="${(items as string[]).length}">
           <h3 class="text-sm font-semibold uppercase tracking-[0.3em] text-primary">${escapeHtml(title as string)}</h3>
           <ul class="flex flex-wrap gap-2">
             ${(items as string[])
@@ -938,6 +1186,10 @@ function renderAboutPage(
           </ul>
         </section>`,
 	);
+
+	const testimonials = profile.testimonials || [];
+	const testimonialsSection =
+		testimonials.length > 0 ? renderTestimonialsCarousel(testimonials) : "";
 
 	const body = `    <main id="main" class="mx-auto flex w-full max-w-4xl flex-col gap-12 px-6 pb-24 pt-10">
       <header class="page-hero" data-animation="fade-in-up">
@@ -953,6 +1205,11 @@ function renderAboutPage(
         <h2 id="timeline" class="text-lg font-semibold text-white">Experience timeline</h2>
         <ol class="flex flex-col gap-6">${timeline}</ol>
       </section>
+      ${testimonialsSection}
+      <section aria-labelledby="skills-viz" class="flex flex-col gap-6">
+        <h2 id="skills-viz" class="text-lg font-semibold text-white">Skills Dashboard</h2>
+        <div data-skills-viz class="animate-fade-in"></div>
+      </section>
       <section aria-labelledby="toolbox" class="flex flex-col gap-4">
         <h2 id="toolbox" class="text-lg font-semibold text-white">Toolbox</h2>
         <div class="grid gap-4 md:grid-cols-2">
@@ -966,8 +1223,86 @@ function renderAboutPage(
 		body,
 		currentNav: "/about",
 		canonicalPath: "/about/",
-		scripts: ["../../ts/main.ts", "../../ts/animations.ts"],
+		scripts: [
+			"../../ts/main.ts",
+			"../../ts/animations.ts",
+			"../../ts/skills-viz.ts",
+			"../../ts/testimonials-carousel.ts",
+		],
 	});
+}
+
+function renderTestimonialsCarousel(
+	testimonials: Array<{
+		author: string;
+		role: string;
+		company: string;
+		avatar: string;
+		text: string;
+		date: string;
+	}>,
+): string {
+	if (!testimonials || testimonials.length === 0) {
+		return "";
+	}
+
+	const slides = testimonials
+		.map((testimonial, index) => {
+			// Generate initials for avatar fallback
+			const initials = testimonial.author
+				.split(" ")
+				.map((n) => n[0])
+				.join("")
+				.toUpperCase();
+
+			return `<div class="testimonial-slide ${index === 0 ? "testimonial-slide--active" : "hidden"}" data-testimonial-slide aria-hidden="${index === 0 ? "false" : "true"}">
+          <div class="testimonial-card">
+            <p class="testimonial-quote">"${escapeHtml(testimonial.text)}"</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <span>${initials}</span>
+              </div>
+              <div class="testimonial-author-info">
+                <p class="testimonial-author-name">${escapeHtml(testimonial.author)}</p>
+                <p class="testimonial-author-role">${escapeHtml(testimonial.role)}</p>
+              </div>
+            </div>
+          </div>
+        </div>`;
+		})
+		.join("");
+
+	const indicators = testimonials
+		.map(
+			(_, index) =>
+				`<button type="button" class="testimonial-indicator ${index === 0 ? "testimonial-indicator--active" : ""}" data-testimonial-indicator aria-label="Go to testimonial ${index + 1}" aria-current="${index === 0 ? "true" : "false"}" tabindex="${index === 0 ? "0" : "-1"}"></button>`,
+		)
+		.join("");
+
+	return `<section aria-labelledby="testimonials-heading" class="flex flex-col gap-6">
+      <h2 id="testimonials-heading" class="text-lg font-semibold text-white">What colleagues say</h2>
+      <div class="testimonials-carousel" data-testimonials-carousel>
+        <div class="testimonials-track" data-testimonials-track>
+          ${slides}
+        </div>
+        <div class="testimonials-nav">
+          <button type="button" class="testimonials-button" data-testimonials-prev aria-label="Previous testimonial" disabled aria-disabled="true">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-5 w-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+          </button>
+          <div class="testimonials-indicators">
+            ${indicators}
+          </div>
+          <button type="button" class="testimonials-button" data-testimonials-next aria-label="Next testimonial" aria-disabled="false">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-5 w-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+          </button>
+        </div>
+        <div class="sr-only" aria-live="polite" aria-atomic="true" data-testimonials-live></div>
+      </div>
+    </section>`;
 }
 
 function renderContactPage(
@@ -1091,6 +1426,7 @@ function generateCreativeWorkSchema(
 async function generateSitemap(
 	profile: ProfileYaml,
 	caseStudies: CaseStudy[],
+	blogPosts: BlogPost[],
 ): Promise<void> {
 	const baseUrl = profile.schema_org?.person?.url ?? "https://example.com";
 	const publicDir = path.join(projectRoot, "public");
@@ -1099,6 +1435,7 @@ async function generateSitemap(
 		{ loc: "/", priority: "1.0", changefreq: "monthly" },
 		{ loc: "/projects/", priority: "0.8", changefreq: "monthly" },
 		{ loc: "/case-studies/", priority: "0.8", changefreq: "monthly" },
+		{ loc: "/blog/", priority: "0.8", changefreq: "weekly" },
 		{ loc: "/about/", priority: "0.7", changefreq: "monthly" },
 		{ loc: "/contact/", priority: "0.6", changefreq: "yearly" },
 		...caseStudies.map((study) => ({
@@ -1106,6 +1443,12 @@ async function generateSitemap(
 			priority: "0.7",
 			changefreq: "yearly",
 			lastmod: study.meta.date,
+		})),
+		...blogPosts.map((post) => ({
+			loc: `/blog/${post.meta.slug}/`,
+			priority: "0.7",
+			changefreq: "monthly",
+			lastmod: post.meta.date,
 		})),
 	];
 
@@ -1144,10 +1487,153 @@ Disallow: /api/
 	await writeFile(path.join(publicDir, "robots.txt"), robots, "utf8");
 }
 
+async function generateSearchIndex(
+	profile: ProfileYaml,
+	projects: ProjectCard[],
+	caseStudies: CaseStudy[],
+	blogPosts: BlogPost[],
+): Promise<void> {
+	const publicDir = path.join(projectRoot, "public");
+
+	// Build search index with all searchable content
+	const searchIndex: Array<{
+		type: string;
+		title: string;
+		excerpt: string;
+		url: string;
+		tags: string[];
+	}> = [
+		{
+			type: "page",
+			title: "Home",
+			excerpt:
+				"Applied ML Engineer building production RAG and AWS Iceberg platforms.",
+			url: "/",
+			tags: [],
+		},
+		{
+			type: "page",
+			title: "Projects",
+			excerpt:
+				"Technical projects and case studies showcasing production systems.",
+			url: "/projects/",
+			tags: [],
+		},
+		{
+			type: "page",
+			title: "About",
+			excerpt: `${profile.profile.summary} ${profile.skills.strengths.join(", ")}`,
+			url: "/about/",
+			tags: [],
+		},
+		{
+			type: "page",
+			title: "Contact",
+			excerpt:
+				"Get in touch to discuss ML projects, data platforms, or collaboration opportunities.",
+			url: "/contact/",
+			tags: [],
+		},
+		{
+			type: "page",
+			title: "Blog",
+			excerpt:
+				"Technical articles on software engineering, ML systems, and architecture.",
+			url: "/blog/",
+			tags: [],
+		},
+		...projects.map((project) => ({
+			type: "project",
+			title: project.title,
+			excerpt: project.summary,
+			url: `/projects/#${project.slug}`,
+			tags: project.tags,
+		})),
+		...caseStudies.map((study) => ({
+			type: "case-study",
+			title: study.meta.title,
+			excerpt: study.excerpt,
+			url: `/case-studies/${study.meta.slug}/`,
+			tags: study.meta.tags,
+		})),
+		...blogPosts.map((post) => ({
+			type: "blog",
+			title: post.meta.title,
+			excerpt: post.meta.excerpt || post.excerpt,
+			url: `/blog/${post.meta.slug}/`,
+			tags: post.meta.tags,
+		})),
+	];
+
+	await writeFile(
+		path.join(publicDir, "search-index.json"),
+		JSON.stringify(searchIndex, null, 2),
+		"utf8",
+	);
+}
+
+async function generateRssFeed(
+	profile: ProfileYaml,
+	blogPosts: BlogPost[],
+): Promise<void> {
+	const baseUrl = profile.schema_org?.person?.url ?? "https://example.com";
+	const publicDir = path.join(projectRoot, "public");
+	const author = profile.profile.name;
+	const email = profile.profile.contact.email;
+
+	// Sort posts by date (newest first)
+	const sortedPosts = [...blogPosts].sort(
+		(a, b) => new Date(b.meta.date).getTime() - new Date(a.meta.date).getTime(),
+	);
+
+	// Get the most recent post date for lastBuildDate
+	const lastBuildDate =
+		sortedPosts.length > 0
+			? new Date(sortedPosts[0].meta.date).toUTCString()
+			: new Date().toUTCString();
+
+	const rss = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>${author}'s Blog</title>
+    <link>${baseUrl}/blog/</link>
+    <description>Technical articles on software engineering, ML, and system design</description>
+    <language>en-us</language>
+    <lastBuildDate>${lastBuildDate}</lastBuildDate>
+    <atom:link href="${baseUrl}/rss.xml" rel="self" type="application/rss+xml" />
+${sortedPosts
+	.map(
+		(post) => `    <item>
+      <title>${escapeXml(post.meta.title)}</title>
+      <link>${baseUrl}/blog/${post.meta.slug}/</link>
+      <guid isPermaLink="true">${baseUrl}/blog/${post.meta.slug}/</guid>
+      <pubDate>${new Date(post.meta.date).toUTCString()}</pubDate>
+      <author>${email} (${author})</author>
+      <description>${escapeXml(post.meta.excerpt || post.excerpt)}</description>
+      ${post.meta.tags.map((tag) => `<category>${escapeXml(tag)}</category>`).join("\n      ")}
+    </item>`,
+	)
+	.join("\n")}
+  </channel>
+</rss>`;
+
+	await writeFile(path.join(publicDir, "rss.xml"), rss, "utf8");
+}
+
+function escapeXml(text: string): string {
+	return text
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;")
+		.replace(/'/g, "&apos;");
+}
+
 async function generate(): Promise<void> {
 	const profile = await loadProfile();
 	const projects = await loadProjects();
 	const caseStudies = await loadCaseStudies();
+	const blogPosts = await loadBlogPosts();
 
 	const navItems = profile.site_preferences.navigation;
 	const renderLayout = createLayoutGenerator(
@@ -1183,8 +1669,22 @@ async function generate(): Promise<void> {
 		renderContactPage(profile, renderLayout),
 	);
 
-	// Generate sitemap.xml and robots.txt
-	await generateSitemap(profile, caseStudies);
+	// Generate blog pages
+	await writeHtml(
+		path.join(pagesDir, "blog", "index.html"),
+		renderBlogListing(blogPosts, renderLayout),
+	);
+	for (const post of blogPosts) {
+		await writeHtml(
+			path.join(pagesDir, "blog", post.meta.slug, "index.html"),
+			renderBlogPost(post, renderLayout, profile),
+		);
+	}
+
+	// Generate sitemap.xml, RSS feed, search index, and robots.txt
+	await generateSitemap(profile, caseStudies, blogPosts);
+	await generateRssFeed(profile, blogPosts);
+	await generateSearchIndex(profile, projects, caseStudies, blogPosts);
 	await generateRobotsTxt(profile);
 
 	console.info("[generate-content] Generated pages:", [
@@ -1192,10 +1692,14 @@ async function generate(): Promise<void> {
 		"/projects/",
 		"/case-studies/",
 		...caseStudies.map((study) => `/case-studies/${study.meta.slug}/`),
+		"/blog/",
+		...blogPosts.map((post) => `/blog/${post.meta.slug}/`),
 		"/about/",
 		"/contact/",
 	]);
-	console.info("[generate-content] Generated sitemap.xml and robots.txt");
+	console.info(
+		"[generate-content] Generated sitemap.xml, rss.xml, search-index.json, and robots.txt",
+	);
 }
 
 function setupWatchers(): void {
@@ -1203,6 +1707,7 @@ function setupWatchers(): void {
 		path.join(contentDir, "profile.yaml"),
 		path.join(contentDir, "projects.json"),
 		path.join(contentDir, "case-studies"),
+		path.join(contentDir, "blog"),
 	];
 	let running = false;
 	let rerun = false;

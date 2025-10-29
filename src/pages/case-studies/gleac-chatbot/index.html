@@ -34,7 +34,7 @@
     <meta name="twitter:description" content="Cross-department chatbot rollout with measurable interaction uplift." />
     <meta name="twitter:image" content="https://adigannat.com/api/og?title=GLEAC%20Chatbot%20-%20%2B91%25%20interactions&metric=91%25%20increase%20in%20client%20interactions" />
   </head>
-  <body class="bg-slate-950 text-slate-100 antialiased">
+  <body class="bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
     <a href="#main" class="absolute left-4 top-4 -translate-y-16 rounded bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground focus:translate-y-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary">Skip to content</a>
     <header class="site-header bg-transparent" data-site-header>
       <div class="site-header__inner">
@@ -44,32 +44,91 @@
             <li><a class="nav-link focus-ring" href="/">Home</a></li>
           <li><a class="nav-link focus-ring" href="/projects/">Projects</a></li>
           <li><a class="nav-link nav-link--active focus-ring" href="/case-studies/" aria-current="page">Case Studies</a></li>
+          <li><a class="nav-link focus-ring" href="/blog/">Blog</a></li>
           <li><a class="nav-link focus-ring" href="/about/">About</a></li>
           <li><a class="nav-link focus-ring" href="/contact/">Contact</a></li>
           </ul>
         </nav>
-        <a class="site-cta focus-ring" href="/contact/">Let's talk</a>
+        <div class="flex items-center gap-3">
+          <button type="button" class="mobile-menu-button" data-mobile-menu-button aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+            <span class="mobile-menu-button__line"></span>
+            <span class="mobile-menu-button__line"></span>
+            <span class="mobile-menu-button__line"></span>
+          </button>
+          <button type="button" class="search-trigger hidden md:flex" data-search-trigger aria-label="Search site" title="Search (Ctrl+K)">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-5 w-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+            </svg>
+            <span class="hidden lg:inline text-xs text-slate-400">Ctrl+K</span>
+          </button>
+          <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle theme" aria-pressed="true">
+            <svg data-theme-icon-sun class="hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+            </svg>
+            <svg data-theme-icon-moon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+            </svg>
+          </button>
+          <a class="site-cta hidden md:inline-flex focus-ring" href="/resume.pdf" download="Aditya-Ganesh-Resume.pdf" title="Download Resume">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-4 w-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+            <span class="hidden lg:inline">Resume</span>
+          </a>
+          <a class="site-cta hidden md:inline-flex focus-ring" href="/contact/">Let's talk</a>
+        </div>
       </div>
     </header>
+    <div class="mobile-menu-overlay" data-mobile-menu-overlay aria-hidden="true"></div>
+    <aside id="mobile-menu" class="mobile-menu-drawer" data-mobile-menu-drawer aria-label="Mobile navigation">
+      <div class="mobile-menu-drawer__header">
+        <span class="text-xs font-semibold uppercase tracking-[0.35em] text-slate-700 dark:text-slate-300">Menu</span>
+        <button type="button" class="mobile-menu-drawer__close" data-mobile-menu-close aria-label="Close menu">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-6 w-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <nav class="mobile-menu-drawer__nav" aria-label="Mobile primary navigation">
+        <a class="mobile-menu-drawer__link" href="/">Home</a>
+        <a class="mobile-menu-drawer__link" href="/projects/">Projects</a>
+        <a class="mobile-menu-drawer__link mobile-menu-drawer__link--active" href="/case-studies/" aria-current="page">Case Studies</a>
+        <a class="mobile-menu-drawer__link" href="/blog/">Blog</a>
+        <a class="mobile-menu-drawer__link" href="/about/">About</a>
+        <a class="mobile-menu-drawer__link" href="/contact/">Contact</a>
+      </nav>
+      <div class="mobile-menu-drawer__footer">
+        <div class="flex flex-col gap-3">
+          <a class="btn-primary-enhanced block text-center" href="/contact/">Let's talk</a>
+          <a class="btn-secondary-enhanced flex items-center justify-center gap-2" href="/resume.pdf" download="Aditya-Ganesh-Resume.pdf">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-5 w-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+            <span>Download Resume</span>
+          </a>
+        </div>
+      </div>
+    </aside>
     <div class="vitals-bar" role="status" aria-live="polite">
       <div class="vitals-item" data-vital="lcp"><span class="vitals-item__label">LCP</span><span class="vitals-item__value" data-vital-value="lcp">= 2.5 s</span></div>
       <div class="vitals-item" data-vital="inp"><span class="vitals-item__label">INP</span><span class="vitals-item__value" data-vital-value="inp">&lt; 200 ms</span></div>
       <div class="vitals-item" data-vital="cls"><span class="vitals-item__label">CLS</span><span class="vitals-item__value" data-vital-value="cls">= 0.1</span></div>
     </div>
-    <main id="main" class="mx-auto flex w-full max-w-3xl flex-col gap-12 px-6 pb-24 pt-10">
-      <header class="flex flex-col gap-6">
-        <a class="text-xs font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/case-studies/">Case studies</a>
-        <div class="flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <p class="text-sm uppercase tracking-[0.4em] text-primary">Case Study</p>
-            <h1 class="text-4xl font-semibold leading-tight text-white sm:text-5xl">Engagement Bot Rollout at GLEAC</h1>
+    <main id="main" class="mx-auto flex w-full max-w-6xl gap-8 px-6 pb-24 pt-10">
+      <div class="flex flex-1 flex-col gap-12">
+        <header class="flex flex-col gap-6">
+          <a class="text-xs font-semibold text-primary underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="/case-studies/">Case studies</a>
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <p class="text-sm uppercase tracking-[0.4em] text-primary">Case Study</p>
+              <h1 class="text-4xl font-semibold leading-tight text-white sm:text-5xl">Engagement Bot Rollout at GLEAC</h1>
+            </div>
+            <div class="flex flex-wrap gap-2"><li class="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">automation</li><li class="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">chatbot</li><li class="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">enablement</li></div>
           </div>
-          <div class="flex flex-wrap gap-2"><li class="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">automation</li><li class="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">chatbot</li><li class="rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">enablement</li></div>
-        </div>
-        <div class="flex flex-wrap gap-3"><li class="rounded-full border border-slate-700 px-3 py-1 text-xs font-semibold text-slate-200">91% increase in client interactions</li><li class="rounded-full border border-slate-700 px-3 py-1 text-xs font-semibold text-slate-200">33% reduction in time waste</li></div>
-        <p class="text-sm text-slate-400">Published Feb 2025</p>
-      </header>
-      <article class="prose prose-invert max-w-none prose-headings:text-white prose-p:text-slate-200 prose-a:text-primary prose-strong:text-white">
+          <div class="flex flex-wrap gap-3"><li class="rounded-full border border-slate-700 px-3 py-1 text-xs font-semibold text-slate-200">91% increase in client interactions</li><li class="rounded-full border border-slate-700 px-3 py-1 text-xs font-semibold text-slate-200">33% reduction in time waste</li></div>
+          <p class="text-sm text-slate-400">Published Feb 2025</p>
+        </header>
+        <article class="prose prose-invert max-w-none prose-headings:text-white prose-p:text-slate-200 prose-a:text-primary prose-strong:text-white" data-toc-content>
 <h2>Context</h2>
 <p>GLEAC helps teams build soft skills using AI-guided coaching. Client support relied on email threads and spreadsheets, overwhelming the small operations team. Leadership needed a chatbot that extended the coaching experience and offloaded repetitive guidance.</p>
 <h2>Problem</h2>
@@ -102,22 +161,24 @@
 <ul>
 <li>Feedback loops and adoption dashboard samples are available on request.</li>
 </ul>
-      </article>
-      <section aria-labelledby="stack-heading" class="flex flex-col gap-4">
-        <h2 id="stack-heading" class="text-lg font-semibold text-white">Stack and tooling</h2>
-        <ul class="flex flex-wrap gap-2"><li class="rounded-md border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">Automation platform</li><li class="rounded-md border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">Analytics warehouse</li><li class="rounded-md border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">Change enablement</li></ul>
-      </section>
-      <section aria-labelledby="links-heading" class="flex flex-col gap-4">
-        <h2 id="links-heading" class="text-lg font-semibold text-white">Links</h2>
-        <div class="flex flex-wrap gap-4"></div>
-      </section>
-      <section aria-labelledby="cta-heading" class="card-elevated-primary">
-        <div class="flex flex-col gap-4 p-8">
-          <h2 id="cta-heading" class="text-xl font-semibold text-white">Need similar results?</h2>
+        </article>
+        <section aria-labelledby="stack-heading" class="flex flex-col gap-4">
+          <h2 id="stack-heading" class="text-lg font-semibold text-white">Stack and tooling</h2>
+          <ul class="flex flex-wrap gap-2"><li class="rounded-md border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">Automation platform</li><li class="rounded-md border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">Analytics warehouse</li><li class="rounded-md border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">Change enablement</li></ul>
+        </section>
+        <section aria-labelledby="links-heading" class="flex flex-col gap-4">
+          <h2 id="links-heading" class="text-lg font-semibold text-white">Links</h2>
+          <div class="flex flex-wrap gap-4"></div>
+        </section>
+        <section aria-labelledby="cta-heading" class="card-elevated-primary">
+          <div class="flex flex-col gap-4 p-8">
+            <h2 id="cta-heading" class="text-xl font-semibold text-white">Need similar results?</h2>
           <p class="text-base text-slate-300">I help teams ship reliable assistants, governed data platforms, and automation with measurable SLOs.</p>
-          <a class="btn-primary-enhanced self-start" href="/contact/">Work together</a>
-        </div>
-      </section>
+            <a class="btn-primary-enhanced self-start" href="/contact/">Work together</a>
+          </div>
+        </section>
+      </div>
+      <aside class="hidden lg:block lg:w-64" data-toc aria-label="Table of contents"></aside>
     </main>
     <footer class="border-t border-slate-800 bg-slate-950/40">
       <div class="mx-auto flex w-full max-w-6xl flex-col gap-4 px-6 py-10 text-sm text-slate-400 md:flex-row md:items-center md:justify-between">
@@ -131,5 +192,6 @@
     </footer>
     <script type="module" src="../../../ts/main.ts"></script>
     <script type="module" src="../../../ts/animations.ts"></script>
+    <script type="module" src="../../../ts/toc.ts"></script>
   </body>
 </html>
